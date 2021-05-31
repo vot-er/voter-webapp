@@ -32,7 +32,7 @@ class App extends React.Component {
         <PrivateRoute exact path="/password/request" component={PasswordResetRequestPage} isAuthorized={!isAuthenticated} redirectTo="/"/>
         <Route exact path="/password/reset" component={PasswordResetPage} />
         <Route exact path="/password/reset/success" component={PasswordResetSuccessPage} />
-        <PrivateRoute path="/order" isAuthorized={isAuthenticated} exact component={OrderKitPage} />
+        <PrivateRoute path="/order" isAuthorized={isAuthenticated} redirectTo="/login" exact component={OrderKitPage} />
         <PrivateRouteContainer isAuthorized={isAuthenticated} redirectTo="/login" withParams>
           <div id="app">
             <div className="fill flex-row">

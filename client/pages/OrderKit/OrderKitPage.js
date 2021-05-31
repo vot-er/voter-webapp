@@ -14,9 +14,9 @@ export class OrderKitPage extends React.Component {
       state: ''
     };
   }
-  onFormChange(e) {
+  onFormChange(field, value) {
     this.setState({
-      [e.target.name]: e.target.value
+      [field]: value
     });
   }
   render() {

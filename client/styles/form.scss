@@ -9,7 +9,6 @@ input.form__control {
   display: block;
   width: 100%;
   min-width: 100px;
-  max-width: 500px;
   border-radius: 4px;
   border: 1px solid lighten($light-grey, 2);
   outline: none;
@@ -23,7 +22,6 @@ input.form__control {
   font-weight: 500;
   display: block;
   color: $text-color;
-  margin-top: 8px;
   margin-bottom: 2px;
 }
 

@@ -8,8 +8,8 @@ export const CHANGE_PASSWORD_SUCCESS = 'CHANGE_PASSWORD_SUCCESS';
 export const MERGE_USERS = 'MERGE_USERS';
 export const REMOVE_USER = 'REMOVE_USER';
 
-export const MERGE_TASKS = 'MERGE_TASKS';
-export const REMOVE_TASK = 'REMOVE_TASK';
+export const MERGE_KITS = 'MERGE_KITS';
+export const REMOVE_KIT = 'REMOVE_KIT';
 
 export const START_SEARCH = 'START_SEARCH';
 export const RETURN_SEARCH_RESULTS = 'RETURN_SEARCH_RESULTS';

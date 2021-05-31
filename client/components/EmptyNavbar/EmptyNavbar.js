@@ -6,12 +6,9 @@ import './empty-navbar.scss';
 class EmptyNavbar extends React.Component {
   render() {
     return (
-      <div className="navbar">
-        <div className="navbar-group-left">
-          <div className="navbar__logo__container">
-            Vot-ER
-            <img src={navLogo} />
-          </div>
+      <div className="empty-navbar">
+        <div className="navbar__logo__container">
+          <img src={navLogo} className="navbar__logo"/>
         </div>
       </div>
     );

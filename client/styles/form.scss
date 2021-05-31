@@ -69,3 +69,11 @@ input {
     color: $primary-accent;
   }
 }
+
+.form__row {
+  display: flex;
+  flex-direction: row;
+  & .form__row__col {
+    flex: 1;
+  }
+}

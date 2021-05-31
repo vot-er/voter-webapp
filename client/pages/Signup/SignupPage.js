@@ -6,20 +6,49 @@ import * as authActions from '../../actions/authActions';
 import * as routerActions from '../../actions/routerActions';
 import SignupForm from './components/SignupForm';
 import './signup-page.scss';
+import navLogo from '../../assets/nav-logo.png';
 
 export class LoginPage extends React.Component {
-  signup = async({email, password, name}) => {
+  constructor() {
+    super();
+    this.state = {
+      email: '',
+      password: '',
+      name: '',
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      passwordIsValid: false,
+      passwordValidationMessage: '',
+      error: '',
+      isSubmitting: false
+    };
+  }
+  signup = async({
+    email, password, name
+  }) => {
     await this.props.authActions.signup({email, password, name});
     await this.props.routerActions.push('/signup/verify');
+  }
+  onChange(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
 
   render() {
     return (
       <div className="fill signup-page">
-        <SignupForm
-          signup={this.signup}
-          isAuthenticating={this.props.auth.isAuthenticating}
-        />
+        <div className="fill signup__content">
+          <img src={navLogo} style={{maxHeight: 46, marginBottom: 12}}/>
+          <SignupForm
+            signup={this.signup}
+            isAuthenticating={this.props.auth.isAuthenticating}
+          />
+        </div>
+        <div className="signup__image"/>
       </div>
     );
   }

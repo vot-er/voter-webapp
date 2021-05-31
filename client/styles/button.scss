@@ -66,6 +66,7 @@ a.btn-default,.btn-default {
 
 a.btn-primary,.btn-primary {
   background-color: $primary-accent;
+  border: none;
   &:hover {
     background-color: lighten($primary-accent, 10);
   }

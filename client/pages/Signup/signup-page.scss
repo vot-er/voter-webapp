@@ -3,18 +3,22 @@
 
 .signup-page {
   @include flex-center;
-  padding: 36px;
-  text-align: center;
-  & .signup-card {
-    @include card;
-    text-align: left;
-    display: inline-block;
-    width: 440px;
-    padding: 36px;
-  }
+  display: flex;
+  flex-direction: row;
   & .signup-button {
     width: 100%;
     margin: 12px 0;
+  }
+  & .signup__image {
+    flex: 1;
+    background-image: url("/assets/signup-image.jpg");
+    background-position: left;
+    background-size: cover;
+    height: 100vh;
+  }
+  & .signup__content {
+    max-width: 540px;
+    padding: 12px 52px;
   }
 
 }

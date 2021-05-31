@@ -11,8 +11,9 @@ export class SignupForm extends React.Component {
       email: '',
       password: '',
       name: '',
-      organization: '',
-      stateOfWork: '',
+      addressLine1: '',
+      addressLine2: '',
+      zipcode: '',
       passwordIsValid: false,
       passwordValidationMessage: '',
       error: '',
@@ -78,21 +79,16 @@ export class SignupForm extends React.Component {
     const {isSubmitting} = this.state;
     return (
       <div className="signup-card">
-        <h1>{'Let\'s get you a healthy democracy kit.'}</h1>
+        <h1>Sign Up</h1>
         <AlertCard type="error" message={this.state.error} />
         <form onSubmit={this.onSubmit}>
-          <label className="form__label">Name</label>
-          <input onChange={this.onChange} name="name" className="form__control" value={this.state.name} disabled={this.props.isAuthenticating}/>
+          <br/>
           <label className="form__label">Email</label>
           <input onChange={this.onChange} name="email" className="form__control" value={this.state.email} disabled={this.props.isAuthenticating}/>
-          <label className="form__label">Organization</label>
-          <input onChange={this.onChange} className="form__control" name="organization" value={this.state.organization} disabled={this.props.isAuthenticating} placeholder="Hospital, clinic, practice, etc."/>
-          <label className="form__label">State Where You Work</label>
-          <input onChange={this.onChange} className="form__control" name="stateOfWork" value={this.state.stateOfWork} disabled={this.props.isAuthenticating}/>
           <label className="form__label">Password</label>
-          <input onChange={this.onChange} className="form__control" type="password" name="password" value={this.state.password} disabled={this.props.isAuthenticating}/>
+          <input onChange={this.onChange} type="password" className="form__control" name="password" value={this.state.password} disabled={this.props.isAuthenticating}/>
           <AlertCard type="error" message={this.state.passwordValidationMessage} />
-          <button type="submit" className="btn btn-primary signup-button" disabled={!isReadyToSubmit || isSubmitting}>Next: Add Shipping Address</button>
+          <button type="submit" className="btn btn-primary signup-button" disabled={!isReadyToSubmit || isSubmitting}>Signup</button>
           Already registered? <Link to="/login">Login.</Link>
         </form>
       </div>

@@ -11,7 +11,7 @@ import PasswordResetPage from './PasswordReset/PasswordResetPage';
 import KitListPage from './KitList/KitListPage';
 import KitShowPage from './KitShow/KitShowPage';
 import AccountPage from './Account/AccountPage';
-import HomePage from './Home/HomePage';
+import ScoreboardPage from './Scoreboard/ScoreboardPage';
 import NotFoundPage from './NotFoundPage';
 import {ErrorBoundary, PrivateRoute, PrivateRouteContainer, SideNav} from 'Components';
 
@@ -41,7 +41,7 @@ class App extends React.Component {
                     <Route path="/account" exact component={AccountPage} />
                     <Route path="/kits" exact component={KitListPage} />
                     <Route path="/kits/:kitId" exact component={KitShowPage} />
-                    <Route path="/" exact component={HomePage} />
+                    <Route path="/scores" component={ScoreboardPage} />
                     <Route path="/" component={NotFoundPage} />
                   </Switch>
                 </div>

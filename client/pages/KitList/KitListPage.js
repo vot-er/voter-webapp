@@ -4,24 +4,24 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import { withRouter } from 'react-router-dom';
 import {TopNav} from 'Components';
+import {selectKits} from '../../selectors';
+import {getAll as getKits} from '../../actions/kitActions';
 import './kit-list-page.scss';
 
 export class KitsListPage extends React.Component {
-  static getDerivedStateFromProps(props) {
-    const taskId = props.match.params.taskId;
-    const task = props.tasksById[taskId];
-    return {
-      task
-    };
+  componentDidMount() {
+    this.props.getKits();
+  }
+  renderKitItem(kit) {
+    return <div key={kit._id}>{kit.code}</div>;
   }
   render() {
-    const {task} = this.state;
-    if (!task) return null;
+    const {kits} = this.props;
     return (
       <div className="fill">
-        <TopNav title="Task"/>
+        <TopNav title="Kits"/>
         <div className="fill task-page">
-          <div>{task.title}</div>
+          <div>{kits.map(kit => this.renderKitItem(kit))}</div>
         </div>
       </div>
     );
@@ -29,18 +29,19 @@ export class KitsListPage extends React.Component {
 }
 
 KitsListPage.propTypes = {
-  tasksById: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
+  kits: PropTypes.array.isRequired,
+  getKits: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    kits: state.tasks.allIds
+    kits: selectKits(state)
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    getKits: bindActionCreators(getKits, dispatch)
   };
 }
 

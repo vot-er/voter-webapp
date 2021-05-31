@@ -7,5 +7,5 @@ export default {
     activeAccountId: null
   },
   users: initializeNormalState(),
-  tasks: initializeNormalState()
+  kits: initializeNormalState()
 };

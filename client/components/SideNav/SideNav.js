@@ -17,14 +17,14 @@ class Sidebar extends React.Component {
           </div>
         </div>
         <div className="sidebar__items">
-          <Link className="sidebar__item" to="/">
+          <Link className="sidebar__item" to="/scores">
             Scoreboard
           </Link>
-          <Link className="sidebar__item" to="/team">
-            Team
+          <Link className="sidebar__item" to="/organization">
+            Organization
           </Link>
-          <Link className="sidebar__item" to="/badges">
-            Badges
+          <Link className="sidebar__item" to="/kits">
+            Kits
           </Link>
           <br />
           <Link className="sidebar__item" to="/account">

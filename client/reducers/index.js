@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 import auth from './authReducer';
-import tasks from './taskReducer';
+import kits from './kitReducer';
 import { connectRouter } from 'connected-react-router';
 
 const rootReducer = history => combineReducers({
   auth,
-  tasks,
+  kits,
   router: connectRouter(history)
 });
 

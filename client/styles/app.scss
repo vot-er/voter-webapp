@@ -1,0 +1,222 @@
+/* Variables */
+
+@import "_variables";
+@import "grid";
+@import "bootstrap-grid";
+@import "card";
+@import "button";
+@import "labels";
+@import "tabs";
+@import "table";
+@import "datepicker";
+@import "form";
+@import "animation";
+@import "loader";
+@import "list";
+
+/* Styles */
+
+body, html {
+  min-height: 100%;
+  width: 100%;
+  color: #222222;
+  background-color: $background-color;
+  background-attachment: fixed;
+}
+
+body {
+  font: 14px -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";;
+  line-height: 1.4em;
+  color: $text-color;
+  margin: 0 auto;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-font-smoothing: antialiased;
+  font-weight: 400;
+}
+
+#app {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
+  display: flex;
+}
+
+.fill {
+  height: 100%;
+  width: 100%;
+  flex: 1;
+}
+
+.fill-height {
+  height: 100%;
+}
+
+.bottom-container {
+  overflow-x: hidden;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.content-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  max-width: 800px;
+}
+
+.flex-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1, h2, h3, h4, h5 {
+  margin-top: 0;
+  font-family: $heading-font;
+  line-height: 1.2em;
+  margin-bottom: 0.25em;
+}
+
+.top-spaced {
+  margin-top: 32px;
+}
+
+.pull-right {
+  float: right;
+}
+
+.hidden {
+  display: none;
+}
+
+.alert {
+  display: visible;
+}
+
+.alert-error {
+  color: $danger-accent;
+}
+
+.alert-success {
+  color: green;
+}
+
+h1.page-heading {
+  margin-bottom: 12px;
+}
+
+.page-heading-fixed {
+  position: fixed;
+}
+
+.page-body {
+  width: 100%;
+  box-sizing: border-box;
+  padding-top: 28px;
+  padding-bottom: 120px;
+}
+
+.icon-lg {
+  font-size: 48px;
+}
+
+.icon-md {
+  font-size: 20px;
+}
+
+.icon-sm {
+  font-size: 10px;
+}
+
+a.unstyled-link, a.unstyled-link:hover, a.unstyled-link:visited, a.unstyled-link:active {
+  text-decoration: none;
+  color: $text-color;
+}
+
+a.styled-link {
+  color: $text-color;
+  font-weight: 600;
+  text-decoration: none;
+  &:visited,:hover,:active {
+    text-decoration: none;
+    color: $text-color;
+  }
+  &:hover {
+    text-decoration: underline;
+    color: $text-color;
+  }
+}
+
+.clickable:hover {
+  cursor: pointer;
+}
+
+.centered {
+  text-align: center;
+}
+
+.righted {
+  text-align: right;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.block-clicks {
+  pointer-events: none;
+}
+
+.pseudo-full-height {
+  height: 100%;
+  width: 0px;
+  display: inline-block;
+  vertical-align: middle;
+  position: absolute;
+  top: 0;
+}
+
+.divider {
+  height: 1px;
+  background-color: $light-grey;
+  width: 100%;
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+a {
+  color: $link-color;
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+a.title-link {
+  color: $link-color;
+  text-decoration: none;
+  font-weight: 600;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.container--small {
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.content {
+  max-width: 800px;
+}

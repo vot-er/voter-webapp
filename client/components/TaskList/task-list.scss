@@ -1,0 +1,10 @@
+@import "../../styles/_variables";
+
+.task-list {
+  width: 100%;
+  & .task-list__header {
+    background-color: $lightest-grey;
+    border-bottom: 1px solid $lighter-grey;
+    padding: 10px 18px;
+  }
+}

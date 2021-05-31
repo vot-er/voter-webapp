@@ -1,0 +1,28 @@
+@import '../../styles/_variables';
+@import '../../styles/_mixins';
+
+.sidebar {
+  width: 210px;
+  display: block;
+  border-right: 1px solid $light-grey;
+  & .sidebar__top {
+    height: 120px;
+    padding: 18px 12px;
+    display: block;
+  }
+  & a.sidebar__item {
+    padding: 0 12px;
+    display: block;
+    text-decoration: none;
+    color: lighten($text-color, 14);
+    font-weight: 400;
+    &:hover {
+      color: $text-color;
+    }
+  }
+  & .sidebar__logo {
+    max-height: 46px;
+    max-width: 140px;
+  }
+}
+

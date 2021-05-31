@@ -12,6 +12,7 @@ import KitListPage from './KitList/KitListPage';
 import KitShowPage from './KitShow/KitShowPage';
 import AccountPage from './Account/AccountPage';
 import ScoreboardPage from './Scoreboard/ScoreboardPage';
+import OrderKitPage from './OrderKit/OrderKitPage';
 import NotFoundPage from './NotFoundPage';
 import {ErrorBoundary, PrivateRoute, PrivateRouteContainer, SideNav} from 'Components';
 
@@ -31,6 +32,7 @@ class App extends React.Component {
         <PrivateRoute exact path="/password/request" component={PasswordResetRequestPage} isAuthorized={!isAuthenticated} redirectTo="/"/>
         <Route exact path="/password/reset" component={PasswordResetPage} />
         <Route exact path="/password/reset/success" component={PasswordResetSuccessPage} />
+        <PrivateRoute path="/order" isAuthorized={isAuthenticated} exact component={OrderKitPage} />
         <PrivateRouteContainer isAuthorized={isAuthenticated} redirectTo="/login" withParams>
           <div id="app">
             <div className="fill flex-row">

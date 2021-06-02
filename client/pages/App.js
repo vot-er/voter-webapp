@@ -44,6 +44,7 @@ class App extends React.Component {
                     <Route path="/kits" exact component={KitListPage} />
                     <Route path="/kits/:kitId" exact component={KitShowPage} />
                     <Route path="/scores" component={ScoreboardPage} />
+                    <PrivateRoute path="/" exact redirectTo="/scores" isAuthenticated={false}/>
                     <Route path="/" component={NotFoundPage} />
                   </Switch>
                 </div>

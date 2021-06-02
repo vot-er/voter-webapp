@@ -1,10 +1,10 @@
-import {User} from '../../sqldb';
+import {User} from '../../../sequelize/models';
 import emailer, {VerificationEmail, SignupNotificationEmail} from '../../email';
 import config from '../../config/environment';
 
 export async function sendEmailVerification(userId) {
   const user = await User.scope('withSecrets').findByPk(userId);
-  if(!user) throw new Error(`No user found with id ${userId}.`);
+  if (!user) throw new Error(`No user found with id ${userId}.`);
   user.generateEmailVerificationToken();
   await user.save();
   await emailer.send(VerificationEmail, {
@@ -17,7 +17,7 @@ export async function sendEmailVerification(userId) {
 
 export async function handlePostRegistrationExternalServices(user) {
   try {
-    if(config.adminSettings.notifyOnSignup) {
+    if (config.adminSettings.notifyOnSignup) {
       await emailer.send(SignupNotificationEmail, {user});
     }
   } catch(e) {

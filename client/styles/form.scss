@@ -15,6 +15,9 @@ input.form__control {
   font-size: 1em;
   padding: 10px;
   margin-bottom: 8px;
+  &::placeholder {
+    color: rgb(200, 200, 200);
+  }
 }
 
 .form__label {
@@ -73,5 +76,11 @@ input {
   flex-direction: row;
   & .form__row__col {
     flex: 1;
+    &.form__row__col--left {
+      padding-right: 6px;
+    }
+    &.form__row__col--right {
+      padding-left: 6px;
+    }
   }
 }

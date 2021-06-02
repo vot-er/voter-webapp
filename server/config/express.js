@@ -18,7 +18,7 @@ import hsts from 'hsts';
 import config from './environment';
 import passport from 'passport';
 import session from 'express-session';
-import {sequelize} from '../sqldb';
+import {sequelize} from '../../sequelize/models';
 
 const SessionStore = require('connect-session-sequelize')(session.Store);
 

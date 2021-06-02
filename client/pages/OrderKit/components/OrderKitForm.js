@@ -42,11 +42,11 @@ export class OrderForm extends React.Component {
         <label className="form__label">Address Line 2</label>
         <input onChange={this.onInputChange.bind(this)} className="form__control" name="addressLine2" value={addressLine2} placeholder="Apartment/suite number, unit etc. (optional) "/>
         <div className="form__row">
-          <div className="form__row__col" style={{paddingRight: 8}}>
+          <div className="form__row__col form__row__col--left" style={{paddingRight: 8}}>
             <label className="form__label">City</label>
             <input onChange={this.onInputChange.bind(this)} className="form__control" name="city" value={city}/>
           </div>
-          <div className="form__row__col" style={{paddingLeft: 8}}>
+          <div className="form__row__col form__row__col--right" style={{paddingLeft: 8}}>
             <label className="form__label">State</label>
             <Select options={this.getStateOptions()} onChange={e => this.onStateSelectChange(e)} className="form__control" name="state" value={this.getStateOptionFromValue(state)}/>
           </div>

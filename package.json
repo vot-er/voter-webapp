@@ -1,7 +1,7 @@
 {
-  "name": "kardiggle",
+  "name": "voter-webapp",
   "version": "0.1.0",
-  "description": "D&D generator.",
+  "description": "VotER webapp",
   "engines": {
     "npm": ">=6",
     "node": "14.16.0"

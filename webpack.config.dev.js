@@ -7,7 +7,7 @@ export default {
     extensions: ['*', '.js', '.jsx', '.json'],
     alias: {
       'react-dom': '@hot-loader/react-dom',
-      Components: path.resolve(__dirname, 'client/components')
+      Components: path.resolve(__dirname, 'client/components'),
     }
   },
   mode: 'development',

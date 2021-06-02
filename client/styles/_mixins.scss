@@ -49,7 +49,7 @@
   padding: 8px;
   border-radius: 4px;
   &::placeholder {
-    color: lighten($grey, 4);
+    color: rgb(230, 230, 230);
     font-size: 0.85em;
   }
 }

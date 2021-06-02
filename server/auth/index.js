@@ -2,7 +2,7 @@
 import express from 'express';
 import config from '../config/environment';
 import verification from './verification';
-import {User} from '../sqldb';
+import {User} from '../../sequelize/models';
 // Passport Configuration
 
 require('./local/local.passport').setup(User, config);

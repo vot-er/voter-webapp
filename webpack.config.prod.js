@@ -18,7 +18,7 @@ export default {
   resolve: {
     extensions: ['*', '.js', '.jsx', '.json'],
     alias: {
-      Components: path.resolve(__dirname, 'client/components')
+      Components: path.resolve(__dirname, 'client/components'),
     }
   },
   mode: 'production',

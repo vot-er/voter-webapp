@@ -1,6 +1,6 @@
 'use strict';
 
-import {User, Sequelize} from '../../../sequelize/models';
+import {User, AccountPermission, Account, Sequelize} from '../../sqldb';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
@@ -226,6 +226,24 @@ export async function me(req, res, next) {
     });
     if (!user) return res.status(401).end();
     return res.json(user.dataValues);
+  } catch(e) {
+    return next(e);
+  }
+}
+
+export async function myAccounts(req, res, next) {
+  try {
+    const userId = req.user._id;
+    const permissions = await AccountPermission.findAll({
+      where: {
+        userId
+      },
+      include: [{
+        model: Account,
+        as: 'account'
+      }]
+    });
+    return res.status(200).json(permissions);
   } catch(e) {
     return next(e);
   }

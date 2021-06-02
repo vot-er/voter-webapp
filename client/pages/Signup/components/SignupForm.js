@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes, {func, bool} from 'prop-types';
 import {Link} from 'react-router-dom';
+import Select from 'react-select';
 import AlertCard from '../../../components/Alerts/AlertCard';
 import passwordValidation from '../../../../shared/validation/password';
+import {states} from '../../../../shared/utils';
 
 export class SignupForm extends React.Component {
   constructor() {
@@ -10,9 +12,10 @@ export class SignupForm extends React.Component {
     this.state = {
       email: '',
       password: '',
-      name: '',
+      firstName: '',
+      lastName: '',
       organization: '',
-      stateOfWork: '',
+      stateOfWork: null,
       passwordIsValid: false,
       passwordValidationMessage: '',
       error: '',
@@ -20,25 +23,30 @@ export class SignupForm extends React.Component {
     };
   }
 
+  getStateOptions() {
+    return states.map(state => ({
+      value: state.abbreviation,
+      label: state.name
+    }));
+  }
+
   isReadyToSubmit() {
     return this.state.email.length > 0
       && this.state.passwordIsValid
-      && this.state.name.length > 0;
+      && this.state.firstName.length > 0 && this.state.lastName.length > 0;
   }
 
-  onChange = async e => {
-    switch (e.target.name) {
-    case 'email':
-      return this.setState({email: e.target.value});
+  onChange = async(field, value) => {
+    switch (field) {
     case 'password':
-      const {isValid: passwordIsValid, message: passwordValidationMessage} = passwordValidation(e.target.value);
+      const {isValid: passwordIsValid, message: passwordValidationMessage} = passwordValidation(value);
       this.setState({
         passwordIsValid,
         passwordValidationMessage
       });
-      return this.setState({password: e.target.value});
+      return this.setState({password: value});
     default:
-      return this.setState({[e.target.name]: e.target.value});
+      return this.setState({[field]: value});
     }
   }
 
@@ -75,22 +83,32 @@ export class SignupForm extends React.Component {
 
   render() {
     const isReadyToSubmit = this.isReadyToSubmit();
-    const {isSubmitting} = this.state;
+    const {isSubmitting, stateOfWork} = this.state;
     return (
       <div className="signup-card">
         <h1>{'Let\'s get you a healthy democracy kit.'}</h1>
         <AlertCard type="error" message={this.state.error} />
         <form onSubmit={this.onSubmit}>
-          <label className="form__label">Name</label>
-          <input onChange={this.onChange} name="name" className="form__control" value={this.state.name} disabled={this.props.isAuthenticating}/>
+          <div className="form__row">
+            <div className="form__row__col form__row__col--left">
+              <label className="form__label">First Name</label>
+              <input onChange={e => this.onChange(e.target.name, e.target.value)} name="firstName" className="form__control" value={this.state.name} disabled={this.props.isAuthenticating} placeholder="Jane"/>
+            </div>
+            <div className="form__row__col form__row__col--right">
+              <label className="form__label">Last Name</label>
+              <input onChange={e => this.onChange(e.target.name, e.target.value)} name="lastName" className="form__control" value={this.state.name} disabled={this.props.isAuthenticating} placeholder="Smith"/>
+            </div>
+          </div>
           <label className="form__label">Email</label>
-          <input onChange={this.onChange} name="email" className="form__control" value={this.state.email} disabled={this.props.isAuthenticating}/>
+          <input onChange={e => this.onChange(e.target.name, e.target.value)} name="email" className="form__control" value={this.state.email} disabled={this.props.isAuthenticating} placeholder="e.g. your@workemail.com"/>
           <label className="form__label">Organization</label>
-          <input onChange={this.onChange} className="form__control" name="organization" value={this.state.organization} disabled={this.props.isAuthenticating} placeholder="Hospital, clinic, practice, etc."/>
-          <label className="form__label">State Where You Work</label>
-          <input onChange={this.onChange} className="form__control" name="stateOfWork" value={this.state.stateOfWork} disabled={this.props.isAuthenticating}/>
+          <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" name="organization" value={this.state.organization} disabled={this.props.isAuthenticating} placeholder="Hospital, clinic, practice, etc."/>
+          <div style={{marginBottom: 8}}>
+            <label className="form__label">State Where You Work</label>
+            <Select options={this.getStateOptions()} onChange={e => this.onChange('stateOfWork', e)} className="form__control" name="stateOfWork" value={stateOfWork}/>
+          </div>
           <label className="form__label">Password</label>
-          <input onChange={this.onChange} className="form__control" type="password" name="password" value={this.state.password} disabled={this.props.isAuthenticating}/>
+          <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" type="password" name="password" value={this.state.password} disabled={this.props.isAuthenticating}/>
           <AlertCard type="error" message={this.state.passwordValidationMessage} />
           <button type="submit" className="btn btn-primary signup-button" disabled={!isReadyToSubmit || isSubmitting}>Next: Add Shipping Address</button>
           Already registered? <Link to="/login">Login.</Link>

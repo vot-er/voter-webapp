@@ -33,7 +33,7 @@ class App extends React.Component {
         <Route exact path="/password/reset" component={PasswordResetPage} />
         <Route exact path="/password/reset/success" component={PasswordResetSuccessPage} />
         <PrivateRoute path="/order" isAuthorized={isAuthenticated} redirectTo="/login" exact component={OrderKitPage} />
-        <PrivateRouteContainer isAuthorized={isAuthenticated} redirectTo="/login" withParams>
+        <PrivateRouteContainer isAuthorized={true} redirectTo="/login" withParams>
           <div id="app">
             <div className="fill flex-row">
               <SideNav />

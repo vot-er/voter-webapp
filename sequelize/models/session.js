@@ -10,6 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       userId: DataTypes.STRING,
       expires: DataTypes.DATE,
       data: DataTypes.STRING(50000),
+      createdAt: {type: DataTypes.DATE, allowNull: false},
+      updatedAt: DataTypes.DATE
     },
     {}
   );

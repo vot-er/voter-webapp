@@ -101,14 +101,14 @@ export class SignupForm extends React.Component {
           </div>
           <label className="form__label">Email</label>
           <input onChange={e => this.onChange(e.target.name, e.target.value)} name="email" className="form__control" value={this.state.email} disabled={this.props.isAuthenticating} placeholder="e.g. your@workemail.com"/>
-          <label className="form__label">Organization</label>
-          <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" name="organization" value={this.state.organization} disabled={this.props.isAuthenticating} placeholder="Hospital, clinic, practice, etc."/>
+          <label className="form__label">Organization Name</label>
+          <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" name="organization" value={this.state.organization} disabled={this.props.isAuthenticating} placeholder="Your hospital, clinic, practice, etc."/>
           <div style={{marginBottom: 8}}>
             <label className="form__label">State Where You Work</label>
             <Select options={this.getStateOptions()} onChange={e => this.onChange('stateOfWork', e)} className="form__control" name="stateOfWork" value={stateOfWork}/>
           </div>
           <label className="form__label">Password</label>
-          <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" type="password" name="password" value={this.state.password} disabled={this.props.isAuthenticating}/>
+          <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" type="password" name="password" value={this.state.password} disabled={this.props.isAuthenticating} placeholder="This helps us secure your kit data."/>
           <AlertCard type="error" message={this.state.passwordValidationMessage} />
           <button type="submit" className="btn btn-primary signup-button" disabled={!isReadyToSubmit || isSubmitting}>Next: Add Shipping Address</button>
           Already registered? <Link to="/login">Login.</Link>

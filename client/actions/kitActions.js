@@ -13,7 +13,6 @@ export function getAll() {
 
         }]
       });
-      return;
       axios.get('/api/kits')
         .then(response => dispatch({
           type: types.MERGE_KITS,

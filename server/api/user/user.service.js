@@ -1,4 +1,4 @@
-import {User} from '../../../sequelize/models';
+import {User} from '../../models';
 import emailer, {VerificationEmail, SignupNotificationEmail} from '../../email';
 import config from '../../config/environment';
 

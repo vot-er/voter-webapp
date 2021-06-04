@@ -1,6 +1,6 @@
 'use strict';
 
-import {Kit, Address} from '../../../sequelize/models';
+import {Kit, Address} from '../../models';
 
 export async function index(req, res, next) {
   try {

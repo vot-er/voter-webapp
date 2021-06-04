@@ -1,4 +1,4 @@
-import {User} from '../../../sequelize/models';
+import {User} from '../../models';
 import {signToken} from '../auth.service';
 
 export async function verifyEmail(req, res) {

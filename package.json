@@ -19,7 +19,7 @@
     "prebuild": "npm run lint && npm run test",
     "postinstall": "npm run compile",
     "build": "npm run compile",
-    "compile": "npm run clean && babel -d ./dist/server ./server -s && babel-node tools/build.js && cp ./package.json ./dist/package.json",
+    "compile": "npm run clean && babel -d ./dist/server ./server -s && babel -d ./dist/sequelize ./sequelize -s && babel -d ./dist/shared ./shared -s && babel-node tools/build.js && cp ./package.json ./dist/package.json",
     "seed:all": "babel-node tools/seed",
     "test": "jest",
     "test:CI": "babel-node tools/testCi.js",

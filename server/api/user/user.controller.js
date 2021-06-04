@@ -1,6 +1,6 @@
 'use strict';
 
-import {User, Sequelize} from '../../../sequelize/models';
+import {User, Sequelize} from '../../models';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';

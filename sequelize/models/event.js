@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Event.associate = function(models) {
-    Event.hasOne(models.Kit, {as: 'Kit', foreignKey: {
+    Event.belongsTo(models.Kit, {as: 'Kit', foreignKey: {
       name: 'kit',
       allowNull: true
     }});

@@ -8,7 +8,7 @@ export async function sendEmailVerification(userId) {
   user.generateEmailVerificationToken();
   await user.save();
   await emailer.send(VerificationEmail, {
-    userId: user.get('_id'),
+    userId: user.get('id'),
     userEmail: user.get('email'),
     token: user.get('emailVerificationToken')
   });

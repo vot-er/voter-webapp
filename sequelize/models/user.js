@@ -13,7 +13,7 @@ var validatePresenceOf = function(value) {
 
 module.exports = (sequelize, DataTypes) => {
   var User = sequelize.define('user', {
-    _id: {
+    id: {
       primaryKey: true,
       type: DataTypes.UUID,
       allowNull: false,
@@ -78,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
       // Non-sensitive info we'll be putting in the token
       token() {
         return {
-          _id: this._id,
+          id: this.id,
           role: this.role
         };
       }
@@ -119,7 +119,7 @@ module.exports = (sequelize, DataTypes) => {
 
 
   User.prototype.getSignedToken = function() {
-    return jwt.sign({ _id: this.get('_id') }, config.secrets.session, {
+    return jwt.sign({ id: this.get('id') }, config.secrets.session, {
       expiresIn: 60 * 60 * 5
     });
   };

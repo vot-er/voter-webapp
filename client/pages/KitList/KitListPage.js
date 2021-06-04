@@ -14,11 +14,11 @@ export class KitsListPage extends React.Component {
     const {kits} = this.props;
     await this.props.getKits();
     if (kits.length == 1) {
-      this.props.goTo(`/kits/${kits[0]._id}`);
+      this.props.goTo(`/kits/${kits[0].id}`);
     }
   }
   renderKitItem(kit) {
-    return <div key={kit._id}>{kit.code}</div>;
+    return <div key={kit.id}>{kit.code}</div>;
   }
   renderNoKits() {
     return <div><div>{'It looks like you haven\'t ordered any kits yet.'}</div></div>;

@@ -11,7 +11,7 @@ class UserList extends React.Component {
     const {dropdown: UserDropdown, users} = this.props;
     var orgUsers = users
       //.sort((a, b) => comparelocal(a.name, b.name))
-      .map(user => <div className="card-list__item card-list__item--padded flex-row" key={user._id}>
+      .map(user => <div className="card-list__item card-list__item--padded flex-row" key={user.id}>
         <div className="flex-row__group flex-row__group--left">{user.name}</div>
         <div className="flex-row__group flex-row__group--left">{user.email}</div>
         <div className="flex-row__group flex-row__group--left">{user.role ? user.role : null}</div>

@@ -14,7 +14,7 @@ module.exports = {
       updatedAt: DataTypes.DATE
     });
     await queryInterface.createTable('users', {
-      _id: {
+      id: {
         primaryKey: true,
         type: DataTypes.UUID,
         allowNull: false,

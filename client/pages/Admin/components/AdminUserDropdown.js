@@ -10,13 +10,13 @@ import '../admin-page.scss';
 
 class AdminUserDropdown extends React.Component {
   setUserRole(role) {
-    this.props.adminActions.changeUserRole(this.props.user._id, role)
+    this.props.adminActions.changeUserRole(this.props.user.id, role)
       .then(() => this.props.userActions.get());
   }
   deleteUser(user) {
     const confirm = window.confirm(`Are you sure you want to delete user ${user.name}?`); // eslint-disable-line no-alert
-    if(confirm) {
-      this.props.adminActions.deleteUser(user._id);
+    if (confirm) {
+      this.props.adminActions.deleteUser(user.id);
     }
   }
   render() {

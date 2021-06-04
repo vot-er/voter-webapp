@@ -3,19 +3,38 @@ module.exports = (sequelize, DataTypes) => {
   var Kit = sequelize.define(
     'kit',
     {
-      code: {
-        type: DataTypes.STRING,
+      id: {
+        primaryKey: true,
+        type: DataTypes.UUID,
         allowNull: false,
-        unique: true
-      }
+        defaultValue: DataTypes.UUIDV4
+      },
+      user: {
+        type: DataTypes.UUID,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
+      },
+      code: {
+        type: DataTypes.TEXT,
+        unique: true,
+        sparse: true
+
+      },
+      createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
+      updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false
+      },
     },
     {}
   );
   Kit.associate = function(models) {
-    Kit.hasOne(models.Address, {as: 'ShippingAddress', foreignKey: {
-      name: 'shippingAddress',
-      allowNull: true
-    }});
+    Kit.belongsTo(models.Address, {as: 'ShippingAddress', foreignKey: 'shippingAddress'});
   };
   return Kit;
 };

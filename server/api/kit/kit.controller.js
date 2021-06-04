@@ -4,7 +4,7 @@ import {Kit, Address} from '../../../sequelize/models';
 
 export async function index(req, res, next) {
   try {
-    const {user} = req.user._id;
+    const {user} = req.user.id;
     const kits = await Kit.findAll({
       user
     });
@@ -16,12 +16,12 @@ export async function index(req, res, next) {
 
 export async function create(req, res, next) {
   try {
-    const {user} = req.user._id;
+    const userId = req.user.id;
     const {shippingAddress: shippingAddressBody} = req.body;
     const shippingAddress = await Address.create(shippingAddressBody);
     const kit = await Kit.create({
-      shippingAddress,
-      user
+      shippingAddress: shippingAddress.id,
+      user: userId
     });
     return res.status(200).json({data: kit});
   } catch(e) {

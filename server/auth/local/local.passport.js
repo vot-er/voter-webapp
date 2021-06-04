@@ -8,7 +8,7 @@ export function setup(User/*, config*/) {
   }, async function(email, password, done) {
     try {
       console.log(User);
-      const user = await User.findOne({ where: { email: email.toLowerCase() }, attributes: ['_id', 'role', 'salt', 'password'] });
+      const user = await User.findOne({ where: { email: email.toLowerCase() }, attributes: ['id', 'role', 'salt', 'password'] });
       if (!user || user.get('role') === 'unverified') {
         return done(null, false, { message: 'The email or password is not correct.' });
       }

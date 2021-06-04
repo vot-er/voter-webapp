@@ -20,7 +20,7 @@ export function create(body) {
     const {data} = await axios.post('/api/kits', body);
     dispatch({
       type: types.MERGE_KITS,
-      items: data
+      items: [data.data]
     });
     return data;
   };

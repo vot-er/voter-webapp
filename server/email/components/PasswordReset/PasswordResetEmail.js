@@ -6,7 +6,7 @@ import path from 'path';
 export default class PasswordResetEmail extends HTMLComponent {
   async renderHtml() {
     const {user, token} = this.props;
-    const resetUrl = `${config.domain}/password/reset?user=${user._id}&token=${token}`;
+    const resetUrl = `${config.domain}/password/reset?user=${user.id}&token=${token}`;
     return `
       <div class="container">
         <div class="card card--full card--padded">

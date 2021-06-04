@@ -2,7 +2,7 @@
 const cryptoUtil = require('../../server/utils/crypto');
 const defaultPassword = 'admin';
 const users = [{
-  _id: '5173e5ef-0526-4136-b0d5-24b8006051f0',
+  id: '5173e5ef-0526-4136-b0d5-24b8006051f0',
   provider: 'local',
   role: 'admin',
   name: 'Starting Admin',
@@ -29,7 +29,7 @@ module.exports = {
   down: async(queryInterface, Sequelize) => {
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete('users', {
-      [Op.or]: users.map(user => ({ _id: user._id }))
+      [Op.or]: users.map(user => ({ id: user.id }))
     });
     return;
   }

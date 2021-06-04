@@ -10,7 +10,7 @@ export default class Normalizer {
     return definition(this);
   }
   define(key, model, options = {}) {
-    options.idAttribute = options.idAttribute || '_id';
+    options.idAttribute = options.idAttribute || 'id';
     const schema = new Entity(key, {}, options);
     this.schemaMap[key] = schema;
     this.schemas.push({
@@ -23,7 +23,7 @@ export default class Normalizer {
     this.schemas.forEach(({key, model}) => {
       const mappedModel = {};
       Object.keys(model).forEach(modelKey => {
-        if(typeof model[modelKey] === 'string') {
+        if (typeof model[modelKey] === 'string') {
           const schema = this.schemaMap[model[modelKey]];
           mappedModel[modelKey] = schema;
         } else {

@@ -52,8 +52,8 @@ export async function create(req, res, next) {
     user.set('email', email);
     user.set('name', name);
     user = await user.save();
-    await sendEmailVerification(user.get('_id'));
-    const token = jwt.sign({ _id: user._id }, config.secrets.session, {
+    await sendEmailVerification(user.get('id'));
+    const token = jwt.sign({ id: user.id }, config.secrets.session, {
       expiresIn: 60 * 60 * 5
     });
     await handlePostRegistrationExternalServices(user);
@@ -70,7 +70,7 @@ export async function create(req, res, next) {
 export async function destroy(req, res, next) {
   try {
     const {userId} = req.params;
-    const user = await User.findOne({ where: { _id: userId } });
+    const user = await User.findOne({ where: { id: userId } });
     if (!user) {
       return res.status(404).end();
     }
@@ -86,8 +86,8 @@ export async function destroy(req, res, next) {
  */
 export async function changePassword(req, res, next) {
   try {
-    let userId = req.user._id;
-    const user = await User.findOne({ where: { _id: userId }});
+    let userId = req.user.id;
+    const user = await User.findOne({ where: { id: userId }});
     var oldPass = String(req.body.oldPassword);
     var newPass = String(req.body.newPassword);
     if (user.authenticate(oldPass)) {
@@ -110,7 +110,7 @@ export async function updateMyProfile(req, res, next) {
   try {
     const user = await User.scope('withSecrets').findOne({
       where: {
-        _id: req.user._id
+        id: req.user.id
       }
     });
     if (!user) return res.status(401).end();
@@ -118,7 +118,7 @@ export async function updateMyProfile(req, res, next) {
     applyPatch(user, patch, { allowedKeys: ['name'] });
     await user.save();
     return res.status(200).json({
-      _id: user.get('_id'),
+      id: user.get('id'),
       name: user.get('name'),
       role: user.get('role')
     });
@@ -136,7 +136,7 @@ export async function requestPasswordReset(req, res, next) {
           [Op.iLike]: email
         }
       },
-      attributes: ['_id', 'email', 'passwordResetToken', 'passwordResetTokenExpiresAt']
+      attributes: ['id', 'email', 'passwordResetToken', 'passwordResetTokenExpiresAt']
     });
     if (!user) return res.status(200).end(); // Do not reveal there is no user.
     user.generatePasswordResetToken();
@@ -155,8 +155,8 @@ export async function resetPassword(req, res, next) {
     if (!passwordResetToken) return res.status(400).end();
     const {newPassword} = req.body;
     const user = await User.findOne({
-      where: { _id: userId, passwordResetToken },
-      attributes: ['_id', 'passwordResetTokenExpiresAt']
+      where: { id: userId, passwordResetToken },
+      attributes: ['id', 'passwordResetTokenExpiresAt']
     });
     if (!user) return res.status(401).end();
     const resetTokenIsExpired = !user.get('passwordResetTokenExpiresAt') || moment(user.get('passwordResetTokenExpiresAt')).isBefore(moment());
@@ -176,7 +176,7 @@ export async function verifyResetToken(req, res, next) {
     const {userId, token: passwordResetToken} = req.query;
     if (!passwordResetToken) return res.status(400).end();
     const user = await User.findOne({
-      where: { _id: userId, passwordResetToken },
+      where: { id: userId, passwordResetToken },
       attributes: ['passwordResetTokenExpiresAt']
     });
     if (!user) return res.status(401).end();
@@ -195,7 +195,7 @@ export async function changeRole(req, res, next) {
     if (config.userRoles.indexOf(newRole) === -1) {
       return res.status(403).send(`Cannot set unknown role ${newRole}.`);
     }
-    const user = await User.findOne({where: { _id: userId }});
+    const user = await User.findOne({where: { id: userId }});
     if (!user) return res.status(404).end();
     user.set('role', newRole);
     await user.save();
@@ -211,13 +211,13 @@ export async function changeRole(req, res, next) {
  */
 export async function me(req, res, next) {
   try {
-    var userId = req.user._id;
+    var userId = req.user.id;
     const user = await User.findOne({
       where: {
-        _id: userId
+        id: userId
       },
       attributes: [
-        '_id',
+        'id',
         'name',
         'email',
         'role',

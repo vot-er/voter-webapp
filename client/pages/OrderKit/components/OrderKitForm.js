@@ -60,7 +60,7 @@ export class OrderForm extends React.Component {
           <label className="form__label">Zipcode</label>
           <input onChange={this.onInputChange.bind(this)} className="form__control" name="zipcode" value={zipcode}/>
 
-          <button type="submit" onClick={this.props.onSubmit.bind(this)} className="btn btn-primary signup-button" disabled={!this.isReadyToSubmit()}>Complete Order</button>
+          <button type="submit" className="btn btn-primary signup-button" disabled={!this.isReadyToSubmit()}>Complete Order</button>
         </form>
       </div>
     );

@@ -6,7 +6,7 @@ export async function verifyEmail(req, res) {
   const user = await User.scope('withSecrets').findByPk(id);
   if (!user || !user.verifyEmailVerificationToken(code)) return res.redirect('/errors/expired');
   await user.verify();
-  const token = signToken(user.get('_id'), 'user');
+  const token = signToken(user.get('id'), 'user');
   res.cookie('token', token);
   return res.redirect('/customers');
 }

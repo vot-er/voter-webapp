@@ -21,12 +21,12 @@ export function attachUser() {
         req.headers.authorization = `Bearer ${req.cookies.token}`;
       }
       validateJwt(req, res, async function(e) {
-        if (!e && req.user && req.user._id) {
+        if (!e && req.user && req.user.id) {
           req.user = await User.findOne({
             where: {
-              _id: req.user._id,
+              id: req.user.id,
             },
-            attributes: ['_id', 'name', 'role']
+            attributes: ['id', 'name', 'role']
           });
         } else {
           Reflect.deleteProperty(req, 'user'); // Ignore error since authentication forbidding handled later
@@ -94,7 +94,7 @@ export function hasAccountRole(roleRequired, options) {
  * Returns a jwt token signed by the app secret
  */
 export function signToken(id, role) {
-  return jwt.sign({ _id: id, role }, config.secrets.session, {
+  return jwt.sign({ id, role }, config.secrets.session, {
     expiresIn: 60 * 60 * 24 * 7 // one week
   });
 }
@@ -106,6 +106,6 @@ export function setTokenCookie(req, res) {
   if (!req.user) {
     return res.status(404).send('It looks like you aren\'t logged in, please try again.');
   }
-  var token = signToken(req.user._id, req.user.role);
+  var token = signToken(req.user.id, req.user.role);
   res.cookie('token', token);
 }

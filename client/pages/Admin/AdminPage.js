@@ -55,7 +55,6 @@ function mapDispatchToProps(dispatch) {
   return {
     changeUserRole: bindActionCreators(changeUserRole, dispatch),
     userActions: bindActionCreators(userActions, dispatch),
-    chargeDailyPayments: bindActionCreators(chargeDailyPayments, dispatch)
   };
 }
 

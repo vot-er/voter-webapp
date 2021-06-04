@@ -1,11 +1,11 @@
 'use strict';
 
-import cryptoUtil from '../../server/utils/crypto';
+import cryptoUtil from '../utils/crypto';
 import passwordIsValid from '../../shared/validation/password';
 import moment from 'moment';
 import randomstring from 'randomstring';
 import jwt from 'jsonwebtoken';
-import config from '../../server/config/environment';
+import config from '../config/environment';
 
 var validatePresenceOf = function(value) {
   return value && value.length;

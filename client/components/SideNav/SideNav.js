@@ -13,18 +13,16 @@ class Sidebar extends React.Component {
     return (
       <div className="sidebar">
         <div className="sidebar__top">
-          <div className="sidebar__workspace">            <img className="sidebar__logo"src={navLogo} />
+          <div className="sidebar__workspace">
+            <img className="sidebar__logo"src={navLogo} />
           </div>
         </div>
         <div className="sidebar__items">
           <Link className="sidebar__item" to="/scores">
             Scoreboard
           </Link>
-          <Link className="sidebar__item" to="/organization">
-            Organization
-          </Link>
           <Link className="sidebar__item" to="/kits">
-            Kits
+            Kit
           </Link>
           <br />
           <Link className="sidebar__item" to="/account">

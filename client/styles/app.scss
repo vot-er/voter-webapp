@@ -41,6 +41,10 @@ body {
   display: flex;
 }
 
+.app__row {
+  min-height: 100vh;
+}
+
 .fill {
   height: 100%;
   width: 100%;
@@ -63,7 +67,6 @@ body {
 .flex-row {
   display: flex;
   flex-direction: row;
-  justify-content: center;
 }
 
 .content-container {

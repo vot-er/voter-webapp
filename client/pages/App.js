@@ -13,6 +13,7 @@ import KitShowPage from './KitShow/KitShowPage';
 import AccountPage from './Account/AccountPage';
 import ScoreboardPage from './Scoreboard/ScoreboardPage';
 import OrderKitPage from './OrderKit/OrderKitPage';
+import OrderKitSuccessPage from './OrderKitSuccess/OrderKitSuccessPage';
 import NotFoundPage from './NotFoundPage';
 import {ErrorBoundary, PrivateRoute, PrivateRouteContainer, SideNav} from 'Components';
 
@@ -32,22 +33,21 @@ class App extends React.Component {
         <PrivateRoute exact path="/password/request" component={PasswordResetRequestPage} isAuthorized={!isAuthenticated} redirectTo="/"/>
         <Route exact path="/password/reset" component={PasswordResetPage} />
         <Route exact path="/password/reset/success" component={PasswordResetSuccessPage} />
-        <PrivateRoute path="/order" isAuthorized={isAuthenticated} redirectTo="/login" exact component={OrderKitPage} />
+        <PrivateRoute path="/signup/order" isAuthorized={isAuthenticated} redirectTo="/login" exact component={OrderKitPage} />
+        <PrivateRoute path="/signup/order/success" isAuthorized={isAuthenticated} redirectTo="/login" exact component={OrderKitSuccessPage} />
         <PrivateRouteContainer isAuthorized={true} redirectTo="/login" withParams>
-          <div id="app">
-            <div className="fill flex-row">
-              <SideNav />
-              <div className="fill flex-column">
-                <div className="fill flex-row">
-                  <Switch>
-                    <Route path="/account" exact component={AccountPage} />
-                    <Route path="/kits" exact component={KitListPage} />
-                    <Route path="/kits/:kitId" exact component={KitShowPage} />
-                    <Route path="/scores" component={ScoreboardPage} />
-                    <PrivateRoute path="/" exact redirectTo="/scores" isAuthenticated={false}/>
-                    <Route path="/" component={NotFoundPage} />
-                  </Switch>
-                </div>
+          <div className="fill flex-row app__row">
+            <SideNav />
+            <div className="fill flex-column">
+              <div className="fill flex-row">
+                <Switch>
+                  <Route path="/account" exact component={AccountPage} />
+                  <Route path="/kits" exact component={KitListPage} />
+                  <Route path="/kits/:kitId" exact component={KitShowPage} />
+                  <Route path="/scores" component={ScoreboardPage} />
+                  <PrivateRoute path="/" exact redirectTo="/scores" isAuthenticated={false}/>
+                  <Route path="/" component={NotFoundPage} />
+                </Switch>
               </div>
             </div>
           </div>

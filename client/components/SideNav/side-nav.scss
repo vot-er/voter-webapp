@@ -3,6 +3,8 @@
 
 .sidebar {
   width: 210px;
+  min-width: 210px;
+  min-height: 100vh;
   display: block;
   border-right: 1px solid $light-grey;
   & .sidebar__top {

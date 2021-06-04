@@ -23,7 +23,10 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Event.associate = function(models) {
-    // associations can be defined here
+    Event.hasOne(models.Kit, {as: 'Kit', foreignKey: {
+      name: 'kit',
+      allowNull: true
+    }});
   };
   return Event;
 };

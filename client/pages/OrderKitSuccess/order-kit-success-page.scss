@@ -1,0 +1,16 @@
+@import "../../styles/_variables";
+@import "../../styles/_mixins";
+
+.order-kit-page {
+  .order-kit-page__content {
+    @include flex-center;
+    padding: 24px;   
+  }
+  .order-kit__form-container {
+    width: 500px;
+  }
+  & .signup-button {
+    width: 100%;
+    margin: 12px 0;
+  }
+}

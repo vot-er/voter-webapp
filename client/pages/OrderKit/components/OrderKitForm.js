@@ -25,6 +25,11 @@ export class OrderForm extends React.Component {
       label: state.name
     }));
   }
+  handleNativeSubmit(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    this.props.onSubmit();
+  }
   render() {
     const {
       addressLine1,
@@ -35,26 +40,28 @@ export class OrderForm extends React.Component {
     } = this.props.form;
     return (
       <div>
-        <h1>Shipping Address</h1>
-        <div style={{marginBottom: 18}}>{'We\'ll send your kit here.'}</div>
-        <label className="form__label">Address Line 1</label>
-        <input onChange={this.onInputChange.bind(this)} className="form__control" name="addressLine1" value={addressLine1} placeholder="Street Address or P.O. Box"/>
-        <label className="form__label">Address Line 2</label>
-        <input onChange={this.onInputChange.bind(this)} className="form__control" name="addressLine2" value={addressLine2} placeholder="Apartment/suite number, unit etc. (optional) "/>
-        <div className="form__row">
-          <div className="form__row__col form__row__col--left" style={{paddingRight: 8}}>
-            <label className="form__label">City</label>
-            <input onChange={this.onInputChange.bind(this)} className="form__control" name="city" value={city}/>
+        <form onSubmit={this.handleNativeSubmit.bind(this)}>
+          <h1>Shipping Address</h1>
+          <div style={{marginBottom: 18}}>{'We\'ll send your kit here.'}</div>
+          <label className="form__label">Address Line 1</label>
+          <input onChange={this.onInputChange.bind(this)} className="form__control" name="addressLine1" value={addressLine1} placeholder="Street Address or P.O. Box"/>
+          <label className="form__label">Address Line 2</label>
+          <input onChange={this.onInputChange.bind(this)} className="form__control" name="addressLine2" value={addressLine2} placeholder="Apartment/suite number, unit etc. (optional) "/>
+          <div className="form__row">
+            <div className="form__row__col form__row__col--left" style={{paddingRight: 8}}>
+              <label className="form__label">City</label>
+              <input onChange={this.onInputChange.bind(this)} className="form__control" name="city" value={city}/>
+            </div>
+            <div className="form__row__col form__row__col--right" style={{paddingLeft: 8}}>
+              <label className="form__label">State</label>
+              <Select options={this.getStateOptions()} onChange={e => this.onStateSelectChange(e)} className="form__control" name="state" value={this.getStateOptionFromValue(state)}/>
+            </div>
           </div>
-          <div className="form__row__col form__row__col--right" style={{paddingLeft: 8}}>
-            <label className="form__label">State</label>
-            <Select options={this.getStateOptions()} onChange={e => this.onStateSelectChange(e)} className="form__control" name="state" value={this.getStateOptionFromValue(state)}/>
-          </div>
-        </div>
-        <label className="form__label">Zipcode</label>
-        <input onChange={this.onInputChange.bind(this)} className="form__control" name="zipcode" value={zipcode}/>
+          <label className="form__label">Zipcode</label>
+          <input onChange={this.onInputChange.bind(this)} className="form__control" name="zipcode" value={zipcode}/>
 
-        <button type="submit" className="btn btn-primary signup-button" disabled={!this.isReadyToSubmit()}>Complete Order</button>
+          <button type="submit" onClick={this.props.onSubmit.bind(this)} className="btn btn-primary signup-button" disabled={!this.isReadyToSubmit()}>Complete Order</button>
+        </form>
       </div>
     );
   }
@@ -63,6 +70,7 @@ export class OrderForm extends React.Component {
 OrderForm.propTypes = {
   form: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired
 };
 
 export default OrderForm;

@@ -6,14 +6,22 @@ import { withRouter } from 'react-router-dom';
 import {TopNav} from 'Components';
 import {selectKits} from '../../selectors';
 import {getAll as getKits} from '../../actions/kitActions';
+import {goTo} from '../../actions/routerActions';
 import './kit-list-page.scss';
 
 export class KitsListPage extends React.Component {
-  componentDidMount() {
-    this.props.getKits();
+  async componentDidMount() {
+    const {kits} = this.props;
+    await this.props.getKits();
+    if (kits.length == 1) {
+      this.props.goTo(`/kits/${kits[0]._id}`);
+    }
   }
   renderKitItem(kit) {
     return <div key={kit._id}>{kit.code}</div>;
+  }
+  renderNoKits() {
+    return <div><div>{'It looks like you haven\'t ordered any kits yet.'}</div></div>;
   }
   render() {
     const {kits} = this.props;
@@ -21,6 +29,7 @@ export class KitsListPage extends React.Component {
       <div className="fill">
         <TopNav title="Kits"/>
         <div className="fill task-page">
+          {kits.length == 0 ? this.renderNoKits() : null}
           <div>{kits.map(kit => this.renderKitItem(kit))}</div>
         </div>
       </div>
@@ -30,7 +39,8 @@ export class KitsListPage extends React.Component {
 
 KitsListPage.propTypes = {
   kits: PropTypes.array.isRequired,
-  getKits: PropTypes.func.isRequired
+  getKits: PropTypes.func.isRequired,
+  goTo: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -41,7 +51,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    getKits: bindActionCreators(getKits, dispatch)
+    getKits: bindActionCreators(getKits, dispatch),
+    goTo: bindActionCreators(goTo, dispatch)
   };
 }
 

@@ -50,7 +50,7 @@
         "enforceForArrowConditionals": false
       }
     ],
-    "no-extra-semi": 2, //disallow unnecessary semicolons
+    "no-extra-semi": 1, //disallow unnecessary semicolons
     "no-func-assign": 2, //disallow overwriting functions written as function declarations
     "no-inner-declarations": 1, //disallow function or variable declarations in nested blocks
     "no-invalid-regexp": 2, //disallow invalid regular expression strings in the RegExp constructor
@@ -253,7 +253,7 @@
     "sort-imports": 0, //sort import declarations within module
     "semi": 1, //require or disallow use of semicolons instead of ASI
     "sort-vars": 0, //sort variables within the same declaration block
-    "space-before-blocks": 2, //require or disallow a space before blocks
+    "space-before-blocks": 1, //require or disallow a space before blocks
     "space-before-function-paren": [1, "never"], //require or disallow a space before function opening parenthesis
     "space-in-parens": 2, //require or disallow spaces inside parentheses
     "space-infix-ops": 2, //require spaces around operators

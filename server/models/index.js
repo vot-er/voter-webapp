@@ -6,9 +6,7 @@ var Sequelize = require('sequelize');
 var basename = path.basename(__filename);
 var config = require('../config/environment');
 var db = {};
-const sequelize = new Sequelize(config.sequelize.uri, {
-  dialect: config.dialect
-});
+const sequelize = new Sequelize(config.sequelize.uri, config.sequelize);
 
 fs
   .readdirSync(__dirname)

@@ -27,8 +27,14 @@ module.exports = {
     dialect: 'postgres',
     logging: false,
     storage: 'dist.postgres',
+    ssl: true,
     define: {
       timestamps: true
+    },
+    dialectOptions: {
+      ssl: {
+        require: true
+      }
     }
   }
 };

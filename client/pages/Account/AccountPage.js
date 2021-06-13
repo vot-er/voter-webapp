@@ -27,6 +27,7 @@ export class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
+  logout: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {

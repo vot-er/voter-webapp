@@ -14,7 +14,7 @@ export function login(credentials) {
         credentials
       });
       const {data} = await axios.post('/auth/local', credentials);
-      dispatch(trackEvent(LOGIN_SUCCESS));
+      //dispatch(trackEvent(LOGIN_SUCCESS));
       if (data.token) {
         setAuthorizationHeader(data.token);
         await dispatch(getMyProfile());
@@ -29,16 +29,15 @@ export function login(credentials) {
   };
 }
 
-export function signup({
-  name, email, password
-}, redirectTo) {
+export function signup(userData, redirectTo) {
   return async function(dispatch) {
     try {
-      const {data} = await axios.post('/api/users', {name, email, password});
+      const {data} = await axios.post('/api/users', userData);
+      console.log(data);
       if (data.token) {
-        dispatch(goTo(redirectTo));
         setAuthorizationHeader(data.token);
-        dispatch(trackEvent(SIGNUP));
+        dispatch(goTo(redirectTo));
+        //dispatch(trackEvent(SIGNUP));
         return dispatch(getMyProfile());
       } else {
         throw new Error('No token provided.');

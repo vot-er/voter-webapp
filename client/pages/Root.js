@@ -26,7 +26,7 @@ class Root extends Component {
       <Provider store={this.props.store}>
         <ConnectedRouter history={this.props.history}>
           <App
-            isAuthenticated={!!this.props.auth.user && this.props.auth.user.role !== 'unverified'}
+            isAuthenticated={!!this.props.auth.user}
             isLoaded={this.state.isLoaded}
           />
         </ConnectedRouter>

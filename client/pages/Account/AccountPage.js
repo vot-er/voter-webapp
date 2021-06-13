@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import { withRouter } from 'react-router-dom';
 import {TopNav} from 'Components';
+import {logout} from '../../actions/authActions';
 import './account-page.scss';
 
 export class HomePage extends React.Component {
@@ -17,6 +18,8 @@ export class HomePage extends React.Component {
           Change My Name
           <br/>
           Change My Password
+          <br/>
+          <a href="#" onClick={this.props.logout.bind(this)}>Logout</a>
         </div>
       </div>
     );
@@ -33,6 +36,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    logout: bindActionCreators(logout, dispatch)
   };
 }
 

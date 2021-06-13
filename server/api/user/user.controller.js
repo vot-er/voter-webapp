@@ -52,11 +52,9 @@ export async function create(req, res, next) {
     user.set('email', email);
     user.set('name', name);
     user = await user.save();
-    await sendEmailVerification(user.get('id'));
     const token = jwt.sign({ id: user.id }, config.secrets.session, {
       expiresIn: 60 * 60 * 5
     });
-    await handlePostRegistrationExternalServices(user);
     return res.json({ token });
   } catch(e) {
     return next(e);

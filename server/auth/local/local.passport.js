@@ -7,9 +7,9 @@ export function setup(User/*, config*/) {
     passwordField: 'password' // this is the virtual field on the model
   }, async function(email, password, done) {
     try {
-      console.log(User);
+      console.log(email, password);
       const user = await User.findOne({ where: { email: email.toLowerCase() }, attributes: ['id', 'role', 'salt', 'password'] });
-      if (!user || user.get('role') === 'unverified') {
+      if (!user) {
         return done(null, false, { message: 'The email or password is not correct.' });
       }
       const authenticated = await user.authenticate(password);

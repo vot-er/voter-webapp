@@ -9,28 +9,9 @@ import './signup-page.scss';
 import navLogo from '../../assets/nav-logo.png';
 
 export class LoginPage extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      email: '',
-      password: '',
-      name: '',
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      state: '',
-      zipcode: '',
-      passwordIsValid: false,
-      passwordValidationMessage: '',
-      error: '',
-      isSubmitting: false
-    };
-  }
-  signup = async({
-    email, password, name
-  }) => {
-    await this.props.authActions.signup({email, password, name});
-    await this.props.routerActions.push('/signup/verify');
+  signup = async data => {
+    await this.props.authActions.signup(data);
+    await this.props.routerActions.goTo('/signup/order');
   }
   onChange(e) {
     this.setState({

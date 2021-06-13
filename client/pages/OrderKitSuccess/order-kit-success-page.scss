@@ -1,16 +1,20 @@
 @import "../../styles/_variables";
 @import "../../styles/_mixins";
 
-.order-kit-page {
-  .order-kit-page__content {
+.order-kit-success-page {
+  .order-kit-success-page__content {
     @include flex-center;
     padding: 24px;   
   }
-  .order-kit__form-container {
-    width: 500px;
+  & .order-kit-success-page__check {
+    max-height: 100px;
+    margin-bottom: 20px;
   }
-  & .signup-button {
-    width: 100%;
-    margin: 12px 0;
+  & .order-kit-success-page__text-container {
+    text-align: center;
+    font-size: 1.2em;
+  }
+  .order-kit-success-page__text--congratulations {
+    font-weight: bold;
   }
 }

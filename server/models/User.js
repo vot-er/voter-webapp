@@ -19,8 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: DataTypes.UUIDV4
     },
-    firstName: DataTypes.STRING,
-    lastName: DataTypes.STRING,
+    name: {type: DataTypes.STRING, allowNull: false, defaultValue: ''},
     email: {
       type: DataTypes.STRING,
       unique: {
@@ -52,8 +51,8 @@ module.exports = (sequelize, DataTypes) => {
     passwordResetTokenExpiresAt: DataTypes.DATE,
     emailVerificationToken: DataTypes.STRING,
     emailVerificationTokenExpiresAt: DataTypes.DATE,
-    stateOfWork: DataTypes.STRING,
-    occupation: DataTypes.STRING
+    stateOfWork: DataTypes.TEXT,
+    occupation: DataTypes.TEXT
   }, {
     defaultScope: {
       attributes: { exclude: ['passwordResetToken', 'passwordResetTokenExpiresAt', 'emailVerificationToken', 'emailVerificationTokenExpiresAt', 'salt', 'password'] }

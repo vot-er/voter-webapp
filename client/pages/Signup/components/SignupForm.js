@@ -12,9 +12,8 @@ export class SignupForm extends React.Component {
     this.state = {
       email: '',
       password: '',
-      firstName: '',
-      lastName: '',
-      organization: '',
+      name: '',
+      organizationName: '',
       stateOfWork: null,
       passwordIsValid: false,
       passwordValidationMessage: '',
@@ -33,7 +32,7 @@ export class SignupForm extends React.Component {
   isReadyToSubmit() {
     return this.state.email.length > 0
       && this.state.passwordIsValid
-      && this.state.firstName.length > 0 && this.state.lastName.length > 0;
+      && this.state.name.length > 0;
   }
 
   onChange = async(field, value) => {
@@ -52,7 +51,7 @@ export class SignupForm extends React.Component {
 
   onSubmit = async e => {
     const {
-      email, password, name, isSubmitting
+      email, password, name, stateOfWork, organizationName, isSubmitting
     } = this.state;
     e.stopPropagation();
     e.preventDefault();
@@ -66,7 +65,7 @@ export class SignupForm extends React.Component {
     }
     try {
       this.setState({isSubmitting: true});
-      await this.props.signup({email, password, name});
+      await this.props.signup({email, password, name, stateOfWork, organizationName});
     } catch(err) {
       console.error(err);
       this.setState({isSubmitting: false});
@@ -83,32 +82,26 @@ export class SignupForm extends React.Component {
 
   render() {
     const isReadyToSubmit = this.isReadyToSubmit();
-    const {isSubmitting, stateOfWork} = this.state;
+    const {
+      isSubmitting, name, email, password, stateOfWork, organizationName
+    } = this.state;
     return (
       <div className="signup-card">
         <h1>{'Let\'s get you a healthy democracy kit.'}</h1>
         <AlertCard type="error" message={this.state.error} />
         <form onSubmit={this.onSubmit}>
-          <div className="form__row">
-            <div className="form__row__col form__row__col--left">
-              <label className="form__label">First Name</label>
-              <input onChange={e => this.onChange(e.target.name, e.target.value)} name="firstName" className="form__control" value={this.state.name} disabled={this.props.isAuthenticating} placeholder="Jane"/>
-            </div>
-            <div className="form__row__col form__row__col--right">
-              <label className="form__label">Last Name</label>
-              <input onChange={e => this.onChange(e.target.name, e.target.value)} name="lastName" className="form__control" value={this.state.name} disabled={this.props.isAuthenticating} placeholder="Smith"/>
-            </div>
-          </div>
+          <label className="form__label">Name</label>
+          <input onChange={e => this.onChange(e.target.name, e.target.value)} name="name" className="form__control" value={name} disabled={this.props.isAuthenticating} placeholder="Elizabeth Blackwell"/>
           <label className="form__label">Email</label>
-          <input onChange={e => this.onChange(e.target.name, e.target.value)} name="email" className="form__control" value={this.state.email} disabled={this.props.isAuthenticating} placeholder="e.g. your@workemail.com"/>
+          <input onChange={e => this.onChange(e.target.name, e.target.value)} name="email" className="form__control" value={email} disabled={this.props.isAuthenticating} placeholder="your@workemail.com"/>
           <label className="form__label">Organization Name</label>
-          <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" name="organization" value={this.state.organization} disabled={this.props.isAuthenticating} placeholder="Your hospital, clinic, practice, etc."/>
+          <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" name="organizationName" value={organizationName} disabled={this.props.isAuthenticating} placeholder="Your hospital, clinic, practice, etc."/>
           <div style={{marginBottom: 8}}>
             <label className="form__label">State Where You Work</label>
             <Select options={this.getStateOptions()} onChange={e => this.onChange('stateOfWork', e)} className="form__control" name="stateOfWork" value={stateOfWork}/>
           </div>
           <label className="form__label">Password</label>
-          <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" type="password" name="password" value={this.state.password} disabled={this.props.isAuthenticating} placeholder="This helps us secure your kit data."/>
+          <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" type="password" name="password" value={password} disabled={this.props.isAuthenticating} placeholder="This helps us secure your kit data."/>
           <AlertCard type="error" message={this.state.passwordValidationMessage} />
           <button type="submit" className="btn btn-primary signup-button" disabled={!isReadyToSubmit || isSubmitting}>Next: Add Shipping Address</button>
           Already registered? <Link to="/login">Login.</Link>

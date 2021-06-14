@@ -20,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         unique: true,
         sparse: true
-
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -34,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   Kit.associate = function(models) {
+    Kit.belongsTo(models.User, {as: 'User', foreignKey: 'user'});
     Kit.belongsTo(models.Address, {as: 'ShippingAddress', foreignKey: 'shippingAddress'});
   };
   return Kit;

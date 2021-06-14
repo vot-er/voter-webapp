@@ -3,7 +3,7 @@ import axios from 'axios';
 import { history } from '../store/configureStore';
 import {setAuthorizationHeader, removeAuthorizationHeader, getToken} from '../utils/axiosConfig';
 import {trackEvent, identifyUser} from './trackingActions';
-import {SIGNUP, LOGIN_SUCCESS, LOGIN_FAILED} from '../constants/trackingTypes';
+import {LOGIN_FAILED} from '../constants/trackingTypes';
 import {goTo} from './routerActions';
 
 export function login(credentials) {

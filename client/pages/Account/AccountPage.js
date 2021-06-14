@@ -30,7 +30,7 @@ HomePage.propTypes = {
   logout: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
+function mapStateToProps() {
   return {
   };
 }

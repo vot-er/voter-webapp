@@ -6,7 +6,6 @@ import jwt from 'jsonwebtoken';
 import moment from 'moment';
 import emailer from '../../email';
 import PasswordResetEmail from '../../email/components/PasswordReset/PasswordResetEmail';
-import {sendEmailVerification, handlePostRegistrationExternalServices} from './user.service';
 import {applyPatch} from '../../utils/patch';
 const Op = Sequelize.Op;
 

@@ -92,17 +92,33 @@ export class SignupForm extends React.Component {
         <AlertCard type="error" message={this.state.error} />
         <form onSubmit={this.onSubmit}>
           <label className="form__label">Name</label>
-          <input onChange={e => this.onChange(e.target.name, e.target.value)} name="name" className="form__control" value={name} disabled={this.props.isAuthenticating} placeholder="Elizabeth Blackwell"/>
+          <input
+            onChange={e => this.onChange(e.target.name, e.target.value)}
+            name="name"
+            className="form__control" value={name} disabled={this.props.isAuthenticating} placeholder="Elizabeth Blackwell"/>
           <label className="form__label">Email</label>
-          <input onChange={e => this.onChange(e.target.name, e.target.value)} name="email" className="form__control" value={email} disabled={this.props.isAuthenticating} placeholder="your@workemail.com"/>
+          <input
+            onChange={e => this.onChange(e.target.name, e.target.value)}
+            name="email"
+            className="form__control" value={email} disabled={this.props.isAuthenticating} placeholder="your@workemail.com"/>
           <label className="form__label">Organization Name</label>
-          <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" name="organizationName" value={organizationName} disabled={this.props.isAuthenticating} placeholder="Your hospital, clinic, practice, etc."/>
+          <input
+            onChange={e => this.onChange(e.target.name, e.target.value)}
+            className="form__control"
+            name="organizationName" value={organizationName} disabled={this.props.isAuthenticating} placeholder="Your hospital, clinic, practice, etc."/>
           <div style={{marginBottom: 8}}>
             <label className="form__label">State Where You Work</label>
             <Select options={this.getStateOptions()} onChange={e => this.onChange('stateOfWork', e)} className="form__control" name="stateOfWork" value={stateOfWork}/>
           </div>
           <label className="form__label">Password</label>
-          <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" type="password" name="password" value={password} disabled={this.props.isAuthenticating} placeholder="This helps us secure your kit data."/>
+          <input
+            onChange={e => this.onChange(e.target.name, e.target.value)}
+            className="form__control"
+            type="password"
+            name="password"
+            value={password}
+            disabled={this.props.isAuthenticating}
+            placeholder="This helps us secure your kit data."/>
           <AlertCard type="error" message={this.state.passwordValidationMessage} />
           <SubmitButton className="btn btn-primary signup-button" disabled={!isReadyToSubmit} isSubmitting={isSubmitting} value="Next: Shipping Address"/>
           Already registered? <Link to="/login">Login.</Link>

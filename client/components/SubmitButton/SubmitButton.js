@@ -5,7 +5,7 @@ import './submit-button.scss';
 
 export class SubmitButton extends React.Component {
   onClick(e) {
-    if(this.props.onClick) this.props.onClick(e);
+    if (this.props.onClick) this.props.onClick(e);
   }
   getClassName = () => {
     const {isSubmitting, className} = this.props;

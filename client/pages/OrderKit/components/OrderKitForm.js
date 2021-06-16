@@ -2,8 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import {states} from '../../../../shared/utils';
-
+import {SubmitButton} from '../../../components';
 export class OrderForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isSubmitting: false
+    };
+  }
   isReadyToSubmit() {
     const {
       addressLine1, city, state, zipcode
@@ -25,10 +31,20 @@ export class OrderForm extends React.Component {
       label: state.name
     }));
   }
-  handleNativeSubmit(e) {
+  async handleNativeSubmit(e) {
     e.preventDefault();
     e.stopPropagation();
-    this.props.onSubmit();
+    try {
+      this.setState({
+        isSubmitting: true
+      });
+      await this.props.onSubmit();
+    } catch(err) {
+      this.setState({
+        isSubmitting: false
+      });
+      console.error(err);
+    }
   }
   render() {
     const {
@@ -38,6 +54,7 @@ export class OrderForm extends React.Component {
       city,
       state
     } = this.props.form;
+    const {isSubmitting} = this.state;
     return (
       <div>
         <form onSubmit={this.handleNativeSubmit.bind(this)}>
@@ -60,7 +77,7 @@ export class OrderForm extends React.Component {
           <label className="form__label">Zipcode</label>
           <input onChange={this.onInputChange.bind(this)} className="form__control" name="zipcode" value={zipcode}/>
 
-          <button type="submit" className="btn btn-primary signup-button" disabled={!this.isReadyToSubmit()}>Complete Order</button>
+          <SubmitButton className="btn btn-primary signup-button" disabled={!this.isReadyToSubmit()} isSubmitting={isSubmitting} value="Complete Order"/>
         </form>
       </div>
     );

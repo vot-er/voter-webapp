@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes, {func, bool} from 'prop-types';
 import {Link} from 'react-router-dom';
 import Select from 'react-select';
+import {SubmitButton} from 'Components';
 import AlertCard from '../../../components/Alerts/AlertCard';
 import passwordValidation from '../../../../shared/validation/password';
 import {states} from '../../../../shared/utils';
@@ -103,7 +104,7 @@ export class SignupForm extends React.Component {
           <label className="form__label">Password</label>
           <input onChange={e => this.onChange(e.target.name, e.target.value)} className="form__control" type="password" name="password" value={password} disabled={this.props.isAuthenticating} placeholder="This helps us secure your kit data."/>
           <AlertCard type="error" message={this.state.passwordValidationMessage} />
-          <button type="submit" className="btn btn-primary signup-button" disabled={!isReadyToSubmit || isSubmitting}>Next: Add Shipping Address</button>
+          <SubmitButton className="btn btn-primary signup-button" disabled={!isReadyToSubmit} isSubmitting={isSubmitting} value="Next: Shipping Address"/>
           Already registered? <Link to="/login">Login.</Link>
         </form>
       </div>

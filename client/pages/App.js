@@ -35,7 +35,7 @@ class App extends React.Component {
         <Route exact path="/password/reset/success" component={PasswordResetSuccessPage} />
         <PrivateRoute path="/signup/order" isAuthorized={isAuthenticated} redirectTo="/login" exact component={OrderKitPage} />
         <PrivateRoute path="/signup/order/success" isAuthorized={isAuthenticated} redirectTo="/login" exact component={OrderKitSuccessPage} />
-        <PrivateRouteContainer isAuthorized={isAuthenticated} redirectTo="/login" withParams>
+        <PrivateRouteContainer isAuthorized={isAuthenticated} redirectTo="/signup" withParams>
           <div className="fill flex-row app__row">
             <SideNav />
             <div className="fill flex-column">

@@ -8,6 +8,7 @@ import express from 'express';
 import config from './config/environment';
 import http from 'http';
 import {requestHandler, errorHandler} from './config/tracking';
+
 // Setup server
 var app = express();
 var server = http.createServer(app);

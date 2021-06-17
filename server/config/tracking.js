@@ -1,15 +1,16 @@
 const Sentry = require('@sentry/node');
 import config from './environment';
+
 export function requestHandler(app) {
   if (config.sentry.backendDSN) {
-    //Sentry.init({ dsn: config.sentry.backendDSN, environment: config.deployment});
-    //app.use(Sentry.Handlers.requestHandler());
+    Sentry.init({ dsn: config.sentry.backendDSN, environment: config.deployment});
+    app.use(Sentry.Handlers.requestHandler());
   }
 }
 
 export function errorHandler(app) {
   if (config.sentry.backendDSN) {
-    //app.use(Sentry.Handlers.errorHandler());
+    app.use(Sentry.Handlers.errorHandler());
   }
   app.use(handleError);
 }

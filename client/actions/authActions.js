@@ -3,7 +3,7 @@ import axios from 'axios';
 import { history } from '../store/configureStore';
 import {setAuthorizationHeader, removeAuthorizationHeader, getToken} from '../utils/axiosConfig';
 import {trackEvent, identifyUser} from './trackingActions';
-import {LOGIN_FAILED} from '../constants/trackingTypes';
+import {LOGIN_SUCCESS, LOGIN_FAILED} from '../constants/trackingTypes';
 import {goTo} from './routerActions';
 
 export function login(credentials) {
@@ -14,7 +14,7 @@ export function login(credentials) {
         credentials
       });
       const {data} = await axios.post('/auth/local', credentials);
-      //dispatch(trackEvent(LOGIN_SUCCESS));
+      dispatch(trackEvent(LOGIN_SUCCESS));
       if (data.token) {
         setAuthorizationHeader(data.token);
         await dispatch(getMyProfile());
@@ -91,7 +91,7 @@ export function getMyProfile() {
         type: types.GET_MY_PROFILE,
         user
       });
-      dispatch(identifyUser(user._id, user));
+      dispatch(identifyUser(user.id, user));
       dispatch(finishLogin());
       return user;
     } catch(err) {

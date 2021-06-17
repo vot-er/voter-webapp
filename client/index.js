@@ -9,12 +9,17 @@ import './styles/icons/fontawesome';
 import 'react-datepicker/dist/react-datepicker.css';
 import {setAuthorizationHeader} from './utils/axiosConfig';
 import * as Sentry from '@sentry/browser';
+import mixpanel from 'mixpanel-browser';
 
 if (process.env.SENTRY_DSN_FRONTEND) {
   Sentry.init({
     dsn: process.env.SENTRY_DSN_FRONTEND,
     environment: process.env.DEPLOYMENT_NAME
   });
+}
+
+if (process.env.MIXPANEL_ID) {
+  mixpanel.init(process.env.MIXPANEL_ID);
 }
 
 const store = configureStore();

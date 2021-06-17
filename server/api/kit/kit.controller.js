@@ -5,9 +5,11 @@ import { pushKitToAirtable } from '../../services/airtable.service';
 
 export async function index(req, res, next) {
   try {
-    const {user} = req.user.id;
+    const user = req.user.id;
     const kits = await Kit.findAll({
-      user
+      where: {
+        user
+      }
     });
     return res.status(200).json({data: kits});
   } catch(e) {

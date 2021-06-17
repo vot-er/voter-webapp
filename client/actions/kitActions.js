@@ -8,7 +8,7 @@ export function getAll() {
       axios.get('/api/kits')
         .then(response => dispatch({
           type: types.MERGE_KITS,
-          items: response.data
+          items: response.data.data
         }))
         .catch(handleErrorWithLogout(reject, dispatch));
     });

@@ -11,6 +11,7 @@ const GLOBALS = {
   'process.env.SENTRY_DSN_FRONTEND': JSON.stringify(process.env.SENTRY_DSN_FRONTEND),
   'process.env.DEPLOYMENT_NAME': JSON.stringify(process.env.DEPLOYMENT_NAME),
   'process.env.FORCE_HTTPS': JSON.stringify(process.env.FORCE_HTTPS),
+  'process.env.MIXPANEL_ID': JSON.stringify(process.env.MIXPANEL_ID),
   __DEV__: false
 };
 

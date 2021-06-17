@@ -34,8 +34,7 @@ export default {
       'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN),
       'process.env.DEPLOYMENT_NAME': JSON.stringify(process.env.DEPLOYMENT_NAME),
       'process.env.SENTRY_DSN_FRONTEND': JSON.stringify(process.env.SENTRY_DSN_FRONTEND),
-      'process.env.GOOGLE_ADS_ID': JSON.stringify(process.env.GOOGLE_ADS_ID),
-      'process.env.GOOGLE_ADS_SIGNUP_CONVERSION_ID': JSON.stringify(process.env.GOOGLE_ADS_SIGNUP_CONVERSION_ID),
+      'process.env.MIXPANEL_ID': JSON.stringify(process.env.MIXPANEL_ID),
       __DEV__: true
     }),
     new webpack.NoEmitOnErrorsPlugin(),

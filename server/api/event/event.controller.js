@@ -1,4 +1,4 @@
-import {Event, Kit} from '../models';
+import {Event, Kit} from '../../models';
 
 export async function create(req, res) {
   try {

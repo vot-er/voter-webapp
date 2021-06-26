@@ -7,8 +7,7 @@ export async function index(req, res, next) {
     const kits = await Kit.findAndCountAll({
       where: {
         user: req.user.id
-      },
-      order: '-createdAt'
+      }
     });
 
     return res.status(200).json({data: kits});

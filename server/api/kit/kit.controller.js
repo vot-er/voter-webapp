@@ -1,7 +1,6 @@
 'use strict';
 
 import {Kit, Address} from '../../models';
-import { pushKitToAirtable } from '../../services/airtable.service';
 
 export async function index(req, res, next) {
   try {
@@ -26,7 +25,6 @@ export async function create(req, res, next) {
       shippingAddress: shippingAddress.id,
       user: userId
     });
-    await pushKitToAirtable(kit);
     return res.status(200).json({data: kit});
   } catch(e) {
     return next(e);

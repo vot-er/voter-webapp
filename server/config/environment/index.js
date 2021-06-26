@@ -42,10 +42,6 @@ var all = {
     frontendDSN: process.env.SENTRY_DSN_FRONTEND,
     backendDSN: process.env.SENTRY_DSN_BACKEND
   },
-  airtable: {
-    secret: process.env.AIRTABLE_KEY,
-    app: process.env.AIRTABLE_APP
-  },
 };
 
 // Export the config object based on the NODE_ENV

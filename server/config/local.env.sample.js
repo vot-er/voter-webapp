@@ -10,7 +10,6 @@ module.exports = {
   DOMAIN: 'http://localhost:3000',
   DEPLOYMENT_NAME: 'development',
   SESSION_SECRET: 'dev-secret',
-  TOKEN_ENCRYPTION_SECRET: 'dev-secret',
   FORCE_HTTPS: 'false', // default true
 
   SENTRY_DSN_FRONTEND: null,

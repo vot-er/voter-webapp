@@ -26,6 +26,7 @@ class Root extends Component {
       <Provider store={this.props.store}>
         <ConnectedRouter history={this.props.history}>
           <App
+            user={this.props.auth.user}
             isAuthenticated={!!this.props.auth.user}
             isLoaded={this.state.isLoaded}
           />

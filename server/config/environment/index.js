@@ -3,6 +3,7 @@
 
 import path from 'path';
 import _ from 'lodash';
+import shared from './shared';
 
 /*function requiredProcessEnv(name) {
   if(!process.env[name]) {
@@ -42,6 +43,7 @@ var all = {
     frontendDSN: process.env.SENTRY_DSN_FRONTEND,
     backendDSN: process.env.SENTRY_DSN_BACKEND
   },
+  ...shared
 };
 
 // Export the config object based on the NODE_ENV

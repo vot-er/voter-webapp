@@ -10,6 +10,7 @@ import PasswordResetSuccessPage from './PasswordResetSuccess/PasswordResetSucces
 import PasswordResetPage from './PasswordReset/PasswordResetPage';
 import KitListPage from './KitList/KitListPage';
 import KitShowPage from './KitShow/KitShowPage';
+import KitShowAdminPage from './KitShowAdmin/KitShowAdminPage';
 import AccountPage from './Account/AccountPage';
 import ScoreboardPage from './Scoreboard/ScoreboardPage';
 import OrderKitPage from './OrderKit/OrderKitPage';
@@ -24,7 +25,9 @@ import {ErrorBoundary, PrivateRoute, PrivateRouteContainer, SideNav} from 'Compo
 
 class App extends React.Component {
   render() {
-    const {isAuthenticated, isLoaded} = this.props;
+    const {
+      isAuthenticated, isLoaded, user
+    } = this.props;
     return isLoaded ? <ErrorBoundary>
       <Switch>
         <PrivateRoute path="/login" component={LoginPage} isAuthorized={!isAuthenticated} redirectTo="/"/>
@@ -46,6 +49,7 @@ class App extends React.Component {
                   <Route path="/kits/:kitId" exact component={KitShowPage} />
                   <Route path="/scores" component={ScoreboardPage} />
                   <PrivateRoute path="/" exact redirectTo="/scores" isAuthenticated={false}/>
+                  <PrivateRoute path="/admin/kits/:kitId" exact component={KitShowAdminPage} isAuthorized={user && user.role == 'admin'} redirectTo="/" />
                   <Route path="/" component={NotFoundPage} />
                 </Switch>
               </div>
@@ -60,6 +64,7 @@ class App extends React.Component {
 App.propTypes = {
   children: PropTypes.element,
   history: PropTypes.object,
+  user: PropTypes.object,
   isAuthenticated: PropTypes.bool.isRequired,
   isLoaded: PropTypes.bool.isRequired
 };

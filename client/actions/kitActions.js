@@ -2,6 +2,19 @@ import * as types from '../constants/actionTypes';
 import axios from 'axios';
 import {handleErrorWithLogout} from '../utils/error';
 
+export function getOne(kitId) {
+  return async function(dispatch) {
+    return new Promise((resolve, reject) => {
+      axios.get(`/api/kits/${kitId}`)
+        .then(response => dispatch({
+          type: types.MERGE_KITS,
+          items: [response.data.data]
+        }))
+        .catch(handleErrorWithLogout(reject, dispatch));
+    });
+  };
+}
+
 export function getAll() {
   return async function(dispatch) {
     return new Promise((resolve, reject) => {
@@ -25,3 +38,15 @@ export function create(body) {
     return data;
   };
 }
+
+export function patch(kitId, body) {
+  return async function(dispatch) {
+    const {data} = await axios.patch(`/api/kits/${kitId}`, body);
+    dispatch({
+      type: types.MERGE_KITS,
+      items: [data.data]
+    });
+    return data;
+  };
+}
+

@@ -121,7 +121,6 @@ export class SignupForm extends React.Component {
             placeholder="This helps us secure your kit data."/>
           <AlertCard type="error" message={this.state.passwordValidationMessage} />
           <SubmitButton className="btn btn-primary signup-button" disabled={!isReadyToSubmit} isSubmitting={isSubmitting} value="Next: Shipping Address"/>
-          Already registered? <Link to="/login">Login.</Link>
         </form>
       </div>
     );

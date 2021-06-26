@@ -4,7 +4,7 @@ import {Kit, Address} from '../../models';
 
 export async function index(req, res, next) {
   try {
-    const kits = await Kit.findAndCountAll({
+    const kits = await Kit.findAll({
       where: {
         user: req.user.id
       }

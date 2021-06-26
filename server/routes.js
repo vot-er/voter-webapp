@@ -6,12 +6,17 @@
 
 import errors from './components/errors';
 import path from 'path';
+import cors from 'cors';
+
 
 export default function(app) {
   // Insert routes below
 
   app.use('/api/users', require('./api/user'));
   app.use('/api/kits', require('./api/kit'));
+
+  app.options('/api/events', cors());
+  app.use('/api/events', cors(), require('./api/event'));
 
   app.use('/auth', require('./auth').default);
 

@@ -3,6 +3,12 @@ module.exports = (sequelize, DataTypes) => {
   var Event = sequelize.define(
     'event',
     {
+      id: {
+        primaryKey: true,
+        type: DataTypes.UUID,
+        allowNull: false,
+        defaultValue: DataTypes.UUIDV4
+      },
       type: {
         type: DataTypes.TEXT,
         allowNull: false,

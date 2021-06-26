@@ -3,11 +3,13 @@ module.exports = (sequelize, DataTypes) => {
   var Organization = sequelize.define(
     'organization',
     {
-      name: {
-        type: DataTypes.TEXT,
+      id: {
+        primaryKey: true,
+        type: DataTypes.UUID,
         allowNull: false,
+        defaultValue: DataTypes.UUIDV4
       },
-      airtableId: {
+      name: {
         type: DataTypes.TEXT,
         allowNull: false,
       },

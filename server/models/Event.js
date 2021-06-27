@@ -33,6 +33,14 @@ module.exports = (sequelize, DataTypes) => {
       name: 'kit',
       allowNull: true
     }});
+    Event.belongsTo(models.Organization, {as: 'Organization', foreignKey: {
+      name: 'organization',
+      allowNull: true
+    }});
+    Event.belongsTo(models.User, {as: 'User', foreignKey: {
+      name: 'user',
+      allowNull: true
+    }});
   };
   return Event;
 };

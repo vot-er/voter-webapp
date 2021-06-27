@@ -20,7 +20,11 @@ export async function create(req, res) {
       const kit = await Kit.findOne({
         code
       });
-      eventBody.kitId = kit ? kit.id : null;
+      if (kit) {
+        eventBody.kit = kit.id;
+        eventBody.organization = kit.organization;
+        eventBody.user = kit.user;
+      }
     }
     await Event.create(eventBody);
     return res.status(204).end();

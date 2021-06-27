@@ -5,12 +5,7 @@ export async function create(req, res) {
     const {
       code, type, destination, userAgent, ip, device, browser, os, platform
     } = req.body;
-    const kit = await Kit.findOne({
-      code
-    });
-    const kitId = kit ? kit.id : null;
-    await Event.create({
-      kit: kitId,
+    const eventBody = {
       code,
       type,
       destination,
@@ -20,7 +15,14 @@ export async function create(req, res) {
       browser,
       os,
       platform,
-    });
+    };
+    if (code) {
+      const kit = await Kit.findOne({
+        code
+      });
+      eventBody.kitId = kit ? kit.id : null;
+    }
+    await Event.create(eventBody);
     return res.status(204).end();
   } catch(err) {
     console.error(err);

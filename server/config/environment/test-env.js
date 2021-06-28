@@ -6,13 +6,12 @@ module.exports = {
   port: 9090,
   forceHttps: false,
   sequelize: {
-    uri: 'sqlite://',
-    options: {
-      logging: false,
-      storage: 'test.sqlite',
-      define: {
-        timestamps: true
-      }
+    uri: process.env.DATABASE_URL || 'postgres://',
+    dialect: 'postgres',
+    logging: false,
+    storage: 'dev.postgres',
+    define: {
+      timestamps: true
     }
-  }
+  },
 };

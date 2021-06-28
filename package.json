@@ -164,6 +164,7 @@
     "rimraf": "3.0.2",
     "sass-loader": "8.0.2",
     "sequelize-cli": "^6.2.0",
+    "sequelize-mock": "^0.10.2",
     "strip-ansi": "6.0.0",
     "style-loader": "1.2.1",
     "supertest": "4.0.2",

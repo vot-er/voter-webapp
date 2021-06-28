@@ -3,9 +3,6 @@
 // Development specific configuration
 // ==================================
 module.exports = {
-  redis: {
-    uri: 'redis://localhost:6379'
-  },
   sequelize: {
     uri: process.env.DATABASE_URL || 'postgres://',
     dialect: 'postgres',

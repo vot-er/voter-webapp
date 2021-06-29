@@ -77,7 +77,7 @@ export class KitPage extends React.Component {
   async submitCode(e) {
     e.preventDefault();
     e.stopPropagation();
-    if (!this.state.isSubmitting) return;
+    if (this.state.isSubmitting) return;
     try {
       this.setState({
         isSubmitting: true

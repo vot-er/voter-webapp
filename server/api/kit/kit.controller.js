@@ -60,11 +60,13 @@ export async function patch(req, res, next) {
     const {code} = req.body;
     const {kitId} = req.params;
     const kit = await Kit.findOne({
-      id: kitId
+      where: {
+        id: kitId
+      }
     });
     if (!kit) return res.status(403).end();
     kit.update({
-      code
+      code: code && code.length ? code : null
     });
     kit.user = await kit.getUser();
     kit.shippingAddress = await kit.getShippingAddress();

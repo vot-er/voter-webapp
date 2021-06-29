@@ -7,14 +7,15 @@ export async function create(req, res) {
     } = req.body;
     const {ip} = req;
     const {
-      os, platform, browser, isMobile, isDesktop, isBot
+      os, platform, browser, isMobile, isDesktop, isBot, source: userAgent
     } = req.useragent;
+    console.log(userAgent);
     await createEventAndAttachKitMetadata({
       code: ref,
       type,
       destination,
       ip,
-      userAgent: req.useragent,
+      userAgent,
       device: isMobile ? 'mobile' : isDesktop ? 'desktop' : isBot ? 'bot' : null,
       browser,
       os,

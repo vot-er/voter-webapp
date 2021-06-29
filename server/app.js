@@ -8,20 +8,24 @@ import express from 'express';
 import config from './config/environment';
 import http from 'http';
 import {requestHandler, errorHandler} from './config/tracking';
+import useragent from 'express-useragent';
 
 // Setup server
 var app = express();
 var server = http.createServer(app);
+
 
 var socketio = require('socket.io')(server, {
   serveClient: config.env !== 'production',
   path: '/socket.io-client'
 });
 requestHandler(app);
+app.use(useragent.express());
 
 require('./config/socketio').default(socketio);
 require('./config/express').default(app);
 require('./routes').default(app);
+
 errorHandler(app);
 
 // Start server

@@ -3,15 +3,19 @@ import {createEventAndAttachKitMetadata} from '../../services/event/event.servic
 export async function create(req, res) {
   try {
     const {
-      ref, type, destination, userAgent, ip, device, browser, os, platform
+      ref, type, destination
     } = req.body;
+    const {ip} = req;
+    const {
+      os, platform, browser, isMobile, isDesktop, isBot
+    } = req.useragent;
     await createEventAndAttachKitMetadata({
       code: ref,
       type,
       destination,
       ip,
-      userAgent,
-      device,
+      userAgent: req.useragent,
+      device: isMobile ? 'mobile' : isDesktop ? 'desktop' : isBot ? 'bot' : null,
       browser,
       os,
       platform,

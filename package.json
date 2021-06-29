@@ -61,6 +61,7 @@
     "express-jwt": "^5.3.3",
     "express-react-views": "0.11.0",
     "express-session": "^1.17.1",
+    "express-useragent": "^1.0.15",
     "hsts": "^2.2.0",
     "html-minifier": "^4.0.0",
     "html-to-text": "^7.0.0",

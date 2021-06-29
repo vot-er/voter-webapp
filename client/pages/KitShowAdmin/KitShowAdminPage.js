@@ -51,7 +51,7 @@ export class KitPage extends React.Component {
     if (!showCodeEditor) {
       return <span>{kit.code ? kit.code : '-'} <a href="#" onClick={this.openCodeEditor.bind(this)}>Edit</a></span>;
     }
-    return <form onSubmit={this.submitCode.bind(this)}><input className="simple-input" value={formCodeValue} onChange={e => this.changeFormCode(e.target.value)}/> <button type="submit" disabled={this.state.isSubmitting}>Save</button></form>;
+    return <form onSubmit={this.submitCode.bind(this)}><input className="internal-control" value={formCodeValue} onChange={e => this.changeFormCode(e.target.value)}/> <button type="submit" disabled={this.state.isSubmitting}>Save</button></form>;
   }
   renderAddress(address) {
     return <div>

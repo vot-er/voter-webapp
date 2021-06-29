@@ -1,0 +1,6 @@
+@import "../../styles/_variables";
+@import "../../styles/_mixins";
+
+input .internal-control {
+  @include simple-input
+}

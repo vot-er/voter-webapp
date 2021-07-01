@@ -4,7 +4,9 @@ export async function createEventAndAttachKitMetadata(body) {
   const {code} = body;
   if (code) {
     const kit = await Kit.findOne({
-      code
+      where: {
+        code
+      }
     });
     if (kit) {
       body.kit = kit.id;

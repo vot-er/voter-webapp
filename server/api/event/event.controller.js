@@ -9,7 +9,7 @@ export async function create(req, res) {
     const {
       os, platform, browser, isMobile, isDesktop, isBot, source: userAgent
     } = req.useragent;
-    console.log(userAgent);
+
     await createEventAndAttachKitMetadata({
       code: ref,
       type,

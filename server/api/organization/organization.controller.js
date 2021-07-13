@@ -1,0 +1,62 @@
+'use strict';
+
+import {Organization} from '../../models';
+
+export async function index(req, res, next) {
+  try {
+    const kits = await Organization.findAll({
+      where: {}
+    });
+    return res.status(200).json({data: kits});
+  } catch(e) {
+    return next(e);
+  }
+}
+
+export async function create(req, res, next) {
+  try {
+    const {name} = req.body;
+    const kit = await Organization.create({
+      name
+    });
+    return res.status(200).json({data: kit});
+  } catch(e) {
+    return next(e);
+  }
+}
+
+export async function show(req, res, next) {
+  try {
+    const {organizationId} = req.params;
+    const organization = await Organization.findOne({
+      where: {
+        id: organizationId
+      }
+    });
+
+    if (!organization) return res.status(404).end();
+    return res.status(200).json({data: organization});
+  } catch(e) {
+    return next(e);
+  }
+}
+
+
+export async function patch(req, res, next) {
+  try {
+    const {name} = req.body;
+    const {organizationId} = req.params;
+    const organization = await Organization.findOne({
+      where: {
+        id: organizationId
+      }
+    });
+    if (!organization) return res.status(404).end();
+    organization.update({
+      name
+    });
+    return res.status(200).json({data: organization});
+  } catch(e) {
+    return next(e);
+  }
+}

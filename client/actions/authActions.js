@@ -159,7 +159,7 @@ export function handlePostAuthRedirect(redirectTo) {
     if (!user) {
       nextLocation = '/login';
     } else if (user && !activeAccountId) {
-      nextLocation = '/account/create';
+      nextLocation = '/';
     } else if (redirectTo) {
       nextLocation = redirectTo;
     }

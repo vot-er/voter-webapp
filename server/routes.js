@@ -14,6 +14,7 @@ export default function(app) {
 
   app.use('/api/users', require('./api/user'));
   app.use('/api/kits', require('./api/kit'));
+  app.use('/api/organizations', require('./api/organization'));
 
   app.options('/api/events', cors());
   app.use('/api/events', cors(), require('./api/event'));

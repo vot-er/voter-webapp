@@ -7,5 +7,6 @@ export default {
     activeAccountId: null
   },
   users: initializeNormalState(),
-  kits: initializeNormalState()
+  kits: initializeNormalState(),
+  organizations: initializeNormalState()
 };

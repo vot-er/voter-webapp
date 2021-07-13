@@ -15,6 +15,7 @@ import AccountPage from './Account/AccountPage';
 import ScoreboardPage from './Scoreboard/ScoreboardPage';
 import OrderKitPage from './OrderKit/OrderKitPage';
 import OrderKitSuccessPage from './OrderKitSuccess/OrderKitSuccessPage';
+import OrganizationListPage from './OrganizationList/OrganizationListPage';
 import NotFoundPage from './NotFoundPage';
 import {ErrorBoundary, PrivateRoute, PrivateRouteContainer, SideNav} from 'Components';
 
@@ -28,6 +29,7 @@ class App extends React.Component {
     const {
       isAuthenticated, isLoaded, user
     } = this.props;
+    const isAdmin = user && user.role == 'admin';
     return isLoaded ? <ErrorBoundary>
       <Switch>
         <PrivateRoute path="/login" component={LoginPage} isAuthorized={!isAuthenticated} redirectTo="/"/>
@@ -49,7 +51,8 @@ class App extends React.Component {
                   <Route path="/kits/:kitId" exact component={KitShowPage} />
                   <Route path="/scores" component={ScoreboardPage} />
                   <PrivateRoute path="/" exact redirectTo="/scores" isAuthenticated={false}/>
-                  <PrivateRoute path="/admin/kits/:kitId" exact component={KitShowAdminPage} isAuthorized={user && user.role == 'admin'} redirectTo="/" />
+                  <PrivateRoute path="/organizations" exact component={OrganizationListPage} isAuthorized={isAdmin} redirectTo="/404" />
+                  <PrivateRoute path="/admin/kits/:kitId" exact component={KitShowAdminPage} isAuthorized={isAdmin} redirectTo="/404" />
                   <Route path="/" component={NotFoundPage} />
                 </Switch>
               </div>

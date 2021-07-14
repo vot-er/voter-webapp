@@ -4,6 +4,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as authActions from '../../actions/authActions';
 import * as routerActions from '../../actions/routerActions';
+import {getAll as getOrganizations} from '../../actions/organizationActions';
+import {toArray} from '../../utils/normalize';
 import SignupForm from './components/SignupForm';
 import './signup-page.scss';
 import navLogo from '../../assets/nav-logo.png';
@@ -19,6 +21,10 @@ export class LoginPage extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.props.getOrganizations();
+  }
+
   render() {
     return (
       <div className="fill signup-page">
@@ -27,6 +33,7 @@ export class LoginPage extends React.Component {
           <SignupForm
             signup={this.signup}
             isAuthenticating={this.props.auth.isAuthenticating}
+            organizations={this.props.organizations}
           />
         </div>
         <div className="signup__image"/>
@@ -38,19 +45,23 @@ export class LoginPage extends React.Component {
 LoginPage.propTypes = {
   authActions: PropTypes.object.isRequired,
   routerActions: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  organizations: PropTypes.array.isRequired,
+  getOrganizations: PropTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
   return {
-    auth: state.auth
+    auth: state.auth,
+    organizations: toArray(state.organizations)
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     authActions: bindActionCreators(authActions, dispatch),
-    routerActions: bindActionCreators(routerActions, dispatch)
+    routerActions: bindActionCreators(routerActions, dispatch),
+    getOrganizations: bindActionCreators(getOrganizations, dispatch),
   };
 }
 

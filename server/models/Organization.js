@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true
       },
+      public: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      }
     },
     {}
   );

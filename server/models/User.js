@@ -52,7 +52,14 @@ module.exports = (sequelize, DataTypes) => {
     emailVerificationToken: DataTypes.STRING,
     emailVerificationTokenExpiresAt: DataTypes.DATE,
     stateOfWork: DataTypes.TEXT,
-    occupation: DataTypes.TEXT
+    occupation: DataTypes.TEXT,
+    organization: {
+      type: DataTypes.UUID,
+      references: {
+        model: 'organizations',
+        key: 'id'
+      }
+    },
   }, {
     defaultScope: {
       attributes: { exclude: ['passwordResetToken', 'passwordResetTokenExpiresAt', 'emailVerificationToken', 'emailVerificationTokenExpiresAt', 'salt', 'password'] }
@@ -202,6 +209,10 @@ module.exports = (sequelize, DataTypes) => {
     this.set('emailVerificationToken', null);
     this.set('emailVerificationTokenExpiresAt', null);
     await this.save();
+  };
+
+  User.associate = function(models) {
+    User.belongsTo(models.Organization, {as: 'Organization', foreignKey: 'organization'});
   };
 
   return User;

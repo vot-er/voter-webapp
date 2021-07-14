@@ -5,7 +5,9 @@ import {Organization} from '../../models';
 export async function index(req, res, next) {
   try {
     const kits = await Organization.findAll({
-      where: {}
+      where: {
+        public: true
+      }
     });
     return res.status(200).json({data: kits});
   } catch(e) {
@@ -16,10 +18,11 @@ export async function index(req, res, next) {
 export async function create(req, res, next) {
   try {
     const {name} = req.body;
-    const kit = await Organization.create({
-      name
+    const organization = await Organization.create({
+      name,
+      public: req.body.public
     });
-    return res.status(200).json({data: kit});
+    return res.status(200).json({data: organization});
   } catch(e) {
     return next(e);
   }

@@ -1,6 +1,6 @@
 'use strict';
 
-import {User, Sequelize} from '../../models';
+import {User, Organization, Sequelize} from '../../models';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
@@ -28,7 +28,7 @@ export async function index(req, res, next) {
 export async function create(req, res, next) {
   try {
     const {
-      password, email: unformattedEmail, name
+      password, email: unformattedEmail, name, organization: organizationId, newOrganizationName
     } = req.body;
     if (!unformattedEmail || typeof unformattedEmail !== 'string') {
       return res.status(422).send('Must provide an email address.');
@@ -50,6 +50,26 @@ export async function create(req, res, next) {
     user.set('password', password);
     user.set('email', email);
     user.set('name', name);
+    if (newOrganizationName && organizationId) {
+      return res.status(400).send('Cannot both create a new organization and join an existing one.');
+    } else if (!newOrganizationName && !organizationId) {
+      return res.status(400).send('You must enter an organization name or join an existing one.');
+    } else if (newOrganizationName) {
+      const organizationToJoin = await Organization.create({
+        name: newOrganizationName,
+        public: false
+      });
+      user.organization = organizationToJoin.id;
+    } else {
+      const organizationToJoin = await Organization.findOne({
+        where: {
+          id: organizationId
+        }
+      });
+      if (!organizationToJoin) return res.status(400).send('Invalid organization id provided.');
+
+      user.organization = organizationToJoin.id;
+    }
     user = await user.save();
     const token = jwt.sign({ id: user.id }, config.secrets.session, {
       expiresIn: 60 * 60 * 5

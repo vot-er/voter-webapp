@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes, {func, bool} from 'prop-types';
-import {Link} from 'react-router-dom';
+import PropTypes, {func, bool, array} from 'prop-types';
 import Select from 'react-select';
 import {SubmitButton} from 'Components';
 import AlertCard from '../../../components/Alerts/AlertCard';
@@ -14,12 +13,14 @@ export class SignupForm extends React.Component {
       email: '',
       password: '',
       name: '',
-      organizationName: '',
+      organization: null,
+      newOrganizationName: '',
       stateOfWork: null,
       passwordIsValid: false,
       passwordValidationMessage: '',
       error: '',
-      isSubmitting: false
+      isSubmitting: false,
+      createNewOrganization: false
     };
   }
 
@@ -29,6 +30,20 @@ export class SignupForm extends React.Component {
       label: state.name
     }));
   }
+
+  getOrganizationOptions() {
+    return this.props.organizations.map(organization => ({
+      value: organization.id,
+      label: organization.name
+    }));
+  }
+
+  toggleOrganizationCreate() {
+    this.setState({
+      createNewOrganization: !this.state.createNewOrganization
+    });
+  }
+
 
   isReadyToSubmit() {
     return this.state.email.length > 0
@@ -45,6 +60,7 @@ export class SignupForm extends React.Component {
         passwordValidationMessage
       });
       return this.setState({password: value});
+
     default:
       return this.setState({[field]: value});
     }
@@ -52,7 +68,7 @@ export class SignupForm extends React.Component {
 
   onSubmit = async e => {
     const {
-      email, password, name, stateOfWork, organizationName, isSubmitting
+      email, password, name, stateOfWork, createNewOrganization, newOrganizationName, organization, isSubmitting
     } = this.state;
     e.stopPropagation();
     e.preventDefault();
@@ -66,7 +82,13 @@ export class SignupForm extends React.Component {
     }
     try {
       this.setState({isSubmitting: true});
-      await this.props.signup({email, password, name, stateOfWork, organizationName});
+      const signupBody = {email, password, name, stateOfWork};
+      if (createNewOrganization) {
+        signupBody.newOrganizationName = newOrganizationName;
+      } else {
+        signupBody.organization = organization ? organization.value : null;
+      }
+      await this.props.signup(signupBody);
     } catch(err) {
       console.error(err);
       this.setState({isSubmitting: false});
@@ -81,10 +103,32 @@ export class SignupForm extends React.Component {
     return false;
   }
 
+  renderOrganizationInput() {
+    const {
+      createNewOrganization, organization, newOrganizationName
+    } = this.state;
+
+    if (createNewOrganization) {
+      return <div style={{marginBottom: 6}}>
+        <label className="form__label">Organization Name</label>
+        <input
+          onChange={e => this.onChange(e.target.name, e.target.value)}
+          name="newOrganizationName"
+          className="form__control" style={{marginBottom: 0}} value={newOrganizationName} disabled={this.props.isAuthenticating} placeholder="Hospital, clinic, group name"/>
+        <a className="signup-card__helper-link" onClick={this.toggleOrganizationCreate.bind(this)}>Joining an existing organization?</a>
+      </div>;
+    }
+    return <div style={{marginBottom: 6}}>
+      <label className="form__label">Organization</label>
+      <Select options={this.getOrganizationOptions()} onChange={e => this.onChange('organization', e)} className="form__control" name="organization" value={organization}/>
+      <a className="signup-card__helper-link" onClick={this.toggleOrganizationCreate.bind(this)}>Organization not listed?</a>
+    </div>;
+  }
+
   render() {
     const isReadyToSubmit = this.isReadyToSubmit();
     const {
-      isSubmitting, name, email, password, stateOfWork, organizationName
+      isSubmitting, name, email, password, stateOfWork
     } = this.state;
     return (
       <div className="signup-card">
@@ -101,11 +145,8 @@ export class SignupForm extends React.Component {
             onChange={e => this.onChange(e.target.name, e.target.value)}
             name="email"
             className="form__control" value={email} disabled={this.props.isAuthenticating} placeholder="your@workemail.com"/>
-          <label className="form__label">Organization Name</label>
-          <input
-            onChange={e => this.onChange(e.target.name, e.target.value)}
-            className="form__control"
-            name="organizationName" value={organizationName} disabled={this.props.isAuthenticating} placeholder="Your hospital, clinic, practice, etc."/>
+          {this.renderOrganizationInput()}
+
           <div style={{marginBottom: 8}}>
             <label className="form__label">State Where You Work</label>
             <Select options={this.getStateOptions()} onChange={e => this.onChange('stateOfWork', e)} className="form__control" name="stateOfWork" value={stateOfWork}/>
@@ -129,6 +170,7 @@ export class SignupForm extends React.Component {
 
 SignupForm.propTypes = {
   signup: func.isRequired,
+  organizations: array.isRequired,
   isAuthenticating: bool.isRequired,
   error: PropTypes.string
 };

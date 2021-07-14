@@ -25,10 +25,11 @@ export class CreateOrganizationForm extends React.Component {
       });
       await this.props.onSubmit();
     } catch(err) {
+      console.error(err);
+    } finally {
       this.setState({
         isSubmitting: false
       });
-      console.error(err);
     }
   }
   render() {

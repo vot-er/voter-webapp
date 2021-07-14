@@ -13,7 +13,8 @@ export class OrganizationListPage extends React.Component {
     super(props);
     this.state = {
       form: {
-        name
+        name: '',
+        public: true
       }
     };
   }
@@ -34,7 +35,7 @@ export class OrganizationListPage extends React.Component {
   }
   renderOrganization(organization) {
     return <div key={organization.id}>
-      {organization.name}
+      {organization.name}{organization.public ? ' (PUBLIC)' : null}
     </div>;
   }
   render() {

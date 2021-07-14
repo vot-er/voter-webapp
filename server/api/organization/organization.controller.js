@@ -4,12 +4,15 @@ import {Organization} from '../../models';
 
 export async function index(req, res, next) {
   try {
-    const kits = await Organization.findAll({
+    const organizations = await Organization.findAll({
       where: {
         public: true
-      }
+      },
+      order: [
+        ['name']
+      ]
     });
-    return res.status(200).json({data: kits});
+    return res.status(200).json({data: organizations});
   } catch(e) {
     return next(e);
   }

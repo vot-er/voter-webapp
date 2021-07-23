@@ -14,6 +14,7 @@ export class SignupForm extends React.Component {
       password: '',
       name: '',
       organization: null,
+      occupation: '',
       newOrganizationName: '',
       stateOfWork: null,
       passwordIsValid: false,
@@ -36,6 +37,13 @@ export class SignupForm extends React.Component {
       value: organization.id,
       label: organization.name
     }));
+  }
+
+  getOccupationOptions() {
+    return [{
+      value: 'other',
+      label: 'Other'
+    }];
   }
 
   toggleOrganizationCreate() {
@@ -68,7 +76,7 @@ export class SignupForm extends React.Component {
 
   onSubmit = async e => {
     const {
-      email, password, name, stateOfWork, createNewOrganization, newOrganizationName, organization, isSubmitting
+      email, password, name, stateOfWork, createNewOrganization, newOrganizationName, organization, isSubmitting, occupation
     } = this.state;
     e.stopPropagation();
     e.preventDefault();
@@ -82,7 +90,7 @@ export class SignupForm extends React.Component {
     }
     try {
       this.setState({isSubmitting: true});
-      const signupBody = {email, password, name, stateOfWork};
+      const signupBody = {email, password, name, stateOfWork, occupation: occupation ? occupation.value : ''};
       if (createNewOrganization) {
         signupBody.newOrganizationName = newOrganizationName;
       } else {
@@ -128,7 +136,7 @@ export class SignupForm extends React.Component {
   render() {
     const isReadyToSubmit = this.isReadyToSubmit();
     const {
-      isSubmitting, name, email, password, stateOfWork
+      isSubmitting, name, email, password, stateOfWork, occupation
     } = this.state;
     return (
       <div className="signup-card">
@@ -150,6 +158,10 @@ export class SignupForm extends React.Component {
           <div style={{marginBottom: 8}}>
             <label className="form__label">State Where You Work</label>
             <Select options={this.getStateOptions()} onChange={e => this.onChange('stateOfWork', e)} className="form__control" name="stateOfWork" value={stateOfWork}/>
+          </div>
+          <div style={{marginBottom: 8}}>
+            <label className="form__label">Occupation</label>
+            <Select options={this.getOccupationOptions()} onChange={e => this.onChange('occupation', e)} className="form__control" name="occupation" value={occupation}/>
           </div>
           <label className="form__label">Password</label>
           <input

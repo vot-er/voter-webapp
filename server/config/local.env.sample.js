@@ -6,7 +6,7 @@
 // You will need to set these on the server you deploy to.
 
 module.exports = {
-  DATABASE_URL: 'postgres://rvillanueva:@localhost:5432',
+  DATABASE_URL: 'postgres://localhost:5432/dev',
   DOMAIN: 'http://localhost:3000',
   DEPLOYMENT_NAME: 'development',
   SESSION_SECRET: 'dev-secret',

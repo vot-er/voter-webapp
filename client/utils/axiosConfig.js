@@ -3,7 +3,7 @@ import cookie from './cookie';
 
 export function setAuthorizationHeader(token) {
   token = token || cookie.get('token');
-  if(token) {
+  if (token) {
     cookie.set('token', token);
     axios.defaults.headers.common.authorization = `Bearer ${token}`;
   }

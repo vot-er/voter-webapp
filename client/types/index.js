@@ -1,7 +1,9 @@
 // Centralized propType definitions
 import PropTypes from 'prop-types';
 
-const { shape, number, bool, string } = PropTypes;
+const {
+  shape, number, bool, string
+} = PropTypes;
 
 export const fuelSavings = shape({
   newMpg: PropTypes.oneOf([number, string]),

@@ -5,7 +5,7 @@ import './alerts.scss';
 class AlertCard extends React.Component {
   render() {
     const {message, type} = this.props;
-    if(!message) {
+    if (!message) {
       return null;
     } else {
       return <div className={`alert-card alert-card--${type}`}>{message}</div>;

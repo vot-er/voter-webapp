@@ -1,6 +1,6 @@
 export function roundNumber(numberToRound, numberOfDecimalPlaces) {
-  if(numberToRound === 0) return 0;
-  if(!numberToRound) return '';
+  if (numberToRound === 0) return 0;
+  if (!numberToRound) return '';
 
   const scrubbedNumber = numberToRound.toString().replace('$', '').replace(',', '');
   return Math.round(scrubbedNumber * Math.pow(10, numberOfDecimalPlaces)) / Math.pow(10, numberOfDecimalPlaces);
@@ -16,7 +16,7 @@ export function addArray(values) {
 }
 
 export function convertToPennies(value) {
-  if(value === 0) return 0;
+  if (value === 0) return 0;
 
   let dollarValue = parseFloat(value);
   dollarValue = roundNumber(dollarValue, 2); // round to 2 decimal places.
@@ -27,7 +27,7 @@ export function convertToPennies(value) {
 export function accumulate(values) {
   let accumulator = 0;
   return values.map(value => {
-    if(isNaN(value) || typeof value !== 'number') return NaN;
+    if (isNaN(value) || typeof value !== 'number') return NaN;
     accumulator += value;
     return accumulator;
   });

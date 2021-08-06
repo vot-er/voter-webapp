@@ -8,16 +8,16 @@ export function positionWithinWindow(node) {
   var elementBounds = node.getBoundingClientRect();
   var style = {};
   var pad = 0;
-  if(elementBounds.left < windowBounds.left + pad) {
+  if (elementBounds.left < windowBounds.left + pad) {
     style.left = windowBounds.left + pad;
   }
-  if(elementBounds.top < windowBounds.top + pad) {
+  if (elementBounds.top < windowBounds.top + pad) {
     style.top = windowBounds.top + pad;
   }
-  if(elementBounds.right > windowBounds.right - pad) {
+  if (elementBounds.right > windowBounds.right - pad) {
     style.right = pad;
   }
-  if(elementBounds.bottom > windowBounds.bottom - pad) {
+  if (elementBounds.bottom > windowBounds.bottom - pad) {
     style.bottom = pad;
   }
   return style;
@@ -42,16 +42,16 @@ function keepWithinWindowBounds(style, contentRect, pad) {
     bottom: window.innerHeight + window.scrollY - pad,
     right: window.innerWidth + window.scrollX - pad
   };
-  if(style.left < bounds.left) {
+  if (style.left < bounds.left) {
     style.left = bounds.left;
   }
-  if(style.top < bounds.top) {
+  if (style.top < bounds.top) {
     style.top = bounds.top;
   }
-  if(style.left + contentRect.width > bounds.right) {
+  if (style.left + contentRect.width > bounds.right) {
     style.left = bounds.right - contentRect.width;
   }
-  if(style.top + contentRect.height > bounds.bottom) {
+  if (style.top + contentRect.height > bounds.bottom) {
     style.top = bounds.bottom - contentRect.height;
   }
   return style;

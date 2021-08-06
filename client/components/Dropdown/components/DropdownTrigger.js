@@ -4,15 +4,17 @@ import {stopEvent} from '../../../utils/dom';
 
 export default class DropdownTrigger extends React.Component {
   onClick = e => {
-    if(this.props.onClick) {
+    if (this.props.onClick) {
       this.props.onClick();
     }
-    if(this.props.stopClick) {
+    if (this.props.stopClick) {
       stopEvent(e);
     }
   }
   render() {
-    const {className, setRef, stopClick, onClick, ...rest} = this.props; //eslint-disable-line no-unused-vars
+    const {
+      className, setRef, stopClick, onClick, ...rest
+    } = this.props; //eslint-disable-line no-unused-vars
     const compoundClassName = className ? ` ${className}` : '';
     return (
       <div className={`dropdown__trigger${compoundClassName}`} ref={setRef} onClick={this.onClick} {...rest}>

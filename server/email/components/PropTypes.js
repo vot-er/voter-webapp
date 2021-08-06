@@ -6,7 +6,7 @@ export const object = PropType('object');
 export function validateProps(props, propTypes) {
   Object.keys(propTypes).forEach(key => {
     const isValid = propTypes[key].validate(props[key]);
-    if(!isValid) {
+    if (!isValid) {
       throw new Error(`Prop ${key} is not valid. Expected ${propTypes[key].type}, received ${typeof props[key]}.`);
     }
   });

@@ -11,7 +11,7 @@ export default class Avatar extends React.Component {
     };
   }
   componentDidCatch(err, errorInfo) {
-    if(process.env.SENTRY_DSN_FRONTEND) {
+    if (process.env.SENTRY_DSN_FRONTEND) {
       Sentry.withScope(scope => {
         Object.keys(errorInfo).forEach(key => {
           scope.setExtra(key, errorInfo[key]);
@@ -26,7 +26,7 @@ export default class Avatar extends React.Component {
     });
   }
   render() {
-    if(this.state.hasError) {
+    if (this.state.hasError) {
       return <div className="error-boundary-page">
         Sorry, something went wrong and it has been reported. Please try again.
       </div>;

@@ -14,7 +14,7 @@ async function clean() {
 async function rimrafAsync(pattern) {
   return new Promise((resolve, reject) => {
     rimraf(pattern, {}, err => {
-      if(err) return reject(err);
+      if (err) return reject(err);
       resolve();
     });
   });
@@ -23,7 +23,7 @@ async function rimrafAsync(pattern) {
 async function mkdirAsync(path) {
   return new Promise((resolve, reject) => {
     mkdir(path, {}, err => {
-      if(err) return reject(err);
+      if (err) return reject(err);
       resolve();
     });
   });

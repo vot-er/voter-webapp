@@ -19,7 +19,7 @@ export default class BaseHTMLComponent {
     return;
   }
   validate() {
-    if(this.propTypes) {
+    if (this.propTypes) {
       validateProps(this.props, this.propTypes);
     }
   }
@@ -119,9 +119,9 @@ function encapsulateBody(body, styles) {
 
 function fetchStylesheetFile(filePath) {
   return new Promise((resolve, reject) => {
-    if(filePath) {
+    if (filePath) {
       fs.readFile(filePath, (err, data) => {
-        if(err) return reject(err);
+        if (err) return reject(err);
         resolve(data);
       });
     } else {

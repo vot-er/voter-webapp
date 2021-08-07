@@ -9,11 +9,11 @@ import './login-page.scss';
 import querystring from 'querystring';
 
 function parseRedirectFromQueryString(searchStr) {
-  if(!searchStr) {
+  if (!searchStr) {
     return null;
   }
   const {redirect} = querystring.parse(searchStr.slice(1)) || {};
-  if(redirect) {
+  if (redirect) {
     const cleanRedirect = redirect.replace(/^\/+|\/+$/g, ''); // remove leading and trailing slashes
     return `/${cleanRedirect}`;
   }
@@ -35,7 +35,7 @@ export class LoginPage extends React.Component {
       await this.props.authActions.handlePostAuthRedirect(redirectTo);
     } catch(err) {
       const isUnauthorizedError = err && err.response && err.response.status === 401;
-      if(isUnauthorizedError) {
+      if (isUnauthorizedError) {
         this.setState({
           error: 'Invalid username or password, please try again.'
         });

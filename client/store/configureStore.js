@@ -43,7 +43,7 @@ function configureStoreDev(initialState) {
     applyMiddleware(...middlewares)
   ));
 
-  if(module.hot) {
+  if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('../reducers', () => {
       const nextReducer = require('../reducers').default(history); // eslint-disable-line global-require

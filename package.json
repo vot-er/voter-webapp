@@ -24,6 +24,7 @@
     "seed:all": "babel-node tools/seed",
     "test": "jest",
     "test:CI": "babel-node tools/testCi.js",
+    "test:github:ci": "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js --reporters='default' --reporters='./github-actions-reporter'",
     "test:cover": "npm run test -- --coverage ",
     "test:cover:CI": "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "test:watch": "jest --watch",

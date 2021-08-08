@@ -41,7 +41,7 @@ export class Dropdown extends React.Component {
   }
 
   handleClickOutside(e) {
-    if(
+    if (
       !(this.triggerRef && this.triggerRef.contains(e.target))
       && !(this.contentRef && this.contentRef.contains(e.target))
     ) {
@@ -56,15 +56,15 @@ export class Dropdown extends React.Component {
   }
   render() {
     var children = React.Children.map(this.props.children, child => {
-      if(!child) {
+      if (!child) {
         return child;
       }
-      if(isInstanceOfComponent(child, DropdownTrigger)) {
+      if (isInstanceOfComponent(child, DropdownTrigger)) {
         return React.cloneElement(child, {
           onClick: this.onTriggerClick.bind(this),
           setRef: this.setTriggerRef.bind(this)
         });
-      } else if(isInstanceOfComponent(child, DropdownContent)) {
+      } else if (isInstanceOfComponent(child, DropdownContent)) {
         return React.cloneElement(child, {
           setRef: this.setContentRef.bind(this),
           isVisible: this.state.isOpen,
@@ -72,7 +72,7 @@ export class Dropdown extends React.Component {
           handleClickOutside: this.handleClickOutside.bind(this),
           style: this.state.contentStyle
         });
-      } else if(isInstanceOfComponent(child, DropdownOption)) {
+      } else if (isInstanceOfComponent(child, DropdownOption)) {
         return null;
       } else {
         return child;

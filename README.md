@@ -5,11 +5,12 @@
 ## Get Started
 1. **Initial Machine Setup**. First time running the starter kit? Then complete the [Initial Machine Setup](https://github.com/coryhouse/react-slingshot#initial-machine-setup).
 2. **Clone the project**. `git clone https://github.com/vot-er/voter-webapp.git`.
-3. **Install dependencies** `npm install`
-3. **Copy local environment file** Copy `server/config/local.env.sample.js` to `server/config/local.env.js` and point `DATABASE_URL` to your local Postgres database.
-4. **Run the example app**. `npm run dev -s`
+3. **Install Yarn package manager** `npm install --global yarn`
+4. **Install dependencies** `yarn install`
+5. **Copy local environment file** Copy `server/config/local.env.sample.js` to `server/config/local.env.js` and point `DATABASE_URL` to your local Postgres database.
+6. **Run the example app**. `npm run dev -s`
 This will run the automated build process, start up a webserver, and start up Jest testing. When doing development with this kit, this command will continue watching all your files. Every time you hit save the code is rebuilt, linting runs, and tests run automatically. Note: The -s flag is optional. It enables silent mode which suppresses unnecessary messages during the build.
-5. **Open in browser** Open in browser, by default `http://localhost:3000`
+7. **Open in browser** Open in browser, by default `http://localhost:3000`
 
 ## Initial Machine Setup
 1. **Install [Node 14.16.0](https://nodejs.org)** - Use [nvm](https://github.com/creationix/nvm) to manage multiple node environments

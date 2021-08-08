@@ -8,12 +8,14 @@ import querystring from 'querystring';
 
 class PrivateRoute extends React.Component {
   render() {
-    const {component, isAuthorized, redirectTo, withParams, ...rest} = this.props;
-    if(isAuthorized) {
+    const {
+      component, isAuthorized, redirectTo, withParams, ...rest
+    } = this.props;
+    if (isAuthorized) {
       return <Route {...rest} component={component} />;
     } else {
       return <Route {...rest} render = {() => {
-        if(withParams) {
+        if (withParams) {
           const {pathname, search} = window.location;
           const qs = querystring.stringify({ redirect: `${pathname}${search}` });
           return <Redirect to={`${redirectTo}?${qs}`} />;

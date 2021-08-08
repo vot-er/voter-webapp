@@ -1,7 +1,7 @@
 import {roundNumber} from './math';
 
 export function getCurrencyFormattedNumber(value) {
-  if(value === null) {
+  if (value === null) {
     return '';
   }
 
@@ -9,15 +9,15 @@ export function getCurrencyFormattedNumber(value) {
 }
 
 export function getFormattedNumber(value) {
-  if(value === 0) {
+  if (value === 0) {
     return 0;
   }
 
-  if(!value) {
+  if (!value) {
     return '';
   }
 
-  if(!isInt(scrubFormatting(value))) {
+  if (!isInt(scrubFormatting(value))) {
     return ''; // if it's not a number after scrubbing formatting, just return empty.
   }
 
@@ -26,7 +26,7 @@ export function getFormattedNumber(value) {
   roundedValue = roundedValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   const roundedValueContainsDecimalPlace = roundedValue.indexOf('.') !== -1;
 
-  if(roundedValueContainsDecimalPlace) {
+  if (roundedValueContainsDecimalPlace) {
     const numbersToTheRightOfDecimal = roundedValue.split('.')[1];
 
     switch (numbersToTheRightOfDecimal.length) {
@@ -42,7 +42,7 @@ export function getFormattedNumber(value) {
 }
 
 export function isInt(n) {
-  if(n === '' || n === null) {
+  if (n === '' || n === null) {
     return false;
   }
 

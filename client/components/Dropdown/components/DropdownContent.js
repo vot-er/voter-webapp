@@ -23,18 +23,18 @@ class DropdownContent extends React.Component {
     });
   }
   setRefs(node) {
-    if(!this.state.loaded) {
+    if (!this.state.loaded) {
       this.setBoundingStyle(node);
     }
-    if(this.props.setRef) {
+    if (this.props.setRef) {
       this.props.setRef(node);
     }
   }
   transformChild(child) {
-    if(child && isInstanceOfComponent(child, DropdownOption)) {
+    if (child && isInstanceOfComponent(child, DropdownOption)) {
       return React.cloneElement(child, Object.assign({}, child.props, {
         onClick: () => {
-          if(typeof child.props.onClick === 'function') {
+          if (typeof child.props.onClick === 'function') {
             child.props.onClick();
           }
           this.props.setVisibility(false);
@@ -44,7 +44,7 @@ class DropdownContent extends React.Component {
     return child;
   }
   render() {
-    if(!this.props.isVisible) {
+    if (!this.props.isVisible) {
       return null;
     }
     var children = mapAllReactChildren(this.props.children, this.transformChild.bind(this));

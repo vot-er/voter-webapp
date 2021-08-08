@@ -14,17 +14,17 @@ export class LoginForm extends React.Component {
   }
 
   onChange = e => {
-    if(e.target.name === 'email') {
+    if (e.target.name === 'email') {
       this.setState({email: e.target.value});
     }
-    if(e.target.name === 'password') {
+    if (e.target.name === 'password') {
       this.setState({password: e.target.value});
     }
   }
 
   onSubmit(e) {
     stopEvent(e);
-    if(this.props.isAuthenticating) {
+    if (this.props.isAuthenticating) {
       return;
     }
     return this.props.login(this.state.email, this.state.password);

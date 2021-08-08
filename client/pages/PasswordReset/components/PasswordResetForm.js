@@ -13,16 +13,16 @@ export class LoginForm extends React.Component {
   }
 
   onChange = e => {
-    if(e.target.name === 'newPassword') {
+    if (e.target.name === 'newPassword') {
       this.setState({newPassword: e.target.value});
-    } else if(e.target.name === 'newPasswordRepeat') {
+    } else if (e.target.name === 'newPasswordRepeat') {
       this.setState({newPasswordRepeat: e.target.value});
     }
   }
 
   async handleSubmit(e) {
     stopEvent(e);
-    if(this.props.isAuthenticating) {
+    if (this.props.isAuthenticating) {
       return;
     }
     return this.props.onSubmit(this.state.newPassword, this.state.newPasswordRepeat);

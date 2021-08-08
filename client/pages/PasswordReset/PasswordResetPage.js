@@ -33,7 +33,7 @@ export class PasswordResetPage extends React.Component {
   }
   async verifyResetToken(userId, resetToken) {
     try {
-      if(!userId || !resetToken) return this.setState({ tokenIsAuthorized: false });
+      if (!userId || !resetToken) return this.setState({ tokenIsAuthorized: false });
       await this.props.authActions.verifyResetToken(userId, resetToken);
       this.setState({ tokenIsAuthorized: true });
     } catch(err) {
@@ -43,7 +43,7 @@ export class PasswordResetPage extends React.Component {
   changePassword = async(newPassword, newPasswordRepeat) => {
     try {
       const {resetToken, userId} = this.state;
-      if(newPassword !== newPasswordRepeat) return this.setError('Passwords must match.');
+      if (newPassword !== newPasswordRepeat) return this.setError('Passwords must match.');
       await this.props.authActions.resetPassword(userId, resetToken, newPassword);
       history.push('/password/reset/success');
     } catch(err) {
@@ -61,13 +61,13 @@ export class PasswordResetPage extends React.Component {
   render() {
     const {tokenIsAuthorized} = this.state;
     let content = null;
-    if(tokenIsAuthorized) {
+    if (tokenIsAuthorized) {
       content = <PasswordResetForm
         onSubmit={this.changePassword}
         isAuthenticating={this.props.auth.isAuthenticating}
         error={this.state.error}
       />;
-    } else if(tokenIsAuthorized === false) {
+    } else if (tokenIsAuthorized === false) {
       content = this.renderUnauthorized();
     }
     return (

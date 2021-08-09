@@ -28,7 +28,7 @@ export async function index(req, res, next) {
 export async function create(req, res, next) {
   try {
     const {
-      password, email: unformattedEmail, name, organization: organizationId, newOrganizationName, occupation
+      password, email: unformattedEmail, name, organization: organizationId, newOrganizationName, jobTitle
     } = req.body;
     if (!unformattedEmail || typeof unformattedEmail !== 'string') {
       return res.status(422).send('Must provide an email address.');
@@ -50,7 +50,7 @@ export async function create(req, res, next) {
     user.set('password', password);
     user.set('email', email);
     user.set('name', name);
-    user.set('occupation', occupation);
+    user.set('jobTitle', jobTitle);
     if (newOrganizationName && organizationId) {
       return res.status(400).send('Cannot both create a new organization and join an existing one.');
     } else if (!newOrganizationName && !organizationId) {

@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
     emailVerificationToken: DataTypes.STRING,
     emailVerificationTokenExpiresAt: DataTypes.DATE,
     stateOfWork: DataTypes.TEXT,
-    occupation: DataTypes.TEXT,
+    jobTitle: DataTypes.TEXT,
     organization: {
       type: DataTypes.UUID,
       references: {

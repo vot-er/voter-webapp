@@ -14,7 +14,7 @@ export class SignupForm extends React.Component {
       password: '',
       name: '',
       organization: null,
-      occupation: '',
+      jobTitle: '',
       newOrganizationName: '',
       stateOfWork: null,
       passwordIsValid: false,
@@ -39,7 +39,7 @@ export class SignupForm extends React.Component {
     }));
   }
 
-  getOccupationOptions() {
+  getJobTitleOptions() {
     return [{
       value: 'other',
       label: 'Other'
@@ -76,7 +76,7 @@ export class SignupForm extends React.Component {
 
   onSubmit = async e => {
     const {
-      email, password, name, stateOfWork, createNewOrganization, newOrganizationName, organization, isSubmitting, occupation
+      email, password, name, stateOfWork, createNewOrganization, newOrganizationName, organization, isSubmitting, jobTitle
     } = this.state;
     e.stopPropagation();
     e.preventDefault();
@@ -90,7 +90,7 @@ export class SignupForm extends React.Component {
     }
     try {
       this.setState({isSubmitting: true});
-      const signupBody = {email, password, name, stateOfWork, occupation: occupation ? occupation.value : ''};
+      const signupBody = {email, password, name, stateOfWork, jobTitle: jobTitle ? jobTitle.value : ''};
       if (createNewOrganization) {
         signupBody.newOrganizationName = newOrganizationName;
       } else {
@@ -136,7 +136,7 @@ export class SignupForm extends React.Component {
   render() {
     const isReadyToSubmit = this.isReadyToSubmit();
     const {
-      isSubmitting, name, email, password, stateOfWork, occupation
+      isSubmitting, name, email, password, stateOfWork, jobTitle
     } = this.state;
     return (
       <div className="signup-card">
@@ -154,14 +154,13 @@ export class SignupForm extends React.Component {
             name="email"
             className="form__control" value={email} disabled={this.props.isAuthenticating} placeholder="your@workemail.com"/>
           {this.renderOrganizationInput()}
-
           <div style={{marginBottom: 8}}>
             <label className="form__label">State Where You Work</label>
             <Select options={this.getStateOptions()} onChange={e => this.onChange('stateOfWork', e)} className="form__control" name="stateOfWork" value={stateOfWork}/>
           </div>
           <div style={{marginBottom: 8}}>
-            <label className="form__label">Occupation</label>
-            <Select options={this.getOccupationOptions()} onChange={e => this.onChange('occupation', e)} className="form__control" name="occupation" value={occupation}/>
+            <label className="form__label">Job Title</label>
+            <Select options={this.getJobTitleOptions()} onChange={e => this.onChange('jobTitle', e)} className="form__control" name="jobTitle" value={jobTitle}/>
           </div>
           <label className="form__label">Password</label>
           <input

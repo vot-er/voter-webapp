@@ -2,15 +2,21 @@
 @import "../../styles/_mixins";
 
 .order-kit-page {
-  .order-kit-page__content {
-    @include flex-center;
-    padding: 24px;   
-  }
   .order-kit__form-container {
-    width: 500px;
+    padding: 24px;   
   }
   & .signup-button {
     width: 100%;
     margin: 12px 0;
+  }
+}
+
+
+@media (min-width: 548px) {
+  .order-kit-page__content {
+    @include flex-center;
+  }
+  .order-kit__form-container {
+    width: 500px;
   }
 }

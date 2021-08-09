@@ -5,6 +5,12 @@
   @include flex-center;
   display: flex;
   flex-direction: row;
+  & h1 {
+    margin-bottom: 2px;
+  }
+  & p.helper-text {
+    margin-top: 2px;
+  }
   & .signup-button {
     width: 100%;
     margin: 12px 0;
@@ -24,3 +30,10 @@
     font-size: 0.8em;
   }
 }
+
+@media (max-width: 800px) {
+  .signup-page .signup__image {
+    display: none;
+  }
+}
+

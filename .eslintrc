@@ -25,7 +25,7 @@
     // If this isn't set, any propTypes wrapped in
     // a function will be skipped.
   },
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "extends": ["eslint:recommended", "prettier", "plugin:react/recommended"],
   "plugins": ["react"],
   "ignorePatterns": ["**/*.ejs"],
   "rules": {

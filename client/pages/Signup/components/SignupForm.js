@@ -21,7 +21,7 @@ export class SignupForm extends React.Component {
       passwordValidationMessage: '',
       error: '',
       isSubmitting: false,
-      createNewOrganization: false
+      createNewOrganization: false,
     };
   }
 
@@ -41,8 +41,39 @@ export class SignupForm extends React.Component {
 
   getJobTitleOptions() {
     return [{
-      value: 'other',
-      label: 'Other'
+      label: 'Medical Student',
+      value: 'medicalStudent'
+    }, {
+      label: 'Resident',
+      value: 'resident'
+    }, {
+      label: 'Attending/Physician',
+      value: 'attending/physician'
+    }, {
+      label: 'Nurse',
+      value: 'nurse'
+    }, {
+      label: 'Nursing Student',
+      value: 'nursingStudent'
+    }, {
+      label: 'Physician Assistant',
+      value: 'physicianAssistant'
+    }, {
+      label: 'PA Student',
+      value: 'paStudent'
+    },
+    {
+      label: 'Social Worker',
+      value: 'socialWorker'
+    }, {
+      label: 'Social Work/MSW Student',
+      value: 'socialWorkStudent'
+    }, {
+      label: 'Pharmacist',
+      value: 'pharmacist'
+    }, {
+      label: 'Other',
+      value: 'other'
     }];
   }
 
@@ -141,6 +172,7 @@ export class SignupForm extends React.Component {
     return (
       <div className="signup-card">
         <h1>{'Let\'s get you a healthy democracy kit.'}</h1>
+        <p className="helper-text">Placing an order takes less than 60 seconds.</p>
         <AlertCard type="error" message={this.state.error} />
         <form onSubmit={this.onSubmit}>
           <label className="form__label">Name</label>

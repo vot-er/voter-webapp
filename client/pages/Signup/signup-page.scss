@@ -17,8 +17,7 @@
   }
   & .signup__image {
     flex: 1;
-    //background-image: url("https://s3.amazonaws.com/dashboard.vot-er.org/signup-image-lg.jpg");
-    background-image: url("../../twitter.PNG"); //image saved in the same folder as flavo.ico for simplicity
+    background-image: url("../../twitter.PNG");
     background-position: left;
     background-size: cover;
     height: 100vh;

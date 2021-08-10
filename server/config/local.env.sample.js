@@ -12,8 +12,8 @@ module.exports = {
   SESSION_SECRET: 'dev-secret',
   FORCE_HTTPS: 'false', // default true
 
-  SENTRY_DSN_FRONTEND: null,
-  SENTRY_DSN_BACKEND: null,
+  SENTRY_DSN_FRONTEND: '',
+  SENTRY_DSN_BACKEND: '',
 
   SYSTEM_EMAIL_ADDRESS: 'noreply@domain.com',
   SYSTEM_EMAIL_NAME: 'No Reply',

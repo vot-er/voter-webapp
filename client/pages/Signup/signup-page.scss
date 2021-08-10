@@ -21,19 +21,26 @@
     background-position: left;
     background-size: cover;
     height: 100vh;
+    @media only screen and (max-width: 700px) {
+      display: none;
+    }
   }
   & .signup__content {
     max-width: 540px;
-    padding: 12px 52px;
+    padding: 52px 18px;
+    @media only screen and (min-width: 700px) {
+      min-width: 540px;
+      max-height: 100vh;
+      overflow-y: scroll;
+      padding: 24px 42px;
+    }
+    @media only screen and (max-width: 700px) {
+      padding: 52px 18px;
+    }
   }
   & .signup-card__helper-link {
     font-size: 0.8em;
   }
 }
 
-@media (max-width: 800px) {
-  .signup-page .signup__image {
-    display: none;
-  }
-}
 

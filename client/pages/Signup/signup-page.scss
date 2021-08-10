@@ -29,6 +29,7 @@
     max-width: 540px;
     padding: 52px 18px;
     @media only screen and (min-width: 700px) {
+      min-width: 540px;
       max-height: 100vh;
       overflow-y: scroll;
       padding: 24px 42px;

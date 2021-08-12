@@ -212,7 +212,7 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   User.associate = function(models) {
-    User.belongsTo(models.Organization, {as: 'Organization', foreignKey: 'organization'});
+    User.belongsTo(models.Organization, {as: 'Organization', sourceKey: 'organization', foreignKey: 'id'});
   };
 
   return User;

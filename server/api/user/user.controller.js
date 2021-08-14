@@ -147,7 +147,7 @@ export async function updateMyProfile(req, res, next) {
 
 export async function requestPasswordReset(req, res, next) {
   try {
-    const {email} = req.query;
+    const email = decodeURIComponent(req.query.email);
     const user = await User.findOne({
       where: {
         email: {

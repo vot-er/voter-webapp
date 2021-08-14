@@ -12,6 +12,10 @@ module.exports = {
       timestamps: true
     }
   },
+  email: {
+    name: 'Sean Murphy',
+    address: 'murphcoder@murderroo.com'
+  },
   forceHttps: false,
   // Seed database on startup
   seedDB: true

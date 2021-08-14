@@ -1,7 +1,9 @@
 import HTMLComponent from '../BaseComponent';
 import config from '../../../config/environment';
-import PropTypes from '../PropTypes';
+import PropTypes, { object } from '../PropTypes';
 import path from 'path';
+import axios from 'axios';
+import { nextTick } from 'process';
 
 export default class PasswordResetEmail extends HTMLComponent {
   async renderHtml() {
@@ -24,10 +26,25 @@ export default class PasswordResetEmail extends HTMLComponent {
   getDefaultSendOptions() {
     const {user} = this.props;
     return {
-      to: [user.email],
-      from: `${config.email.name} <${config.email.address}>`,
-      subject: 'Password Reset for Waypost'
+      To: user.email,
+      From: `${config.email.name} <${config.email.address}>`,
+      Subject: 'Password Reset for Waypost'
     };
+  }
+  async send(options) {
+    let body = await this.renderHtml();
+    let sendOptions = this.getDefaultSendOptions();
+    let data = {HtmlBody: body, ...sendOptions, ...options};
+    await axios({
+      method: 'POST',
+      url: 'https://api.postmarkapp.com/email',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-Postmark-Server-Token': config.token
+      },
+      data
+    });
   }
 }
 

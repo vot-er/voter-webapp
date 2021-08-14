@@ -9,6 +9,7 @@ import querystring from 'querystring';
 import {history} from '../../store/configureStore';
 import {extractErrorMessage} from '../../utils/error';
 import './password-reset-page.scss';
+import passwordIsValid from '../../../shared/validation/password';
 
 export class PasswordResetPage extends React.Component {
   constructor(props) {
@@ -43,7 +44,11 @@ export class PasswordResetPage extends React.Component {
   changePassword = async(newPassword, newPasswordRepeat) => {
     try {
       const {resetToken, userId} = this.state;
-      if (newPassword !== newPasswordRepeat) return this.setError('Passwords must match.');
+      if (newPassword !== newPasswordRepeat) {
+        return this.setError('Passwords must match.');
+      } else if (!passwordIsValid(newPassword).isValid) {
+        return this.setError(passwordIsValid(newPassword).message);
+      }
       await this.props.authActions.resetPassword(userId, resetToken, newPassword);
       history.push('/password/reset/success');
     } catch(err) {

@@ -119,7 +119,8 @@ export function changeMyPassword(oldPassword, newPassword) {
   };
 }
 
-export function requestPasswordReset(email) {
+export function requestPasswordReset(emailRaw) {
+  let email = encodeURIComponent(emailRaw);
   return async function() {
     return axios({
       method: 'POST',

@@ -19,5 +19,8 @@ module.exports = {
   SYSTEM_EMAIL_NAME: 'No Reply',
 
   // Control debug level for modules using visionmedia/debug
-  DEBUG: ''
+  DEBUG: '',
+
+  // Add token for Postmark Account here
+  POSTMARK_TOKEN: ''
 };

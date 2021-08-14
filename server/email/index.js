@@ -19,6 +19,6 @@ const emailFactory = new EmailFactory();
 
 export default emailFactory;
 
-export PasswordResetEmail from './components/PasswordReset/PasswordResetEmail';
-export VerificationEmail from './components/Verification/VerificationEmail';
-export SignupNotificationEmail from './components/SignupNotification/SignupNotificationEmail';
+// export PasswordResetEmail from './components/PasswordReset/PasswordResetEmail';
+// export VerificationEmail from './components/Verification/VerificationEmail';
+// export SignupNotificationEmail from './components/SignupNotification/SignupNotificationEmail';

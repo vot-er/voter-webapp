@@ -26,7 +26,7 @@ export default class VerificationEmail extends HTMLComponent {
     const {userEmail} = this.props;
     return {
       to: [userEmail],
-      subject: 'Verify your email for Waypost'
+      subject: 'Verify your email for VotER'
     };
   }
 }

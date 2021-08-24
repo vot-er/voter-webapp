@@ -13,8 +13,8 @@ module.exports = {
     }
   },
   email: {
-    name: 'Sean Murphy',
-    address: 'murphcoder@murderroo.com'
+    name: 'VotER',
+    address: process.env.NOTIFICATIONS_EMAIL
   },
   forceHttps: false,
   // Seed database on startup

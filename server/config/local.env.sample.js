@@ -18,9 +18,12 @@ module.exports = {
   SYSTEM_EMAIL_ADDRESS: 'noreply@domain.com',
   SYSTEM_EMAIL_NAME: 'No Reply',
 
+  // Add token for Postmark Account here
+  POSTMARK_TOKEN: '',
+
+  NOTIFICATIONS_EMAIL: 'info@vot-er.org',
+
   // Control debug level for modules using visionmedia/debug
   DEBUG: '',
 
-  // Add token for Postmark Account here
-  POSTMARK_TOKEN: ''
 };

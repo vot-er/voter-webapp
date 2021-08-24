@@ -1,9 +1,8 @@
 import HTMLComponent from '../BaseComponent';
 import config from '../../../config/environment';
-import PropTypes, { object } from '../PropTypes';
+import PropTypes from '../PropTypes';
 import path from 'path';
 import axios from 'axios';
-import { nextTick } from 'process';
 
 export default class PasswordResetEmail extends HTMLComponent {
   async renderHtml() {
@@ -28,7 +27,7 @@ export default class PasswordResetEmail extends HTMLComponent {
     return {
       To: user.email,
       From: `${config.email.name} <${config.email.address}>`,
-      Subject: 'Password Reset for Waypost'
+      Subject: 'Password Reset for VotER'
     };
   }
   async send(options) {

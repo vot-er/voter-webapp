@@ -1,13 +1,19 @@
 'use strict';
 
-import {Organization} from '../../models';
+import {Organization, User} from '../../models';
+import {Sequelize} from 'sequelize';
 
 export async function index(req, res, next) {
   try {
     const organizations = await Organization.findAll({
+      attributes: {
+        include: [[Sequelize.fn('COUNT', Sequelize.col('users.organization')), 'memberCount']]
+      },
+      include: [{ model: User, attributes: []}],
       where: {
         public: true
       },
+      group: ['organization.id'],
       order: [
         ['name']
       ]

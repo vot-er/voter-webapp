@@ -35,7 +35,7 @@ export class OrganizationListPage extends React.Component {
   }
   renderOrganization(organization) {
     return <div key={organization.id}>
-      {organization.name}{organization.public ? ' (PUBLIC)' : null}
+      {`${organization.name} (${organization.memberCount})`}{organization.public ? ' (PUBLIC)' : '(PRIVATE)'}
     </div>;
   }
   render() {

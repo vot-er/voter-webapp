@@ -11,7 +11,7 @@ export default class PasswordResetEmail extends HTMLComponent {
     return `
       <div class="container">
         <div class="card card--full card--padded">
-          We've received a request to reset your Waypost password. If this was not you, you can ignore this email. The links below will be valid for one hour.
+          We've received a request to reset your VotER password. If this was not you, you can ignore this email. The links below will be valid for one hour.
           <br />
           <br />
           You can <a href="${resetUrl}">click here to reset your password</a>

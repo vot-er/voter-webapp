@@ -12,6 +12,10 @@ module.exports = {
       timestamps: true
     }
   },
+  email: {
+    name: 'VotER',
+    address: process.env.NOTIFICATIONS_EMAIL
+  },
   forceHttps: false,
   // Seed database on startup
   seedDB: true

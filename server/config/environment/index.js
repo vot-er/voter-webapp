@@ -22,6 +22,9 @@ var all = {
   // Root path of server
   root: path.normalize(`${__dirname}/../../..`),
 
+  // Postmark Token
+  token: process.env.POSTMARK_TOKEN,
+
   // Browser-sync port
   browserSyncPort: process.env.BROWSER_SYNC_PORT || 3000,
 

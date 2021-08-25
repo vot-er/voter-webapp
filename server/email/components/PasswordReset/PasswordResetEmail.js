@@ -2,6 +2,7 @@ import HTMLComponent from '../BaseComponent';
 import config from '../../../config/environment';
 import PropTypes from '../PropTypes';
 import path from 'path';
+import axios from 'axios';
 
 export default class PasswordResetEmail extends HTMLComponent {
   async renderHtml() {
@@ -10,7 +11,7 @@ export default class PasswordResetEmail extends HTMLComponent {
     return `
       <div class="container">
         <div class="card card--full card--padded">
-          We've received a request to reset your Waypost password. If this was not you, you can ignore this email. The links below will be valid for one hour.
+          We've received a request to reset your VotER password. If this was not you, you can ignore this email. The links below will be valid for one hour.
           <br />
           <br />
           You can <a href="${resetUrl}">click here to reset your password</a>
@@ -24,10 +25,25 @@ export default class PasswordResetEmail extends HTMLComponent {
   getDefaultSendOptions() {
     const {user} = this.props;
     return {
-      to: [user.email],
-      from: `${config.email.name} <${config.email.address}>`,
-      subject: 'Password Reset for Waypost'
+      To: user.email,
+      From: `${config.email.name} <${config.email.address}>`,
+      Subject: 'Password Reset for VotER'
     };
+  }
+  async send(options) {
+    let body = await this.renderHtml();
+    let sendOptions = this.getDefaultSendOptions();
+    let data = {HtmlBody: body, ...sendOptions, ...options};
+    await axios({
+      method: 'POST',
+      url: 'https://api.postmarkapp.com/email',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-Postmark-Server-Token': config.token
+      },
+      data
+    });
   }
 }
 

@@ -18,8 +18,8 @@ import OrderKitSuccessPage from './OrderKitSuccess/OrderKitSuccessPage';
 import OrganizationListPage from './OrganizationList/OrganizationListPage';
 import NotFoundPage from './NotFoundPage';
 import {ErrorBoundary, PrivateRoute, PrivateRouteContainer, SideNav} from 'Components';
-import {EditOrganizationPage} from './OrganizationEdit/EditOrganizationPage';
-import OrganizationEditPageFunc from "./OrganizationEdit/OrganizationEditPageFunc";
+import EditOrganizationPage from './OrganizationEdit/EditOrganizationPage';
+import OrganizationEditPageFunc from './OrganizationEdit/OrganizationEditPageFunc';
 
 
 // This is a class-based component because the current

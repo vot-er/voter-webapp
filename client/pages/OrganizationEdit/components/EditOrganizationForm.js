@@ -6,12 +6,15 @@ export class EditOrganizationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      isPublic: true,
+      isSubmitting: false,
+      originalName: props.form.name,
+      originalIsPublic: props.form.public
     };
   }
   isReadyToSubmit() {
-    return true;
+    const { name: orgName, public: orgIsPublic } = this.props.form;
+    const { originalName, originalIsPublic } = this.state;
+    return orgName !== originalName || orgIsPublic !== originalIsPublic;
   }
   onInputChange(e) {
     this.props.onChange(e.target.name, e.target.value);
@@ -33,16 +36,15 @@ export class EditOrganizationForm extends React.Component {
     }
   }
   render() {
-    const {name, isPublic} = this.props.form;
-    console.log(isPublic)
+    const {name, public: isPublic} = this.props.form;
     const {isSubmitting} = this.state;
     return (
       <div>
         <form onSubmit={this.handleNativeSubmit.bind(this)}>
           <label className="form__label">Name</label>
-          <input onChange={this.onInputChange.bind(this)} className="form__control" name="name" value={name}/>
+          <input onChange={this.onInputChange.bind(this)} className="form__control" name="name" value={name} />
           <label className="form__label">Public</label>
-          <input type="checkbox" onChange={this.onInputChange.bind(this)} className="form__control" name="public" value={isPublic}/>
+          <input type="checkbox" onChange={this.onInputChange.bind(this)} className="form__control" name="public" checked={isPublic} />
           <SubmitButton className="btn btn-primary signup-button" disabled={!this.isReadyToSubmit()} isSubmitting={isSubmitting} value="Edit Organization"/>
         </form>
       </div>
@@ -53,7 +55,8 @@ export class EditOrganizationForm extends React.Component {
 EditOrganizationForm.propTypes = {
   form: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  organization: PropTypes.object.isRequired
 };
 
 export default EditOrganizationForm;

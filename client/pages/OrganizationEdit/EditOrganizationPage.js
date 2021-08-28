@@ -5,16 +5,17 @@ import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {EmptyNavbar} from 'Components';
 import './edit-organization-page.scss';
-import {patch as editOrganization, getOne as getOrganization} from '../../actions/organizationActions';
+import {getOne as getOrganization, patch as editOrganization} from '../../actions/organizationActions';
 import {goTo} from '../../actions/routerActions';
 import EditOrganizationForm from './components/EditOrganizationForm';
 
-export class EditOrganizationPage extends React.Component {
-  constructor() {
-    super();
+
+class EditOrganizationPage extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      organization: null,
-      isSubmitting: false,
+      name: '',
+      public: ''
     };
   }
   static getDerivedStateFromProps(props) {
@@ -29,7 +30,7 @@ export class EditOrganizationPage extends React.Component {
     console.log(`action=${JSON.stringify(getOrganization)}`);
     this.props.getOrganization(this.props.match.params.organizationId);
   }
-  componentDidMount(){
+  componentDidMount() {
     console.log(`${this.props.match.params.organizationId}`);
     this.getOrganization();
   }
@@ -40,13 +41,9 @@ export class EditOrganizationPage extends React.Component {
   }
   async handleSubmit() {
     try {
-      const {
-        addressLine1, addressLine2, zipcode, city, state
-      } = this.state;
+      const {name, public: isPublic} = this.state.organization;
       await this.props.editOrganization({
-        shippingAddress: {
-          addressLine1, addressLine2, zipcode, city, state
-        }
+        name, public: isPublic
       });
       this.props.goTo('/organizations');
     } catch(err) {
@@ -62,7 +59,7 @@ export class EditOrganizationPage extends React.Component {
         <div className="fill edit-organization-page__content">
           <div className="edit-organization__form-container">
             <div>
-              <EditOrganizationForm form={this.state} onChange={this.onFormChange.bind(this)} onSubmit={this.handleSubmit.bind(this)}/>
+              <EditOrganizationForm form={organization} onChange={this.onFormChange.bind(this)} onSubmit={this.handleSubmit.bind(this)} organization={organization}/>
             </div>
           </div>
         </div>
@@ -79,6 +76,11 @@ EditOrganizationPage.propTypes = {
   match: PropTypes.object.isRequired,
 };
 
+function mapStateToProps(state) {
+  return {
+    organizationsById: state.organizations.byId
+  };
+}
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -89,6 +91,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default withRouter(connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(EditOrganizationPage));

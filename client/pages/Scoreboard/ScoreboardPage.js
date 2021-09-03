@@ -1,27 +1,39 @@
 import React from 'react';
-import {TopNav, PrivateRoute} from 'Components';
-import {Link, Switch, Route} from 'react-router-dom';
-import ScoreboardAllPage from './components/ScoreboardAll/ScoreboardAllPage';
+import {TopNav} from 'Components';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+
 
 import './scoreboard-page.scss';
 
 export class ScoreboardPage extends React.Component {
   render() {
+    const {userId, organizationId} = this.props;
     return (
       <div className="fill">
         <TopNav title="Scoreboard"/>
         <div className="fill scoreboard-page">
-          <Link to="/scores/all">All</Link>
-          <Link to="/scores/organization">Organization</Link>
-          <Switch>
-            <Route path="/scores/organization" exact component={ScoreboardAllPage} />
-            <Route path="/scores/all" exact component={ScoreboardAllPage} />
-            <PrivateRoute path="/scores" redirectTo="/scores/all" authenticated={false} />
-          </Switch>
+          {userId ? <iframe src={`${process.env.USER_SCOREBOARD_URL}#hide_parameters=user,organization,relative_date&relative_date=thisyear&user=${userId}&organization=${organizationId}`} frameBorder="0" width="100%" height="800" allowtransparency="true"></iframe> : null}
         </div>
       </div>
     );
   }
 }
 
-export default ScoreboardPage;
+ScoreboardPage.propTypes = {
+  userId: PropTypes.string,
+  organizationId: PropTypes.string
+};
+
+function mapStateToProps(state) {
+  return {
+    userId: state.auth.user ? state.auth.user.id : null,
+    organizationId: state.auth.user ? state.auth.user.organization : null
+  };
+}
+
+
+export default connect(
+  mapStateToProps,
+  null
+)(ScoreboardPage);

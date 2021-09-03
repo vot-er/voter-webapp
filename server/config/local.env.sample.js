@@ -15,8 +15,7 @@ module.exports = {
   SENTRY_DSN_FRONTEND: '',
   SENTRY_DSN_BACKEND: '',
 
-  SYSTEM_EMAIL_ADDRESS: 'noreply@domain.com',
-  SYSTEM_EMAIL_NAME: 'No Reply',
+  USER_SCOREBOARD_URL: '',
 
   // Add token for Postmark Account here
   POSTMARK_TOKEN: '',

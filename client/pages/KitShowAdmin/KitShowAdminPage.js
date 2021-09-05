@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import { withRouter } from 'react-router-dom';
-import {getOne as getKit, patch as patchKit} from '../../actions/kitActions';
+import {getOne as getKit, patch as patchKit, patchShipped as patchKitShipped} from '../../actions/kitActions';
 import {TopNav} from 'Components';
 import './kit-show-admin-page.scss';
 
@@ -33,17 +33,41 @@ export class KitPage extends React.Component {
   render() {
     const {kit} = this.state;
     if (!kit) return null;
+    console.log('in render', kit);
     return (
       <div className="fill">
         <TopNav title="Kit"/>
         <div className="fill task-page">
           <div>{kit.user.name}</div>
+          <div>{kit.id}</div>
           {kit.shippingAddress ? this.renderAddress(kit.shippingAddress) : 'No address provided.'}
           <div>Code: {this.renderCode()}</div>
+          <div>{this.renderShipped(kit.shipped)} </div>
         </div>
       </div>
     );
   }
+
+  renderShipped(isShipped) {
+    return (
+      <label>
+        <input type="checkbox" name="shipped" checked={this.state.kit.shipped} onChange={this.toggleShipped.bind(this)} />
+        Shipped
+      </label>
+    );
+  }
+
+  async toggleShipped() {
+    console.log('in handle shipped');
+    const {match} = this.props; //what does this do
+    const isShipped = !this.state.kit.shipped;
+    console.log('opposite of current state: ', isShipped);
+    await this.props.patchKitShipped(match.params.kitId, {
+      isShipped
+    });
+  }
+
+
   renderCode() {
     const {
       showCodeEditor, kit, formCodeValue
@@ -103,6 +127,7 @@ export class KitPage extends React.Component {
 KitPage.propTypes = {
   getKit: PropTypes.func.isRequired,
   patchKit: PropTypes.func.isRequired,
+  patchKitShipped: PropTypes.func.isRequired,
   kitsById: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
 };
@@ -117,6 +142,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getKit: bindActionCreators(getKit, dispatch),
     patchKit: bindActionCreators(patchKit, dispatch),
+    patchKitShipped: bindActionCreators(patchKitShipped, dispatch)
   };
 }
 

@@ -14,52 +14,60 @@ class EditOrganizationPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
-      public: ''
+      name: null,
+      public: null
     };
   }
   static getDerivedStateFromProps(props) {
     const organizationId = props.match.params.organizationId;
     const organization = props.organizationsById[organizationId];
     return {
-      organization
+      orgId: organization.id,
+      orgName: organization.name,
+      orgPublic: organization.public
     };
   }
   getOrganization() {
-    console.log(`props=${JSON.stringify(this.props.editOrganization)}`);
-    console.log(`action=${JSON.stringify(getOrganization)}`);
     this.props.getOrganization(this.props.match.params.organizationId);
   }
   componentDidMount() {
-    console.log(`${this.props.match.params.organizationId}`);
     this.getOrganization();
   }
   onFormChange(field, value) {
-    this.setState({
-      [field]: value
-    });
+    if (field === 'public') {
+      const { public: isPublic, orgPublic } = this.state;
+      const toggledPublic = isPublic === null ? !orgPublic : !isPublic;
+      this.setState({ public: toggledPublic});
+    } else {
+      this.setState({
+        [field]: value
+      });
+    }
   }
   async handleSubmit() {
     try {
-      const {name, public: isPublic} = this.state.organization;
-      await this.props.editOrganization({
-        name, public: isPublic
-      });
+      const {
+        name, public: isPublic, orgId, orgName, orgIsPublic
+      } = this.state;
+      const updatedOrg = { name: name ?? orgName, public: isPublic ?? orgIsPublic};
+      await this.props.editOrganization(orgId, updatedOrg);
       this.props.goTo('/organizations');
     } catch(err) {
       console.error(err);
     }
   }
   render() {
-    const {organization} = this.state;
-    if (!organization) return null;
+    const {
+      orgName, orgPublic, name, public: isPublic
+    } = this.state;
+    if (!orgName) return null;
     return (
       <div className="fill fill-height flex-column edit-organization-page">
         <EmptyNavbar />
         <div className="fill edit-organization-page__content">
           <div className="edit-organization__form-container">
             <div>
-              <EditOrganizationForm form={organization} onChange={this.onFormChange.bind(this)} onSubmit={this.handleSubmit.bind(this)} organization={organization}/>
+              <EditOrganizationForm form={{name, public: isPublic, orgName, orgPublic}} onChange={this.onFormChange.bind(this)} onSubmit={this.handleSubmit.bind(this)}/>
             </div>
           </div>
         </div>

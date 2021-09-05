@@ -19,7 +19,6 @@ import OrganizationListPage from './OrganizationList/OrganizationListPage';
 import NotFoundPage from './NotFoundPage';
 import {ErrorBoundary, PrivateRoute, PrivateRouteContainer, SideNav} from 'Components';
 import EditOrganizationPage from './OrganizationEdit/EditOrganizationPage';
-import OrganizationEditPageFunc from './OrganizationEdit/OrganizationEditPageFunc';
 
 
 // This is a class-based component because the current
@@ -55,7 +54,6 @@ class App extends React.Component {
                   <PrivateRoute path="/" exact redirectTo="/scores" isAuthenticated={false}/>
                   <PrivateRoute path="/organizations" exact component={OrganizationListPage} isAuthorized={isAdmin} redirectTo="/404" />
                   <PrivateRoute path="/organizations/:organizationId" exact component={EditOrganizationPage} isAuthorized={isAdmin} redirectTo="/404" />
-                  <PrivateRoute path="/organizationsFunc/:organizationId" exact component={OrganizationEditPageFunc} isAuthorized={isAdmin} redirectTo="/404" />
                   <PrivateRoute path="/admin/kits/:kitId" exact component={KitShowAdminPage} isAuthorized={isAdmin} redirectTo="/404" />
                   <Route path="/" component={NotFoundPage} />
                 </Switch>

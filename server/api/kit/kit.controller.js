@@ -80,6 +80,7 @@ export async function patchShipped(req, res, next) {
   try {
     const {isShipped} = req.body;
     const {kitId} = req.params;
+    const time = new Date().toISOString();
     const kit = await Kit.findOne({
       where: {
         id: kitId
@@ -88,7 +89,7 @@ export async function patchShipped(req, res, next) {
     if (!kit) return res.status(403).end();
     kit.update({
       shipped: isShipped,
-      //shippedAt: shipped ? shippedAt : null
+      shippedAt: isShipped ? time : null
     });
 
     kit.user = await kit.getUser();

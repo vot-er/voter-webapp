@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route } from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 
 import LoginPage from './Login/LoginPage';
 import SignupPage from './Signup/SignupPage';
@@ -18,6 +18,7 @@ import OrderKitSuccessPage from './OrderKitSuccess/OrderKitSuccessPage';
 import OrganizationListPage from './OrganizationList/OrganizationListPage';
 import NotFoundPage from './NotFoundPage';
 import {ErrorBoundary, PrivateRoute, PrivateRouteContainer, SideNav} from 'Components';
+import EditOrganizationPage from './OrganizationEdit/EditOrganizationPage';
 
 
 // This is a class-based component because the current
@@ -52,6 +53,7 @@ class App extends React.Component {
                   <Route path="/scores" component={ScoreboardPage} />
                   <PrivateRoute path="/" exact redirectTo="/scores" isAuthenticated={false}/>
                   <PrivateRoute path="/organizations" exact component={OrganizationListPage} isAuthorized={isAdmin} redirectTo="/404" />
+                  <PrivateRoute path="/organizations/:organizationId" exact component={EditOrganizationPage} isAuthorized={isAdmin} redirectTo="/404" />
                   <PrivateRoute path="/admin/kits/:kitId" exact component={KitShowAdminPage} isAuthorized={isAdmin} redirectTo="/404" />
                   <Route path="/" component={NotFoundPage} />
                 </Switch>

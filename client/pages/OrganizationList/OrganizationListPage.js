@@ -7,6 +7,7 @@ import {toArray} from '../../utils/normalize';
 import CreateOrganizationForm from './components/CreateOrganizationForm';
 import './organization-list-page.scss';
 import {getAll as getOrganizations, create as createOrganization} from '../../actions/organizationActions';
+import OrganizationTable from './components/OrganizationTable';
 
 export class OrganizationListPage extends React.Component {
   constructor(props) {
@@ -33,20 +34,15 @@ export class OrganizationListPage extends React.Component {
       console.error(err);
     }
   }
-  renderOrganization(organization) {
-    return <div key={organization.id}>
-      {`${organization.name} (${organization.memberCount})`}{organization.public ? ' (PUBLIC)' : '(PRIVATE)'}
-    </div>;
-  }
   render() {
     const {organizations} = this.props;
     const {form} = this.state;
     return (
-      <div className="fill fill-height flex-column organization-list-page">
+      <div className='fill fill-height flex-column organization-list-page'>
         <CreateOrganizationForm form={form} onChange={this.onFormChange.bind(this)} onSubmit={this.onFormSubmit.bind(this)} />
         <br />
         <br />
-        {organizations.map(organization => this.renderOrganization(organization))}
+        <OrganizationTable organizations={organizations} />
       </div>
     );
   }

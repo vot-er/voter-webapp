@@ -42,7 +42,6 @@ export function create(body) {
 export function patch(kitId, body) {
   return async function(dispatch) {
     const {data} = await axios.patch(`/api/kits/${kitId}`, body);
-    console.log('in code patch axios returned', [data.data]);
     dispatch({
       type: types.MERGE_KITS,
       items: [data.data]
@@ -50,18 +49,3 @@ export function patch(kitId, body) {
     return data;
   };
 }
-
-//body is boolean
-export function patchShipped(kitId, body) {
-  return async function(dispatch) {
-    console.log('in kit action: ', body);
-    const {data} = await axios.patch(`/api/kits/${kitId}/shipped`, body);
-    console.log('axios returned: ', [data.data]);
-    dispatch({
-      type: types.MERGE_KITS,
-      items: [data.data]
-    });
-    return data;
-  };
-}
-

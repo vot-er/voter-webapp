@@ -42,13 +42,13 @@ export class KitPage extends React.Component {
           <div>{kit.id}</div>
           {kit.shippingAddress ? this.renderAddress(kit.shippingAddress) : 'No address provided.'}
           <div>Code: {this.renderCode()}</div>
-          <div>{this.renderShipped(kit.shipped)} </div>
+          <div>{this.renderShipped()} </div>
         </div>
       </div>
     );
   }
 
-  renderShipped(isShipped) {
+  renderShipped() {
     return (
       <label>
         <input type="checkbox" name="shipped" checked={this.state.kit.shipped} onChange={this.toggleShipped.bind(this)} />
@@ -58,11 +58,9 @@ export class KitPage extends React.Component {
   }
 
   async toggleShipped() {
-    console.log('in handle shipped');
-    const {match} = this.props; //what does this do
+    const {match} = this.props;
     const isShipped = !this.state.kit.shipped;
-    console.log('opposite of current state: ', isShipped);
-    await this.props.patchKitShipped(match.params.kitId, {
+    await this.props.patchKit(match.params.kitId, {
       isShipped
     });
   }
@@ -75,8 +73,10 @@ export class KitPage extends React.Component {
     if (!showCodeEditor) {
       return <span>{kit.code ? kit.code : '-'} <a href="#" onClick={this.openCodeEditor.bind(this)}>Edit</a></span>;
     }
-    return <form onSubmit={this.submitCode.bind(this)}><input className="internal-control" value={formCodeValue} onChange={e => this.changeFormCode(e.target.value)}/> <button type="submit" disabled={this.state.isSubmitting}>Save</button></form>;
+    return <form onSubmit={this.submitCode.bind(this)}><input className="internal-control" value={formCodeValue} onChange={e => this.changeFormCode(e.target.value)}/> 
+      <button type="submit" disabled={this.state.isSubmitting}>Save</button></form>;
   }
+
   renderAddress(address) {
     return <div>
       {address.addressLine1}
@@ -127,7 +127,6 @@ export class KitPage extends React.Component {
 KitPage.propTypes = {
   getKit: PropTypes.func.isRequired,
   patchKit: PropTypes.func.isRequired,
-  patchKitShipped: PropTypes.func.isRequired,
   kitsById: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
 };
@@ -142,7 +141,6 @@ function mapDispatchToProps(dispatch) {
   return {
     getKit: bindActionCreators(getKit, dispatch),
     patchKit: bindActionCreators(patchKit, dispatch),
-    patchKitShipped: bindActionCreators(patchKitShipped, dispatch)
   };
 }
 

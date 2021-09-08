@@ -65,7 +65,6 @@ export class KitPage extends React.Component {
     });
   }
 
-
   renderCode() {
     const {
       showCodeEditor, kit, formCodeValue

@@ -33,13 +33,11 @@ export class KitPage extends React.Component {
   render() {
     const {kit} = this.state;
     if (!kit) return null;
-    console.log('in render', kit);
     return (
       <div className="fill">
         <TopNav title="Kit"/>
         <div className="fill task-page">
           <div>{kit.user.name}</div>
-          <div>{kit.id}</div>
           {kit.shippingAddress ? this.renderAddress(kit.shippingAddress) : 'No address provided.'}
           <div>Code: {this.renderCode()}</div>
           <div>{this.renderShipped()} </div>

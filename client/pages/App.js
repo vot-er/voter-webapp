@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Route, Switch} from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import {hideError} from '../actions/alertActions';
+import ErrorCard from '../components/Alerts/ErrorCard';
 import LoginPage from './Login/LoginPage';
 import SignupPage from './Signup/SignupPage';
 import EmailVerificationPage from './EmailVerification/EmailVerificationPage';
@@ -32,6 +35,7 @@ class App extends React.Component {
     } = this.props;
     const isAdmin = user && user.role == 'admin';
     return isLoaded ? <ErrorBoundary>
+      <ErrorCard />
       <Switch>
         <PrivateRoute path="/login" component={LoginPage} isAuthorized={!isAuthenticated} redirectTo="/"/>
         <PrivateRoute path="/signup" exact component={SignupPage} isAuthorized={!isAuthenticated} redirectTo="/"/>
@@ -71,7 +75,19 @@ App.propTypes = {
   history: PropTypes.object,
   user: PropTypes.object,
   isAuthenticated: PropTypes.bool.isRequired,
-  isLoaded: PropTypes.bool.isRequired
+  isLoaded: PropTypes.bool.isRequired,
+  message: PropTypes.string,
+  type: PropTypes.string,
+  hideError: PropTypes.func
 };
 
-export default App;
+const mapStateToProps = state => ({
+  message: state.alert.err,
+  type: 'error'
+});
+
+const mapDispatchToProps = dispatch => ({
+  hideError: () => dispatch(hideError())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

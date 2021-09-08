@@ -6,6 +6,9 @@ export default {
     user: null,
     activeAccountId: null
   },
+  alert: {
+    err: null
+  },
   users: initializeNormalState(),
   kits: initializeNormalState(),
   organizations: initializeNormalState()

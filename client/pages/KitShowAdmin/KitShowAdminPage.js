@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import { withRouter } from 'react-router-dom';
-import {getOne as getKit, patch as patchKit, patchShipped as patchKitShipped} from '../../actions/kitActions';
+import {getOne as getKit, patch as patchKit} from '../../actions/kitActions';
 import {TopNav} from 'Components';
 import './kit-show-admin-page.scss';
 
@@ -70,8 +70,7 @@ export class KitPage extends React.Component {
     if (!showCodeEditor) {
       return <span>{kit.code ? kit.code : '-'} <a href="#" onClick={this.openCodeEditor.bind(this)}>Edit</a></span>;
     }
-    return <form onSubmit={this.submitCode.bind(this)}><input className="internal-control" value={formCodeValue} onChange={e => this.changeFormCode(e.target.value)}/> 
-      <button type="submit" disabled={this.state.isSubmitting}>Save</button></form>;
+    return <form onSubmit={this.submitCode.bind(this)}><input className="internal-control" value={formCodeValue} onChange={e => this.changeFormCode(e.target.value)}/> <button type="submit" disabled={this.state.isSubmitting}>Save</button></form>;
   }
 
   renderAddress(address) {

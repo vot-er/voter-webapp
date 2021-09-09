@@ -8,17 +8,14 @@ class ErrorCard extends React.Component {
   render() {
     const err = this.props.err;
     const hideErr = this.props.hideError;
-    this.click = event => {
-      hideErr()
-    };
-    if (!err) {
-      return null;
-    } else {
-      return <div className={'error-card'}>
-        {err}<br />
-        <button onClick={this.click}>Hide Error</button>
-      </div>;
+    let klass = '';
+    if (err) {
+      klass = 'show';
+      setTimeout(function() {
+        hideErr();
+      }, 5000);
     }
+    return <div id={'error-card'} className={klass}>{err}</div>;
   }
 }
 

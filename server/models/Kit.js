@@ -29,6 +29,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: false
       },
+      shipped: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+      },
+      shippedAt: {
+        type: DataTypes.DATE,
+        allowNull: true
+      }
     },
     {}
   );
@@ -38,3 +46,4 @@ module.exports = (sequelize, DataTypes) => {
   };
   return Kit;
 };
+

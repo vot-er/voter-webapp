@@ -57,7 +57,6 @@ export async function show(req, res, next) {
 
 export async function patch(req, res, next) {
   try {
-    const {code} = req.body;
     const {kitId} = req.params;
     const kit = await Kit.findOne({
       where: {
@@ -65,13 +64,28 @@ export async function patch(req, res, next) {
       }
     });
     if (!kit) return res.status(403).end();
-    kit.update({
-      code: code && code.length ? code : null
-    });
+    kit.update(getUpdates(req.body));
     kit.user = await kit.getUser();
     kit.shippingAddress = await kit.getShippingAddress();
     return res.status(200).json({data: kit});
   } catch(e) {
     return next(e);
   }
+}
+
+function getUpdates(reqBody) {
+  let updateValue = {};
+  const {isShipped, code} = reqBody;
+  if (code !== undefined) {
+    updateValue.code = code.length ? code : null;
+  }
+  if (isShipped !== undefined) {
+    updateValue.shipped = isShipped;
+    updateValue.shippedAt = null;
+    if (isShipped) {
+      const time = new Date().toISOString();
+      updateValue.shippedAt = time;
+    }
+  }
+  return updateValue;
 }

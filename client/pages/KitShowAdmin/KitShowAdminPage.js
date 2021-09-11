@@ -40,10 +40,29 @@ export class KitPage extends React.Component {
           <div>{kit.user.name}</div>
           {kit.shippingAddress ? this.renderAddress(kit.shippingAddress) : 'No address provided.'}
           <div>Code: {this.renderCode()}</div>
+          <div>{this.renderShipped()} </div>
         </div>
       </div>
     );
   }
+
+  renderShipped() {
+    return (
+      <label>
+        <input type="checkbox" name="shipped" checked={this.state.kit.shipped} onChange={this.toggleShipped.bind(this)} />
+        Shipped
+      </label>
+    );
+  }
+
+  async toggleShipped() {
+    const {match} = this.props;
+    const isShipped = !this.state.kit.shipped;
+    await this.props.patchKit(match.params.kitId, {
+      isShipped
+    });
+  }
+
   renderCode() {
     const {
       showCodeEditor, kit, formCodeValue
@@ -53,6 +72,7 @@ export class KitPage extends React.Component {
     }
     return <form onSubmit={this.submitCode.bind(this)}><input className="internal-control" value={formCodeValue} onChange={e => this.changeFormCode(e.target.value)}/> <button type="submit" disabled={this.state.isSubmitting}>Save</button></form>;
   }
+
   renderAddress(address) {
     return <div>
       {address.addressLine1}

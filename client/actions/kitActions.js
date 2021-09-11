@@ -49,4 +49,3 @@ export function patch(kitId, body) {
     return data;
   };
 }
-

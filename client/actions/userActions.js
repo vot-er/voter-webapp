@@ -1,6 +1,7 @@
 import * as types from '../constants/actionTypes';
 import axios from 'axios';
 import {handleErrorWithLogout} from '../utils/error';
+import { displayError } from './alertActions';
 
 export function get() {
   return function(dispatch) {
@@ -28,7 +29,7 @@ export function updateMyProfile(patch) {
         items: [user]
       });
     } catch(err) {
-      console.error(err);
+      dispatch(displayError(err));
     }
   };
 }

@@ -5,6 +5,7 @@ import {setAuthorizationHeader, removeAuthorizationHeader, getToken} from '../ut
 import {trackEvent, identifyUser} from './trackingActions';
 import {LOGIN_SUCCESS, LOGIN_FAILED} from '../constants/trackingTypes';
 import {goTo} from './routerActions';
+import { displayError } from './alertActions';
 
 export function login(credentials) {
   return async function(dispatch) {
@@ -24,7 +25,7 @@ export function login(credentials) {
     } catch(err) {
       dispatch(trackEvent(LOGIN_FAILED));
       dispatch(finishLogin());
-      throw err;
+      dispatch(displayError(err));
     }
   };
 }
@@ -44,7 +45,7 @@ export function signup(userData, redirectTo) {
       }
     } catch(err) {
       dispatch(finishLogin());
-      throw err;
+      dispatch(displayError(err));
     }
   };
 }
@@ -59,7 +60,7 @@ export function verifyUserEmail(userId, verificationCode) {
       });
     } catch(err) {
       dispatch(finishLogin());
-      throw err;
+      dispatch(displayError(err));
     }
   };
 }
@@ -98,7 +99,7 @@ export function getMyProfile() {
       if (err.response && err.response.status === 401) {
         return null;
       } else {
-        console.error(err);
+        dispatch(displayError(err));
       }
     }
   };
@@ -113,7 +114,7 @@ export function changeMyPassword(oldPassword, newPassword) {
       if (err.response.status === 403) {
         throw new Error('Old password is incorrect.');
       } else {
-        throw err;
+        console.log(err);
       }
     }
   };

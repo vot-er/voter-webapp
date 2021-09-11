@@ -1,4 +1,5 @@
 import {logout} from '../actions/authActions';
+import { displayError } from '../actions/alertActions';
 
 export function handleError(cb) {
   return function(err) {
@@ -12,7 +13,7 @@ export function handleError(cb) {
 
 export function handleErrorWithLogout(cb, dispatch) {
   return function(err) {
-    console.error(err);
+    dispatch(displayError(err));
     if (dispatch && err.response && err.response.status === 401) {
       dispatch(logout());
     }

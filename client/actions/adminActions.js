@@ -1,6 +1,7 @@
 import * as types from '../constants/actionTypes';
 import axios from 'axios';
 import {handleError} from '../utils/error';
+import { displayError } from './alertActions';
 
 export function changeUserRole(userId, newRole) {
   return function(dispatch) {
@@ -36,7 +37,7 @@ export function deleteUser(userId) {
         id: userId
       });
     } catch(err) {
-      console.error(err);
+      dispatch(displayError(err));
     }
   };
 }

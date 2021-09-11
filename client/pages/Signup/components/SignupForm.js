@@ -194,7 +194,7 @@ export class SignupForm extends React.Component {
             <label className="form__label">Job Title</label>
             <Select options={this.getJobTitleOptions()} onChange={e => this.onChange('jobTitle', e)} className="form__control" name="jobTitle" value={jobTitle}/>
           </div>
-          <label className="form__label">Password</label>
+          <label className="form__label">Create a Password</label>
           <input
             onChange={e => this.onChange(e.target.name, e.target.value)}
             className="form__control"
@@ -202,7 +202,7 @@ export class SignupForm extends React.Component {
             name="password"
             value={password}
             disabled={this.props.isAuthenticating}
-            placeholder="This helps us secure your kit data."/>
+            placeholder="This will help you access information about your kit."/>
           <AlertCard type="error" message={this.state.passwordValidationMessage} />
           <SubmitButton className="btn btn-primary signup-button" disabled={!isReadyToSubmit} isSubmitting={isSubmitting} value="Next: Shipping Address"/>
         </form>

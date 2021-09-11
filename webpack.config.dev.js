@@ -34,6 +34,7 @@ export default {
       'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN),
       'process.env.DEPLOYMENT_NAME': JSON.stringify(process.env.DEPLOYMENT_NAME),
       'process.env.SENTRY_DSN_FRONTEND': JSON.stringify(process.env.SENTRY_DSN_FRONTEND),
+      'process.env.USER_SCOREBOARD_URL': JSON.stringify(process.env.USER_SCOREBOARD_URL),
       'process.env.MIXPANEL_ID': JSON.stringify(process.env.MIXPANEL_ID),
       __DEV__: true
     }),
@@ -46,11 +47,14 @@ export default {
         collapseWhitespace: true
       },
       inject: true,
-      sentryConfigUrl: process.env.SENTRY_DSN_FRONTEND || '',
-      deploymentName: 'development',
-      googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID,
-      googleAdsId: process.env.GOOGLE_ADS_ID,
-      mixpanelId: process.env.MIXPANEL_ID
+      templateParams: {
+        deploymentName: 'development',
+        userScoreboardUrl: process.env.USER_SCOREBOARD_URL,
+        sentryConfigUrl: process.env.SENTRY_DSN_FRONTEND || '',
+        googleAnalyticsId: process.env.GOOGLE_ANALYTICS_ID,
+        googleAdsId: process.env.GOOGLE_ADS_ID,
+        mixpanelId: process.env.MIXPANEL_ID,
+      },
     })
   ],
   module: {

@@ -56,7 +56,7 @@ export async function show(req, res, next) {
 
 export async function patch(req, res, next) {
   try {
-    const {name} = req.body;
+    const {name, public: isPublic} = req.body;
     const {organizationId} = req.params;
     const organization = await Organization.findOne({
       where: {
@@ -65,7 +65,7 @@ export async function patch(req, res, next) {
     });
     if (!organization) return res.status(404).end();
     organization.update({
-      name
+      name, public: isPublic
     });
     return res.status(200).json({data: organization});
   } catch(e) {

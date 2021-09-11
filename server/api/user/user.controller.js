@@ -239,7 +239,8 @@ export async function me(req, res, next) {
         'name',
         'email',
         'role',
-        'provider'
+        'provider',
+        'organization'
       ]
     });
     if (!user) return res.status(401).end();

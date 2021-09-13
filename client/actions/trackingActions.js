@@ -5,7 +5,7 @@ export function trackEvent(type) {
     try {
       mixpanel.track(type);
     } catch(err) {
-      console.error(err);
+      console.log(err);
     }
   };
 }
@@ -30,7 +30,7 @@ export function identifyUser(userId, user) {
         mixpanel.people.set(userProps);
       }
     } catch(err) {
-      console.error(err);
+      console.log(err);
     }
   };
 }

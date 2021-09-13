@@ -20,3 +20,6 @@ export const OPEN_OVERLAY = 'OPEN_OVERLAY';
 export const CLOSE_OVERLAY = 'CLOSE_OVERLAY';
 
 export const ADMIN_UPDATE_USER_ROLE = 'ADMIN_UPDATE_USER_ROLE';
+
+export const DISPLAY_ERROR = 'DISPLAY_ERROR';
+export const HIDE_ERROR = 'HIDE_ERROR';

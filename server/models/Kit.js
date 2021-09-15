@@ -31,6 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       shipped: {
         type: DataTypes.BOOLEAN,
+        defaultValue: false,
         allowNull: false
       },
       shippedAt: {

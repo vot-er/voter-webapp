@@ -11,5 +11,7 @@ router.get('/:kitId', auth.isAuthenticated(), controller.show);
 router.post('/', auth.isAuthenticated(), controller.create);
 router.patch('/:kitId', auth.isAuthenticated(), auth.hasGlobalRole('admin'), controller.patch);
 router.patch('/:kitId/shipped', auth.isAuthenticated(), auth.hasGlobalRole('admin'), controller.patch);
+router.patch('/:kitId/doNotFulfill', auth.isAuthenticated(), auth.hasGlobalRole('admin'), controller.patch);
+
 
 module.exports = router;

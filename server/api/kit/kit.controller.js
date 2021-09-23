@@ -75,7 +75,9 @@ export async function patch(req, res, next) {
 
 function getUpdates(reqBody) {
   let updateValue = {};
-  const {isShipped, code} = reqBody;
+  const {
+    isShipped, code, fulfill
+  } = reqBody;
   if (code !== undefined) {
     updateValue.code = code.length ? code : null;
   }
@@ -86,6 +88,9 @@ function getUpdates(reqBody) {
       const time = new Date().toISOString();
       updateValue.shippedAt = time;
     }
+  }
+  if (fulfill !== undefined) {
+    updateValue.fulfill = fulfill;
   }
   return updateValue;
 }

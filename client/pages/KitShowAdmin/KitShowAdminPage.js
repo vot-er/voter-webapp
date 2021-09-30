@@ -40,18 +40,24 @@ export class KitPage extends React.Component {
           <div>{kit.user.name}</div>
           {kit.shippingAddress ? this.renderAddress(kit.shippingAddress) : 'No address provided.'}
           <div>Code: {this.renderCode()}</div>
-          <div>{this.renderShipped()} </div>
+          <div>{this.renderOrderInfo()}</div>
         </div>
       </div>
     );
   }
 
-  renderShipped() {
+  renderOrderInfo() {
     return (
-      <label>
-        <input type="checkbox" name="shipped" checked={this.state.kit.shipped} onChange={this.toggleShipped.bind(this)} />
-        Shipped
-      </label>
+      <div>
+        <label>
+          <input data-test-id="orderInfo" type="checkbox" name="shipped" checked={this.state.kit.shipped} onChange={this.toggleShipped.bind(this)} />
+          Shipped
+        </label>
+        <label>
+          <input data-test-id="orderInfo" type="checkbox" name="noFulfill" checked={!this.state.kit.fulfill} onChange={this.toggleFulfill.bind(this)} />
+          Do Not Fulfill
+        </label>
+      </div>
     );
   }
 
@@ -60,6 +66,15 @@ export class KitPage extends React.Component {
     const isShipped = !this.state.kit.shipped;
     await this.props.patchKit(match.params.kitId, {
       isShipped
+    });
+  }
+
+  async toggleFulfill() {
+    console.log(this.state.kit.fulfill)
+    const {match} = this.props;
+    const fulfill = !this.state.kit.fulfill;
+    await this.props.patchKit(match.params.kitId, {
+      fulfill
     });
   }
 

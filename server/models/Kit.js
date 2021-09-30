@@ -37,6 +37,11 @@ module.exports = (sequelize, DataTypes) => {
       shippedAt: {
         type: DataTypes.DATE,
         allowNull: true
+      },
+      fulfill: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false
       }
     },
     {}

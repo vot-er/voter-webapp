@@ -94,3 +94,46 @@ function getUpdates(reqBody) {
   }
   return updateValue;
 }
+
+
+export async function bulkAssign(req, res, next) {
+  try {
+    const {codes} = req.body;
+    const kits = await Kit.findAll({
+      where: {
+        code: null,
+        fulfill: true
+      },
+      limit: codes.length
+    });
+    const results = codes.map(code => ({
+      code,
+      kitId: null,
+      status: null,
+      failureReason: null
+    }));
+    let k = 0;
+    for (var i = 0; i < results.length; i++) {
+      const result = results[i];
+      const kit = kits[k];
+      if (k + 1 > kits.length) {
+        result.status = 'failed';
+        result.failureReason = 'No additional kits without codes to assign to.';
+        continue;
+      }
+      try {
+        kit.code = result.code;
+        await kit.save();
+        result.status = 'succeeded';
+        result.kitId = kit.id;
+        k++;
+      } catch(err) {
+        result.status = 'failed';
+        result.failureReason = String(err);
+      }
+    }
+    return res.status(200).json({results});
+  } catch(e) {
+    return next(e);
+  }
+}

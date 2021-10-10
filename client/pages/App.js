@@ -20,6 +20,7 @@ import OrderKitPage from './OrderKit/OrderKitPage';
 import OrderKitSuccessPage from './OrderKitSuccess/OrderKitSuccessPage';
 import OrganizationListPage from './OrganizationList/OrganizationListPage';
 import BulkUpdatePage from './BulkUpdate/BulkUpdatePage';
+import UserShowAdminPage from './UserShowAdmin/UserShowAdminPage';
 import NotFoundPage from './NotFoundPage';
 import {ErrorBoundary, PrivateRoute, PrivateRouteContainer, SideNav} from 'Components';
 import EditOrganizationPage from './OrganizationEdit/EditOrganizationPage';
@@ -60,6 +61,7 @@ class App extends React.Component {
                   <PrivateRoute path="/organizations" exact component={OrganizationListPage} isAuthorized={isAdmin} redirectTo="/404" />
                   <PrivateRoute path="/organizations/:organizationId" exact component={EditOrganizationPage} isAuthorized={isAdmin} redirectTo="/404" />
                   <PrivateRoute path="/admin/kits/:kitId" exact component={KitShowAdminPage} isAuthorized={isAdmin} redirectTo="/404" />
+                  <PrivateRoute path="/admin/users/:userId" exact component={UserShowAdminPage} isAuthorized={isAdmin} redirectTo="/404" />
                   <PrivateRoute path="/admin/bulk-update" exact component={BulkUpdatePage} isAuthorized={isAdmin} redirectTo="/404" />
                   <Route path="/" component={NotFoundPage} />
                 </Switch>

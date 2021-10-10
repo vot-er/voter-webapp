@@ -60,7 +60,7 @@ export class BulkUpdatePage extends React.Component {
       <div className='fill fill-height flex-column bulk-update-page'>
         <h1>Bulk Assign Kits</h1>
         <form onSubmit={this.onFormSubmit.bind(this)}>
-          <textarea value={inputValue} style={{width: 500, height: 400}} onChange={e => this.setState({inputValue: e.target.value})}/>
+          <textarea value={inputValue} style={{width: 500, height: 400}} onChange={e => this.setState({inputValue: e.target.value})} placeholder="Add a list of line-separated codes to attach to kits without codes and marked for fulfillment."/>
           <div>
             <SubmitButton className="btn btn-primary signup-button" isSubmitting={isSubmitting} value="Bulk Update"/>
           </div>

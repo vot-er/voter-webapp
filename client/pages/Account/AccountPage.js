@@ -15,10 +15,6 @@ export class HomePage extends React.Component {
       <div className="fill">
         <TopNav title="Account"/>
         <div className="fill home-page">
-          Change My Name
-          <br/>
-          Change My Password
-          <br/>
           <a href="#" onClick={this.props.logout.bind(this)}>Logout</a>
         </div>
       </div>

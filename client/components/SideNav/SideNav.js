@@ -21,9 +21,6 @@ class Sidebar extends React.Component {
           <Link className="sidebar__item" to="/scores">
             Scoreboard
           </Link>
-          <Link className="sidebar__item" to="/kits">
-            Kit
-          </Link>
           <br />
           <Link className="sidebar__item" to="/account">
             Account

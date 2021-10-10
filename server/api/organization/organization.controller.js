@@ -5,14 +5,16 @@ import {Sequelize} from 'sequelize';
 
 export async function index(req, res, next) {
   try {
+    const where = {};
+    if (!req.user || req.user.role !== 'admin' || req.query.public) {
+      where.public = true;
+    }
     const organizations = await Organization.findAll({
       attributes: {
         include: [[Sequelize.fn('COUNT', Sequelize.col('users.organization')), 'memberCount']]
       },
       include: [{ model: User, attributes: []}],
-      where: {
-        public: true
-      },
+      where,
       group: ['organization.id'],
       order: [
         ['name']

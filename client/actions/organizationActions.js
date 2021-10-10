@@ -15,10 +15,10 @@ export function getOne(organizationId) {
   };
 }
 
-export function getAll() {
+export function getAll(params) {
   return async function(dispatch) {
     return new Promise((resolve, reject) => {
-      axios.get('/api/organizations')
+      axios.get('/api/organizations', {params})
         .then(response => dispatch({
           type: types.MERGE_ORGANIZATIONS,
           items: response.data.data

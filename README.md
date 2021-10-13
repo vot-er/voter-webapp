@@ -51,3 +51,62 @@ This will run the automated build process, start up a webserver, and start up Je
 The starter kit includes a working example app that puts all of the above to use.
 ## Questions?
 Check out the [FAQ](/docs/FAQ.md)
+
+## Installing on AWS ec2 (Ubuntu 20.04.2)
+```
+% ssh -i <your_PEM_file> ubuntu@<ip_Address>
+
+% sudo bash
+
+# apt update
+
+# echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+# exit    # from sudo
+
+% ubuntu@ip-172-30-0-213:~$ git clone https://github.com/vot-er/voter-webapp.git
+
+% sudo apt install -y npm
+
+% sudo npm install --global yarn
+
+% yarn install
+
+% cp voter-webapp/server/config/local.env.sample.js voter-webapp/server/config/local.env.js
+
+% curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+% exit    # from the ec2 instance
+
+% ssh -i <your_PEM_file> ubuntu@<ip_Address>
+
+% nvm install 14.16.0
+
+% sudo apt install -y watchman% 
+
+% sudo apt install -y postgresql postgresql-contrib
+
+% sudo -i -u postgres
+
+$ createdb dev
+
+$ psql -d dev
+
+># \q
+
+$ exit    # from the postgres user shell
+
+% cd voter-webapp
+
+% npm install -> ERROR
+
+% npm run migrate && npm run compile -> ERROR
+
+% npm run compile
+
+% npm run dev -s
+
+(lots of errors like "SequelizeConnectionError: password authentication failed for user "ubuntu")
+
+(but I can see the vot-er login page...)
+```

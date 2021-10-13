@@ -110,3 +110,7 @@ $ exit    # from the postgres user shell
 
 (but I can see the vot-er login page...)
 ```
+## AWS To Do:
+
+* any tables or data in the database?
+* if it should not run as ubuntu, under what user should it run?

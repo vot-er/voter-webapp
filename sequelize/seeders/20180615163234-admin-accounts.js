@@ -7,6 +7,7 @@ const users = [{
   role: 'admin',
   name: 'Starting Admin',
   email: 'admin@example.com',
+  phonenumber: '123-456-7890',
   password: defaultPassword
 }];
 

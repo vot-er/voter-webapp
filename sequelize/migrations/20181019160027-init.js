@@ -30,6 +30,7 @@ module.exports = {
           isEmail: true
         }
       },
+      phonenumber: DataTypes.STRING,      
       role: {
         type: DataTypes.STRING,
         defaultValue: 'user'

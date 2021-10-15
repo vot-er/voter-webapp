@@ -11,6 +11,7 @@ export class SignupForm extends React.Component {
     super();
     this.state = {
       email: '',
+      phonenumber: '',
       password: '',
       name: '',
       organization: null,
@@ -86,6 +87,7 @@ export class SignupForm extends React.Component {
 
   isReadyToSubmit() {
     return this.state.email.length > 0
+      && this.state.phonenumber.length > 0 // currently requiring phonenumber - can comment this out to make it optional field
       && this.state.passwordIsValid
       && this.state.name.length > 0;
   }
@@ -107,7 +109,7 @@ export class SignupForm extends React.Component {
 
   onSubmit = async e => {
     const {
-      email, password, name, stateOfWork, createNewOrganization, newOrganizationName, organization, isSubmitting, jobTitle
+      email, password, phonenumber, name, stateOfWork, createNewOrganization, newOrganizationName, organization, isSubmitting, jobTitle
     } = this.state;
     e.stopPropagation();
     e.preventDefault();
@@ -121,7 +123,7 @@ export class SignupForm extends React.Component {
     }
     try {
       this.setState({isSubmitting: true});
-      const signupBody = {email, password, name, stateOfWork, jobTitle: jobTitle ? jobTitle.value : ''};
+      const signupBody = {email, password, phonenumber, name, stateOfWork, jobTitle: jobTitle ? jobTitle.value : ''};
       if (createNewOrganization) {
         signupBody.newOrganizationName = newOrganizationName;
       } else {
@@ -167,7 +169,7 @@ export class SignupForm extends React.Component {
   render() {
     const isReadyToSubmit = this.isReadyToSubmit();
     const {
-      isSubmitting, name, email, password, stateOfWork, jobTitle
+      isSubmitting, name, email, phonenumber, password, stateOfWork, jobTitle
     } = this.state;
     return (
       <div className="signup-card">
@@ -185,6 +187,11 @@ export class SignupForm extends React.Component {
             onChange={e => this.onChange(e.target.name, e.target.value)}
             name="email"
             className="form__control" value={email} disabled={this.props.isAuthenticating} placeholder="your@workemail.com"/>
+          <label className="form__label">Phone number</label>
+          <input
+            onChange={e => this.onChange(e.target.name, e.target.value)}
+            name="phonenumber"
+            className="form__control" value={phonenumber} disabled={this.props.isAuthenticating} placeholder="()-___-____"/>
           {this.renderOrganizationInput()}
           <div style={{marginBottom: 8}}>
             <label className="form__label">State Where You Work</label>

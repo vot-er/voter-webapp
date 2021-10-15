@@ -11,8 +11,8 @@ export class SignupForm extends React.Component {
     super();
     this.state = {
       email: '',
-      phonenumber: '',
       password: '',
+      phonenumber: '',
       name: '',
       organization: null,
       jobTitle: '',
@@ -191,7 +191,7 @@ export class SignupForm extends React.Component {
           <input
             onChange={e => this.onChange(e.target.name, e.target.value)}
             name="phonenumber"
-            className="form__control" value={phonenumber} disabled={this.props.isAuthenticating} placeholder="()-___-____"/>
+            className="form__control" value={phonenumber} disabled={this.props.isAuthenticating} placeholder="(000)-000-0000"/>
           {this.renderOrganizationInput()}
           <div style={{marginBottom: 8}}>
             <label className="form__label">State Where You Work</label>

@@ -254,9 +254,9 @@ No problem. Reference your CSS file in index.html, and add a step to the build p
 ### Do I have to use Redux?
 Nope. Redux is useful for applications with more complex data flows. If your app is simple, Redux is overkill. Remove Redux like this:
 
- 2. Uninstall Redux related packages: `npm uninstall redux react-redux redux-thunk`
- 3. Create a new empty component in /components.
- 4. Call render on the new top level component you created in step 3 in client/index.js.
+ 1. Uninstall Redux related packages: `npm uninstall redux react-redux redux-thunk`
+ 2. Create a new empty component in /components.
+ 3. Call render on the new top level component you created in step 3 in client/index.js.
 
 <a name="how-do-i-remove-react-router"></a>
 ### How do I remove React Router?

@@ -7,10 +7,11 @@
 2. **Clone the project**. `git clone https://github.com/vot-er/voter-webapp.git`.
 3. **Install Yarn package manager** `npm install --global yarn`
 4. **Install dependencies** `yarn install`
-5. **Copy local environment file** Copy `server/config/local.env.sample.js` to `server/config/local.env.js` and point `DATABASE_URL` to your local Postgres database.
-6. **Run the example app**. `npm run dev -s`
+5. **Copy local environment file** Copy `server/config/local.env.sample.js` to `server/config/local.env.js` and point `DATABASE_URL` to your local Postgres database. Your postgres url will be set up during installation, and should be something like postgresql://postgres:{password_here}}@localhost. 
+6. **Initialize the databse** `npm run postinstall` which will kick off the npm script `postinstall` (see `package.json`) to initialize the database on your local machine. 
+7. **Run the example app**. `npm run dev -s`
 This will run the automated build process, start up a webserver, and start up Jest testing. When doing development with this kit, this command will continue watching all your files. Every time you hit save the code is rebuilt, linting runs, and tests run automatically. Note: The -s flag is optional. It enables silent mode which suppresses unnecessary messages during the build.
-7. **Open in browser** Open in browser, by default `http://localhost:3000`
+8. **Open in browser** Open in browser, by default `http://localhost:3000`
 
 ## Initial Machine Setup
 1. **Install [Node 14.16.0](https://nodejs.org)** - Use [nvm](https://github.com/creationix/nvm) to manage multiple node environments

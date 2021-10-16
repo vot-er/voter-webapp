@@ -57,60 +57,105 @@ Unfortunately, scripts in package.json can't be commented inline because the JSO
 
 | **Script** | **Description** |
 |----------|-------|
-| remove-demo | Removes the demo application so you can begin development. |
-| prestart | Runs automatically before start. Calls remove-dist script which deletes the dist folder. This helps remind you to run the build script before committing since the dist folder will be deleted if you don't. ;) |
+
+| dev | Runs the server in a development environment where any changes to the source code will rerun the tests and restart the server. |
+| open:src | Configure the development server |
+| open:dist | Configure the production server |
+| copy-modules | Copy files from `node_modules/@font-awesome` to `dist/node_modules` |
+| postinstall | Instantiates the database (see `sequelize\migrations` for database operations) |
+| postinstall | Instantiates and compiles the database (see `sequelize/migrations` for database operations). Calls `migrate` and `compile `respectively |
+| migrate | Purely instantiates the database, gets called by `postinstall`. |
+| compile | Compiles the database, cleans out the distribution folder (`clean`), copies `package-json` to `/dist/package.json`. Gets called by `postinstall`. |
 | start | Runs tests, lints, starts dev webserver, and opens the app in your default browser. |
-| lint:tools | Runs ESLint on build related JS files. (eslint-loader lints src files via webpack when `npm start` is run) |
-| clean-dist | Removes everything from the dist folder. |
-| remove-dist | Deletes the dist folder. |
-| create-dist | Creates the dist folder and the necessary subfolders. |
+| lint | Runs ESLint on build related JS files. (eslint-loader lints src files via webpack when `npm start` is run) |
+| lint:fix | automatically fixes any easy mistakes (as a linter should) |
+| lint:watch | starts watching capability |
+| clean | Removes everything from the dist folder. |
 | prebuild | Runs automatically before build script (due to naming convention). Cleans dist folder, builds html, and builds sass. |
 | build | Bundles all JavaScript using webpack and writes it to /dist. |
 | test | Runs tests (files ending in .spec.js or .test.js) using Jest and outputs results to the command line. Watches all files so tests are re-run upon save. |
 | test:cover | Runs tests as described above. Generates a HTML coverage report to ./coverage/index.html |
 | test:cover:travis | Runs coverage as described above, however sends machine readable lcov data to Coveralls. This should only be used from the travis build! |
+| test:CI | ?? |
+| test:watch | ?? |
+| open:cover | Runs `test:cover` and some other stuff ???? |
+| seed:all | ???? |
+| zip:dist | Zips the distribution |
 | analyze-bundle | Analyzes webpack bundles for production and gives you a breakdown of where modules are used and their sizes via a convenient interactive zoomable treemap. |
+| update:packages | Installs the new versions of the projects if the dependencies get updated.  |
 
 <a name="can-you-explain-the-folder-structure"></a>
 ### Can you explain the folder structure?
 ```
 .
-├── .babelrc                  # Configures Babel
 ├── .editorconfig             # Configures editor rules
 ├── .eslintrc                 # Configures ESLint
 ├── .gitignore                # Tells git which files to ignore
-├── .istanbul.yml             # Configure istanbul code coverage
-├── .npmrc                    # Configures npm to save exact by default
+├── .watchmanconfig           # Configure watchman
 ├── README.md                 # This file.
 ├── dist                      # Folder where the build script places the built app. Use this in prod.
 ├── package.json              # Package configuration. The list of 3rd party libraries and utilities
-├── src                       # Source code
+├── package.json              # Package configuration. The list of 3rd party libraries and utilities
+├── client                       # Source code
 │   ├── actions               # Flux/Redux actions. List of distinct actions that can occur in the app.
+│   ├── assets                # Static files such as logos and pictures. 
 │   ├── components            # React components
 │   ├── constants             # Application constants including constants for Redux
-│   ├── containers            # Top-level React components that interact with Redux
 │   ├── favicon.ico           # favicon to keep your browser from throwing a 404 during dev. Not actually used in prod build.
 │   ├── index.ejs             # Template for homepage
 │   ├── index.js              # Entry point for your app
 │   ├── reducers              # Redux reducers. Your state is altered here based on actions
+│   ├── selectors             # ???
 │   ├── store                 # Redux store configuration
 │   ├── styles                # CSS Styles, typically written in Sass
+│   ├── types                 # ???
 │   └── utils                 # Plain old JS objects (POJOs). Pure logic. No framework specific code here.
+├── sequelize                 # Code configure postgres database
+│   ├── config  
+│   ├──   └── config.js       # Connect to database and prepare test, development, and production tables.
+│   ├── migrations            # Instructions for editing the database
+and kits.
+│   └── seeders               # ???
+├── server                    # ???
+│   ├── api                   # ???
+│   ├── auth                  # ???
+│   ├── sqldb                 # ???
+│   ├── components            # ???
+│   ├── config                # ???
+│   ├── email                 # ???
+│   ├── models                # ???
+│   ├── services              # ???
+│   ├── sqldb                 # ???
+│   ├── utils                 # ???
+│   ├── views                 # ???
+│   ├── app.js                # ???
+│   ├── index.js              # ???
+│   └── routes.js             # ???
+├── shared                    # ???
+│   ├── sqldb                 # ???
+│   ├──   └── index.js        # ???  
+│   ├── utils                 # ???
+│   ├──   └──  index.js       # ???  
+│   ├── validation            # ???
+│   └──    └──  index.js      # ???  
 ├── tools                     # Node scripts that run build related tools
-│   ├── setup                 # Scripts for setting up a new project using React Slingshot
-│   │   ├── setup.js          # Configure project set up
-│   │   ├── setupMessage.js   # Display message when beginning set up
-│   │   └── setupPrompts.js   # Configure prompts for set up
+│   ├── .yamlclean            # ???
+│   ├── analyzeBundle.js      # Analyzes the webpack bundle
+│   ├── assetsTransformer.js  # Spot fix for handling static files
 │   ├── build.js              # Runs the production build
 │   ├── chalkConfig.js        # Centralized configuration for chalk (adds color to console statements)
-│   ├── distServer.js         # Starts webserver and opens final built app that's in dist in your default browser
+│   ├── clean.js              # Removes distribution files
+│   └──  distServer.js        # Starts webserver and opens final built app that's in dist in your default browser
+│   ├── enzymeTestAdapterSetup.js # ???
+│   ├── fileMock.js           # Not yet implemented
 │   ├── nodeVersionCheck.js   # Confirm supported Node version is installed
-│   ├── removeDemo.js         # Remove demo app
-│   ├── srcServer.js          # Starts dev webserver with hot reloading and opens your app in your default browser
+│   └── srcServer.js          # Starts dev webserver with hot reloading and opens your app in your default browser
 │   ├── startMessage.js       # Display message when development build starts
-│   └── analyzeBundle.js      # Analyzes the webpack bundle
+│   └── testCi.js             # ???
 ├── webpack.config.dev.js     # Configures webpack for development builds
-└── webpack.config.prod.js    # Configures webpack for production builds
+├── webpack.config.prod.js    # Configures webpack for production builds
+└── yarn.lock                 # Autogenerated file with more information on dependencies.
+
 ```
 
 <a name="what-are-the-dependencies-in-package.json-used-for"></a>
@@ -205,19 +250,10 @@ For both of the above methods, a separate sourcemap is generated for debugging S
 ### I don't like the magic you just described above. I simply want to use a CSS file.
 No problem. Reference your CSS file in index.html, and add a step to the build process to copy your CSS file over to the same relative location /dist as part of the build step. But be forwarned, you lose style hot reloading with this approach.
 
-<a name="i-just-want-an-empty-starter-kit"></a>
-### I just want an empty starter kit.
-This starter kit includes an example app so you can see how everything hangs together on a real app. When you're done reviewing it, run this to remove the demo app:
-
-  `npm run remove-demo`
-
-Don't want to use Redux? See the next question for some steps on removing Redux.
-
 <a name="do-i-have-to-use-redux"></a>
 ### Do I have to use Redux?
 Nope. Redux is useful for applications with more complex data flows. If your app is simple, Redux is overkill. Remove Redux like this:
 
- 1. Run `npm run remove-demo`
  2. Uninstall Redux related packages: `npm uninstall redux react-redux redux-thunk`
  3. Create a new empty component in /components.
  4. Call render on the new top level component you created in step 3 in client/index.js.

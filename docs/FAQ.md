@@ -149,7 +149,7 @@ and kits.
 │   ├── enzymeTestAdapterSetup.js # ???
 │   ├── fileMock.js           # Not yet implemented
 │   ├── nodeVersionCheck.js   # Confirm supported Node version is installed
-│   └── srcServer.js          # Starts dev webserver with hot reloading and opens your app in your default browser
+│   ├──  srcServer.js          # Starts dev webserver with hot reloading and opens your app in your default browser
 │   ├── startMessage.js       # Display message when development build starts
 │   └── testCi.js             # ???
 ├── webpack.config.dev.js     # Configures webpack for development builds

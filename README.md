@@ -2,7 +2,20 @@
 
 [Vot-ER](https://vot-er.org) is an organization at the crossroads of health and democracy that helps patients register to vote in healthcare settings. Vot-ER experienced rapid growth last year and partners with 500+ hospitals and 20,000+ healthcare workers to help register 50,000 voters. The VotER webapp is the primary platform for our healthcare partners to order Healthy Democracy Kits, learn how to help their patients register to vote, and track their impact.
 
+
 ## Get Started
+
+1. Clone this repository with `git clone git@github.com:leiftechnologiesinc/leif.git`
+2. Install and run [Docker Desktop](https://www.docker.com/products/docker-desktop)
+3. Install [EnvKey](https://www.envkey.com/); you will need a development token
+4. Install [VSCode](https://code.visualstudio.com/) and use it to open the repository
+5. Install [VSCode Pluglin Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) (or look up 'Remote - Containers' in Extensions in VSCode)
+6. Create a copy of `.env-sample` and rename it to `.env`. Set `ENVKEY` to your token
+7. Open the VSCode workspace in a development container with `View > Command Palette > Remote-Containers: Reopen in Container` (or click the green symbol in the bottom left corner)
+8. Run `docker-compose -f docker-compose-dev.yml up --build`
+9. Seed data using `python3 seed_database.py --action populate`
+10. Go to `localhost:3001` and log in with the username `admin@vot-er.org` and password `admin`
+
 1. **Initial Machine Setup**. First time running the starter kit? Then complete the [Initial Machine Setup](https://github.com/coryhouse/react-slingshot#initial-machine-setup).
 2. **Clone the project**. `git clone https://github.com/vot-er/voter-webapp.git`.
 3. **Install Yarn package manager** `npm install --global yarn`

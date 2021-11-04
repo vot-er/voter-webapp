@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       addressLine2: {type: DataTypes.TEXT, allowNull: false, defaultValue: ''},
       city: {type: DataTypes.TEXT, allowNull: false},
       state: {type: DataTypes.TEXT, allowNull: false},
-      zipcode: {type: DataTypes.TEXT, allowNull: false},
+      zipcode: {type: DataTypes.TEXT, allowNull: true},
+      phonenumber: {type: DataTypes.TEXT, allowNull: true},
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false

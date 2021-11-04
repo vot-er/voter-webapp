@@ -87,7 +87,7 @@ export class SignupForm extends React.Component {
 
   isReadyToSubmit() {
     return this.state.email.length > 0
-      && this.state.phonenumber.length > 0 // currently requiring phonenumber - can comment this out to make it optional field
+      // && this.state.phonenumber.length > 0 // currently requiring phonenumber - can comment this out to make it optional field
       && this.state.passwordIsValid
       && this.state.name.length > 0;
   }
@@ -187,11 +187,6 @@ export class SignupForm extends React.Component {
             onChange={e => this.onChange(e.target.name, e.target.value)}
             name="email"
             className="form__control" value={email} disabled={this.props.isAuthenticating} placeholder="your@workemail.com"/>
-          <label className="form__label">Phone number</label>
-          <input
-            onChange={e => this.onChange(e.target.name, e.target.value)}
-            name="phonenumber"
-            className="form__control" value={phonenumber} disabled={this.props.isAuthenticating} placeholder="(000)-000-0000"/>
           {this.renderOrganizationInput()}
           <div style={{marginBottom: 8}}>
             <label className="form__label">State Where You Work</label>

@@ -17,7 +17,8 @@ export class OrderKitPage extends React.Component {
       addressLine2: '',
       zipcode: '',
       city: '',
-      state: ''
+      state: '',
+      phonenumber: ''
     };
   }
   onFormChange(field, value) {
@@ -28,11 +29,11 @@ export class OrderKitPage extends React.Component {
   async handleSubmit() {
     try {
       const {
-        addressLine1, addressLine2, zipcode, city, state
+        addressLine1, addressLine2, zipcode, city, state, phonenumber
       } = this.state;
       await this.props.createKit({
         shippingAddress: {
-          addressLine1, addressLine2, zipcode, city, state
+          addressLine1, addressLine2, zipcode, city, state, phonenumber
         }
       });
       window.location.href = 'https://voter.kindful.com/';

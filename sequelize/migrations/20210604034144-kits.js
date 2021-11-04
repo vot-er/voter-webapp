@@ -14,6 +14,7 @@ module.exports = {
       city: {type: DataTypes.TEXT, allowNull: false},
       state: {type: DataTypes.TEXT, allowNull: false},
       zipcode: {type: DataTypes.TEXT, allowNull: false},
+      phonenumber: {type: DataTypes.TEXT, allowNull: true},
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false

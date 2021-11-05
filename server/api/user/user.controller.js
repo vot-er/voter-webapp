@@ -258,7 +258,6 @@ export async function changeOrganization(req, res, next) {
 }
 
 
-
 /**
  * Get my info
  */

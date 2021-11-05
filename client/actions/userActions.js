@@ -1,6 +1,7 @@
 import * as types from '../constants/actionTypes';
 import axios from 'axios';
 import {handleErrorWithLogout} from '../utils/error';
+import { displayError } from './alertActions';
 
 export function get() {
   return function(dispatch) {
@@ -15,6 +16,14 @@ export function get() {
   };
 }
 
+export function getOne(userId) {
+  return async function() {
+    const {data} = await axios.get(`/api/users/${userId}`);
+    return data;
+  };
+}
+
+
 export function updateMyProfile(patch) {
   return async function(dispatch) {
     try {
@@ -28,7 +37,25 @@ export function updateMyProfile(patch) {
         items: [user]
       });
     } catch(err) {
-      console.error(err);
+      dispatch(displayError(err));
+    }
+  };
+}
+
+
+export function updateOrganization(userId, organizationId) {
+  return async function(dispatch) {
+    try {
+      await axios({
+        method: 'PUT',
+        url: `/api/users/${userId}/organization`,
+        data: {
+          organization: organizationId
+        }
+      });
+    } catch(err) {
+      dispatch(displayError(err));
+      throw err;
     }
   };
 }

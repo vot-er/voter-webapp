@@ -37,7 +37,7 @@ export class LoginForm extends React.Component {
           <input onChange={this.onChange.bind(this)}className="form__control" name="email" value={this.state.email} disabled={this.props.isAuthenticating}/>
           <button type="submit" className="btn btn-primary login-button">Submit</button>
           <br />
-          Still having problems? Contact us at <a href="mailto: support@vot-er.org">support@vot-er.org</a>
+          Still having problems? Contact us at <a href="mailto: info@vot-er.org">info@vot-er.org</a>
         </form>
       </div>
     );

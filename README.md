@@ -2,7 +2,6 @@
 
 [Vot-ER](https://vot-er.org) is an organization at the crossroads of health and democracy that helps patients register to vote in healthcare settings. Vot-ER experienced rapid growth last year and partners with 500+ hospitals and 20,000+ healthcare workers to help register 50,000 voters. The VotER webapp is the primary platform for our healthcare partners to order Healthy Democracy Kits, learn how to help their patients register to vote, and track their impact.
 
-
 ## Get Started
 
 1. Clone this repository with `git clone git@github.com:vot-er/voter-webapp.git`

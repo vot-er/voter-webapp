@@ -22,7 +22,7 @@ export class LoginPage extends React.Component {
   }
 
   componentDidMount() {
-    this.props.getOrganizations();
+    this.props.getOrganizations({public: true});
   }
 
   render() {

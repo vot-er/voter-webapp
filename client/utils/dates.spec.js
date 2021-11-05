@@ -19,5 +19,13 @@ describe('Date Helper', () => {
       // assert
       expect(getFormattedDateTime(date)).toEqual('1/4 11:03:02');
     });
+
+    it('returns next month time when passed a leap day in a non-leap year', () => {
+      // arrange
+      const date = new Date(21, 1, 29, 11, 3, 2, 0);
+
+      // assert it moves to next month
+      expect(getFormattedDateTime(date)).toEqual('3/1 11:03:02');
+    });
   });
 });

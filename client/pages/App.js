@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Route, Switch} from 'react-router-dom';
+import { connect } from 'react-redux';
 
+import {hideError} from '../actions/alertActions';
+import ErrorCard from '../components/Alerts/ErrorCard';
 import LoginPage from './Login/LoginPage';
 import SignupPage from './Signup/SignupPage';
 import EmailVerificationPage from './EmailVerification/EmailVerificationPage';
@@ -16,6 +19,8 @@ import ScoreboardPage from './Scoreboard/ScoreboardPage';
 import OrderKitPage from './OrderKit/OrderKitPage';
 import OrderKitSuccessPage from './OrderKitSuccess/OrderKitSuccessPage';
 import OrganizationListPage from './OrganizationList/OrganizationListPage';
+import BulkUpdatePage from './BulkUpdate/BulkUpdatePage';
+import UserShowAdminPage from './UserShowAdmin/UserShowAdminPage';
 import NotFoundPage from './NotFoundPage';
 import {ErrorBoundary, PrivateRoute, PrivateRouteContainer, SideNav} from 'Components';
 import EditOrganizationPage from './OrganizationEdit/EditOrganizationPage';
@@ -32,6 +37,7 @@ class App extends React.Component {
     } = this.props;
     const isAdmin = user && user.role == 'admin';
     return isLoaded ? <ErrorBoundary>
+      <ErrorCard />
       <Switch>
         <PrivateRoute path="/login" component={LoginPage} isAuthorized={!isAuthenticated} redirectTo="/"/>
         <PrivateRoute path="/signup" exact component={SignupPage} isAuthorized={!isAuthenticated} redirectTo="/"/>
@@ -55,6 +61,8 @@ class App extends React.Component {
                   <PrivateRoute path="/organizations" exact component={OrganizationListPage} isAuthorized={isAdmin} redirectTo="/404" />
                   <PrivateRoute path="/organizations/:organizationId" exact component={EditOrganizationPage} isAuthorized={isAdmin} redirectTo="/404" />
                   <PrivateRoute path="/admin/kits/:kitId" exact component={KitShowAdminPage} isAuthorized={isAdmin} redirectTo="/404" />
+                  <PrivateRoute path="/admin/users/:userId" exact component={UserShowAdminPage} isAuthorized={isAdmin} redirectTo="/404" />
+                  <PrivateRoute path="/admin/bulk-update" exact component={BulkUpdatePage} isAuthorized={isAdmin} redirectTo="/404" />
                   <Route path="/" component={NotFoundPage} />
                 </Switch>
               </div>
@@ -71,7 +79,19 @@ App.propTypes = {
   history: PropTypes.object,
   user: PropTypes.object,
   isAuthenticated: PropTypes.bool.isRequired,
-  isLoaded: PropTypes.bool.isRequired
+  isLoaded: PropTypes.bool.isRequired,
+  message: PropTypes.string,
+  type: PropTypes.string,
+  hideError: PropTypes.func
 };
 
-export default App;
+const mapStateToProps = state => ({
+  message: state.alert.err,
+  type: 'error'
+});
+
+const mapDispatchToProps = dispatch => ({
+  hideError: () => dispatch(hideError())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

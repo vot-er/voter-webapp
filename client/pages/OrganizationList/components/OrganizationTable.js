@@ -12,7 +12,13 @@ class OrganizationTable extends React.Component {
 
   render() {
     const columns = [
-      { name: 'Organization', selector: 'name', sortable: true },
+      { name: 'Organization', selector: 'name', sortable: true, style: {
+        color: 'blue',
+        textDecoration: 'underline',
+        '&:hover': {
+          cursor: 'pointer',
+        },
+      }, },
       { name: 'Member count', selector: 'memberCount', sortable: true },
       { name: 'Public', selector: 'public', cell: row => (row.public ? 'PUBLIC' : 'PRIVATE')},
     ];

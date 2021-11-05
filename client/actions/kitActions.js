@@ -50,3 +50,10 @@ export function patch(kitId, body) {
   };
 }
 
+
+export function bulkAssign(body) {
+  return async function() {
+    const {data} = await axios.post('/api/kits/bulk-assign', body);
+    return data;
+  };
+}

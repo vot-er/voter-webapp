@@ -116,6 +116,7 @@
     "@babel/preset-env": "7.9.6",
     "@babel/preset-react": "7.9.4",
     "@babel/register": "*",
+    "@types/react-redux": "^7.1.18",
     "autoprefixer": "9.8.0",
     "babel-eslint": "10.1.0",
     "babel-jest": "*",

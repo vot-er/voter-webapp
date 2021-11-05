@@ -35,7 +35,7 @@ export class OrderKitPage extends React.Component {
           addressLine1, addressLine2, zipcode, city, state
         }
       });
-      this.props.goTo('/signup/order/success');
+      window.location.href = 'https://voter.kindful.com/';
     } catch(err) {
       console.error(err);
     }

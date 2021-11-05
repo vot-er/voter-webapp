@@ -1,6 +1,6 @@
 'use strict';
 
-import {User, Organization, Sequelize} from '../../models';
+import {User, Organization, Kit, Sequelize} from '../../models';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
 import moment from 'moment';
@@ -21,6 +21,25 @@ export async function index(req, res, next) {
     return next(e);
   }
 }
+
+export async function show(req, res, next) {
+  try {
+    const user = await User.findOne({
+      where: {
+        id: req.params.userId
+      },
+      include: {
+        model: Organization,
+        as: 'Organization'
+      }
+    });
+    if (!user) return res.status(404).end();
+    return res.status(200).json(user);
+  } catch(e) {
+    return next(e);
+  }
+}
+
 
 /**
  * Creates a new user
@@ -216,6 +235,21 @@ export async function changeRole(req, res, next) {
     const user = await User.findOne({where: { id: userId }});
     if (!user) return res.status(404).end();
     user.set('role', newRole);
+    await user.save();
+    return res.status(200).json(user.toJSON());
+  } catch(e) {
+    return next(e);
+  }
+}
+
+
+export async function changeOrganization(req, res, next) {
+  try {
+    const {userId} = req.params;
+    const {organization} = req.body;
+    const user = await User.findOne({where: { id: userId }});
+    if (!user) return res.status(404).end();
+    user.set('organization', organization);
     await user.save();
     return res.status(200).json(user.toJSON());
   } catch(e) {

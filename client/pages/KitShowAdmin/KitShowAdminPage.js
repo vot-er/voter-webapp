@@ -40,10 +40,44 @@ export class KitPage extends React.Component {
           <div>{kit.user.name}</div>
           {kit.shippingAddress ? this.renderAddress(kit.shippingAddress) : 'No address provided.'}
           <div>Code: {this.renderCode()}</div>
+          <div>{this.renderOrderInfo()}</div>
         </div>
       </div>
     );
   }
+
+  renderOrderInfo() {
+    return (
+      <div>
+        <label>
+          <input data-test-id="orderInfo" type="checkbox" name="shipped" checked={this.state.kit.shipped} onChange={this.toggleShipped.bind(this)} />
+          Shipped
+        </label>
+        <label>
+          <input data-test-id="orderInfo" type="checkbox" name="noFulfill" checked={!this.state.kit.fulfill} onChange={this.toggleFulfill.bind(this)} />
+          Do Not Fulfill
+        </label>
+      </div>
+    );
+  }
+
+  async toggleShipped() {
+    const {match} = this.props;
+    const isShipped = !this.state.kit.shipped;
+    await this.props.patchKit(match.params.kitId, {
+      isShipped
+    });
+  }
+
+  async toggleFulfill() {
+    console.log(this.state.kit.fulfill)
+    const {match} = this.props;
+    const fulfill = !this.state.kit.fulfill;
+    await this.props.patchKit(match.params.kitId, {
+      fulfill
+    });
+  }
+
   renderCode() {
     const {
       showCodeEditor, kit, formCodeValue
@@ -53,6 +87,7 @@ export class KitPage extends React.Component {
     }
     return <form onSubmit={this.submitCode.bind(this)}><input className="internal-control" value={formCodeValue} onChange={e => this.changeFormCode(e.target.value)}/> <button type="submit" disabled={this.state.isSubmitting}>Save</button></form>;
   }
+
   renderAddress(address) {
     return <div>
       {address.addressLine1}

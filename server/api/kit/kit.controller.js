@@ -57,7 +57,6 @@ export async function show(req, res, next) {
 
 export async function patch(req, res, next) {
   try {
-    const {code} = req.body;
     const {kitId} = req.params;
     const kit = await Kit.findOne({
       where: {
@@ -65,12 +64,75 @@ export async function patch(req, res, next) {
       }
     });
     if (!kit) return res.status(403).end();
-    kit.update({
-      code: code && code.length ? code : null
-    });
+    kit.update(getUpdates(req.body));
     kit.user = await kit.getUser();
     kit.shippingAddress = await kit.getShippingAddress();
     return res.status(200).json({data: kit});
+  } catch(e) {
+    return next(e);
+  }
+}
+
+function getUpdates(reqBody) {
+  let updateValue = {};
+  const {
+    isShipped, code, fulfill
+  } = reqBody;
+  if (code !== undefined) {
+    updateValue.code = code.length ? code : null;
+  }
+  if (isShipped !== undefined) {
+    updateValue.shipped = isShipped;
+    updateValue.shippedAt = null;
+    if (isShipped) {
+      const time = new Date().toISOString();
+      updateValue.shippedAt = time;
+    }
+  }
+  if (fulfill !== undefined) {
+    updateValue.fulfill = fulfill;
+  }
+  return updateValue;
+}
+
+
+export async function bulkAssign(req, res, next) {
+  try {
+    const {codes} = req.body;
+    const kits = await Kit.findAll({
+      where: {
+        code: null,
+        fulfill: true
+      },
+      limit: codes.length
+    });
+    const results = codes.map(code => ({
+      code,
+      kitId: null,
+      status: null,
+      failureReason: null
+    }));
+    let k = 0;
+    for (var i = 0; i < results.length; i++) {
+      const result = results[i];
+      const kit = kits[k];
+      if (k + 1 > kits.length) {
+        result.status = 'failed';
+        result.failureReason = 'No additional kits without codes to assign to.';
+        continue;
+      }
+      try {
+        kit.code = result.code;
+        await kit.save();
+        result.status = 'succeeded';
+        result.kitId = kit.id;
+        k++;
+      } catch(err) {
+        result.status = 'failed';
+        result.failureReason = String(err);
+      }
+    }
+    return res.status(200).json({results});
   } catch(e) {
     return next(e);
   }

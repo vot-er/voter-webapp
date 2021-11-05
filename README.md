@@ -11,6 +11,7 @@
 4. Install [VSCode Pluglin Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) (or look up 'Remote - Containers' in Extensions in VSCode)
 5. Copy `server/config/local.env.sample.js` to `server/config/local.env.js`
 6. Open the VSCode workspace in a development container with `View > Command Palette > Remote-Containers: Reopen in Container` (or click the green symbol in the bottom left corner)
+7. Migrate your database using `npm run migrate`
 7. Seed data using `npm run seed`
 8. Go to `localhost:3000` and log in with the username `admin@vot-er.org` and password `admin`
 

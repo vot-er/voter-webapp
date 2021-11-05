@@ -16,28 +16,13 @@ services:
     volumes:
       - ..:/workspace:cached
       - //var/run/docker.sock:/var/run/docker.sock
+      #- nodemodules:/workspace/node_modules
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
     # Uncomment the next line to use a non-root user for all processes.
     # user: node
-
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      args:
-        VARIANT: "14"
-
-    environment:
-      DATABASE_URL: "postgres://host.docker.internal/5433/voter"
-
-    volumes:
-      - ..:/workspace:cached
-
-    command: npm run dev
-
     ports:
       - "3000:3000"
 
@@ -51,10 +36,11 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
     ports:
-      - "5433:5432"
+      - "5432:5432"
 
     # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
     # (Adding the "ports" property to this file will not forward from a Codespace.)
 
 volumes:
+  nodemodules: null
   postgres-data: null

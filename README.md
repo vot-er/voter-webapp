@@ -12,7 +12,7 @@
 6. Open the VSCode workspace in a development container with `View > Command Palette > Remote-Containers: Reopen in Container` (or click the green symbol in the bottom left corner)
 7. Migrate your database using `npm run migrate`
 7. Seed data using `npm run seed`
-8. Go to `localhost:3000` and log in with the username `admin@vot-er.org` and password `admin`
+8. Go to `localhost:3000` and log in with the username `admin@example.com` and password `admin`
 
 
 ## Questions?

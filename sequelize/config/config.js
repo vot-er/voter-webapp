@@ -10,6 +10,7 @@ module.exports = {
     password: parsed.password || null,
     database: parsed.database || '',
     host: parsed.host || '127.0.0.1',
+    port: parsed.port || '5432',
     dialect: 'postgres',
     define: {
       timestamps: true

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "description": "VotER webapp",
   "engines": {
-    "npm": ">=6",
-    "node": "14.16.0"
+    "npm": ">=8",
+    "node": "14"
   },
   "scripts": {
     "start": "node dist/server",
@@ -21,7 +21,7 @@
     "migrate": "cd sequelize && sequelize db:migrate && cd ..",
     "build": "npm run compile",
     "compile": "npm run clean && babel -d ./dist/server ./server -s && babel -d ./dist/shared ./shared -s && babel-node tools/build.js && cp ./package.json ./dist/package.json",
-    "seed:all": "babel-node tools/seed",
+    "seed": "npx sequelize db:seed --config=./sequelize/config/config.js",
     "test": "jest",
     "test:CI": "babel-node tools/testCi.js",
     "test:cover": "npm run test -- --coverage ",

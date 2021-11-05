@@ -3,7 +3,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 }
 const parse = require('pg-connection-string').parse;
 const parsed = parse(process.env.DATABASE_URL || '');
-console.log(parsed)
+
 module.exports = {
   development: {
     username: parsed.user || '',

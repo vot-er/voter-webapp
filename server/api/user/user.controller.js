@@ -47,7 +47,7 @@ export async function show(req, res, next) {
 export async function create(req, res, next) {
   try {
     const {
-      password, email: unformattedEmail, phonenumber, name, organization: organizationId, newOrganizationName, jobTitle
+      password, email: unformattedEmail, name, organization: organizationId, newOrganizationName, jobTitle
     } = req.body;
     if (!unformattedEmail || typeof unformattedEmail !== 'string') {
       return res.status(422).send('Must provide an email address.');
@@ -68,7 +68,6 @@ export async function create(req, res, next) {
     }
     user.set('password', password);
     user.set('email', email);
-    user.set('phonenumber', phonenumber);
     user.set('name', name);
     user.set('jobTitle', jobTitle);
     if (newOrganizationName && organizationId) {
@@ -258,20 +257,6 @@ export async function changeOrganization(req, res, next) {
   }
 }
 
-export async function changePhoneNumber(req, res, next) {
-  try {
-    const {userId} = req.params;
-    const {phonenumber} = req.body;
-    const user = await User.findOne({where: { id: userId }});
-    if (!user) return res.status(404).end();
-    user.set('phonenumber', phonenumber);
-    await user.save();
-    return res.status(200).json(user.toJSON());
-  } catch(e) {
-    return next(e);
-  }
-}
-
 
 
 /**
@@ -288,7 +273,6 @@ export async function me(req, res, next) {
         'id',
         'name',
         'email',
-        'phonenumber',
         'role',
         'provider',
         'organization'

@@ -27,9 +27,6 @@ export function identifyUser(userId, user) {
         if (user.stateOfWork) {
           userProps.state_of_work = user.stateOfWork; // eslint-disable-line camelcase
         }
-        if (user.phonenumber) {
-          userProps.$phonenumber = user.phonenumber;
-        }
         mixpanel.people.set(userProps);
       }
     } catch(err) {

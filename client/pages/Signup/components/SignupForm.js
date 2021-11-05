@@ -12,7 +12,6 @@ export class SignupForm extends React.Component {
     this.state = {
       email: '',
       password: '',
-      phonenumber: '',
       name: '',
       organization: null,
       jobTitle: '',
@@ -87,7 +86,6 @@ export class SignupForm extends React.Component {
 
   isReadyToSubmit() {
     return this.state.email.length > 0
-      // && this.state.phonenumber.length > 0 // currently requiring phonenumber - can comment this out to make it optional field
       && this.state.passwordIsValid
       && this.state.name.length > 0;
   }
@@ -109,7 +107,7 @@ export class SignupForm extends React.Component {
 
   onSubmit = async e => {
     const {
-      email, password, phonenumber, name, stateOfWork, createNewOrganization, newOrganizationName, organization, isSubmitting, jobTitle
+      email, password, name, stateOfWork, createNewOrganization, newOrganizationName, organization, isSubmitting, jobTitle
     } = this.state;
     e.stopPropagation();
     e.preventDefault();
@@ -123,7 +121,7 @@ export class SignupForm extends React.Component {
     }
     try {
       this.setState({isSubmitting: true});
-      const signupBody = {email, password, phonenumber, name, stateOfWork, jobTitle: jobTitle ? jobTitle.value : ''};
+      const signupBody = {email, password, name, stateOfWork, jobTitle: jobTitle ? jobTitle.value : ''};
       if (createNewOrganization) {
         signupBody.newOrganizationName = newOrganizationName;
       } else {
@@ -169,7 +167,7 @@ export class SignupForm extends React.Component {
   render() {
     const isReadyToSubmit = this.isReadyToSubmit();
     const {
-      isSubmitting, name, email, phonenumber, password, stateOfWork, jobTitle
+      isSubmitting, name, email, password, stateOfWork, jobTitle
     } = this.state;
     return (
       <div className="signup-card">

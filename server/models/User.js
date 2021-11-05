@@ -29,7 +29,6 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
-    phonenumber: DataTypes.TEXT,
     role: {
       type: DataTypes.STRING,
       defaultValue: 'unverified'

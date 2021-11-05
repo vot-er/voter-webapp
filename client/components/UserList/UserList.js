@@ -14,7 +14,6 @@ class UserList extends React.Component {
       .map(user => <div className="card-list__item card-list__item--padded flex-row" key={user.id}>
         <div className="flex-row__group flex-row__group--left">{user.name}</div>
         <div className="flex-row__group flex-row__group--left">{user.email}</div>
-        <div className="flex-row__group flex-row__group--left">{user.phonenumber}</div>
         <div className="flex-row__group flex-row__group--left">{user.role ? user.role : null}</div>
         <div className="flex-row__group flex-row__group--right"><UserDropdown user={user} /></div>
       </div>

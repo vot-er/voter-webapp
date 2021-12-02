@@ -1,12 +1,12 @@
-'use strict';
+"use strict";
 
-import {User, Organization, Kit, Sequelize} from '../../models';
-import config from '../../config/environment';
-import jwt from 'jsonwebtoken';
-import moment from 'moment';
-import emailer from '../../email';
-import PasswordResetEmail from '../../email/components/PasswordReset/PasswordResetEmail';
-import {applyPatch} from '../../utils/patch';
+import { User, Organization, Kit, Sequelize } from "../../models";
+import config from "../../config/environment";
+import jwt from "jsonwebtoken";
+import moment from "moment";
+import emailer from "../../email";
+import PasswordResetEmail from "../../email/components/PasswordReset/PasswordResetEmail";
+import { applyPatch } from "../../utils/patch";
 const Op = Sequelize.Op;
 
 /**
@@ -17,7 +17,7 @@ export async function index(req, res, next) {
   try {
     const users = await User.findAll({});
     return res.status(200).json(users);
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 }
@@ -26,20 +26,19 @@ export async function show(req, res, next) {
   try {
     const user = await User.findOne({
       where: {
-        id: req.params.userId
+        id: req.params.userId,
       },
       include: {
         model: Organization,
-        as: 'Organization'
-      }
+        as: "Organization",
+      },
     });
     if (!user) return res.status(404).end();
     return res.status(200).json(user);
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 }
-
 
 /**
  * Creates a new user
@@ -47,55 +46,70 @@ export async function show(req, res, next) {
 export async function create(req, res, next) {
   try {
     const {
-      password, email: unformattedEmail, name, organization: organizationId, newOrganizationName, jobTitle
+      password,
+      email: unformattedEmail,
+      firstName,
+      lastName,
+      organization: organizationId,
+      newOrganizationName,
+      jobTitle,
     } = req.body;
-    if (!unformattedEmail || typeof unformattedEmail !== 'string') {
-      return res.status(422).send('Must provide an email address.');
+    if (!unformattedEmail || typeof unformattedEmail !== "string") {
+      return res.status(422).send("Must provide an email address.");
     }
     const email = unformattedEmail.toLowerCase();
     let user = await User.findOne({
       where: {
-        email
-      }
+        email,
+      },
     });
-    const userExistsAndIsVerified = user && user.get('role') !== 'unverified';
-    if (userExistsAndIsVerified) return res.status(403).send('User with email already exists.');
+    const userExistsAndIsVerified = user && user.get("role") !== "unverified";
+    if (userExistsAndIsVerified)
+      return res.status(403).send("User with email already exists.");
     if (!user) {
       user = User.build({
-        provider: 'local',
-        role: 'unverified'
+        provider: "local",
+        role: "unverified",
       });
     }
-    user.set('password', password);
-    user.set('email', email);
-    user.set('name', name);
-    user.set('jobTitle', jobTitle);
+    user.set("password", password);
+    user.set("email", email);
+    user.set("firstName", firstName);
+    user.set("lastName", lastName);
+    user.set("jobTitle", jobTitle);
     if (newOrganizationName && organizationId) {
-      return res.status(400).send('Cannot both create a new organization and join an existing one.');
+      return res
+        .status(400)
+        .send(
+          "Cannot both create a new organization and join an existing one."
+        );
     } else if (!newOrganizationName && !organizationId) {
-      return res.status(400).send('You must enter an organization name or join an existing one.');
+      return res
+        .status(400)
+        .send("You must enter an organization name or join an existing one.");
     } else if (newOrganizationName) {
       const organizationToJoin = await Organization.create({
         name: newOrganizationName,
-        public: false
+        public: false,
       });
       user.organization = organizationToJoin.id;
     } else {
       const organizationToJoin = await Organization.findOne({
         where: {
-          id: organizationId
-        }
+          id: organizationId,
+        },
       });
-      if (!organizationToJoin) return res.status(400).send('Invalid organization id provided.');
+      if (!organizationToJoin)
+        return res.status(400).send("Invalid organization id provided.");
 
       user.organization = organizationToJoin.id;
     }
     user = await user.save();
     const token = jwt.sign({ id: user.id }, config.secrets.session, {
-      expiresIn: 60 * 60 * 5
+      expiresIn: 60 * 60 * 5,
     });
     return res.json({ token });
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 }
@@ -106,14 +120,14 @@ export async function create(req, res, next) {
  */
 export async function destroy(req, res, next) {
   try {
-    const {userId} = req.params;
+    const { userId } = req.params;
     const user = await User.findOne({ where: { id: userId } });
     if (!user) {
       return res.status(404).end();
     }
     await user.destroy();
     return res.status(204).end();
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 }
@@ -124,7 +138,7 @@ export async function destroy(req, res, next) {
 export async function changePassword(req, res, next) {
   try {
     let userId = req.user.id;
-    const user = await User.findOne({ where: { id: userId }});
+    const user = await User.findOne({ where: { id: userId } });
     var oldPass = String(req.body.oldPassword);
     var newPass = String(req.body.newPassword);
     if (user.authenticate(oldPass)) {
@@ -134,32 +148,31 @@ export async function changePassword(req, res, next) {
     } else {
       return res.status(403).end();
     }
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 }
-
 
 /**
  * Change a users password
  */
 export async function updateMyProfile(req, res, next) {
   try {
-    const user = await User.scope('withSecrets').findOne({
+    const user = await User.scope("withSecrets").findOne({
       where: {
-        id: req.user.id
-      }
+        id: req.user.id,
+      },
     });
     if (!user) return res.status(401).end();
     const patch = req.body;
-    applyPatch(user, patch, { allowedKeys: ['name'] });
+    applyPatch(user, patch, { allowedKeys: ["name"] });
     await user.save();
     return res.status(200).json({
-      id: user.get('id'),
-      name: user.get('name'),
-      role: user.get('role')
+      id: user.get("id"),
+      name: user.get("name"),
+      role: user.get("role"),
     });
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 }
@@ -170,93 +183,100 @@ export async function requestPasswordReset(req, res, next) {
     const user = await User.findOne({
       where: {
         email: {
-          [Op.iLike]: email
-        }
+          [Op.iLike]: email,
+        },
       },
-      attributes: ['id', 'email', 'passwordResetToken', 'passwordResetTokenExpiresAt']
+      attributes: [
+        "id",
+        "email",
+        "passwordResetToken",
+        "passwordResetTokenExpiresAt",
+      ],
     });
     if (!user) return res.status(200).end(); // Do not reveal there is no user.
     user.generatePasswordResetToken();
     await user.save();
-    const token = user.get('passwordResetToken');
-    await emailer.send(PasswordResetEmail, {user: user.toJSON(), token});
+    const token = user.get("passwordResetToken");
+    await emailer.send(PasswordResetEmail, { user: user.toJSON(), token });
     return res.status(200).end();
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 }
 
 export async function resetPassword(req, res, next) {
   try {
-    const {userId, token: passwordResetToken} = req.query;
+    const { userId, token: passwordResetToken } = req.query;
     if (!passwordResetToken) return res.status(400).end();
-    const {newPassword} = req.body;
+    const { newPassword } = req.body;
     const user = await User.findOne({
       where: { id: userId, passwordResetToken },
-      attributes: ['id', 'passwordResetTokenExpiresAt']
+      attributes: ["id", "passwordResetTokenExpiresAt"],
     });
     if (!user) return res.status(401).end();
-    const resetTokenIsExpired = !user.get('passwordResetTokenExpiresAt') || moment(user.get('passwordResetTokenExpiresAt')).isBefore(moment());
+    const resetTokenIsExpired =
+      !user.get("passwordResetTokenExpiresAt") ||
+      moment(user.get("passwordResetTokenExpiresAt")).isBefore(moment());
     if (resetTokenIsExpired) return res.status(401).end();
-    user.set('password', newPassword);
-    user.set('passwordResetToken', null);
-    user.set('passwordResetTokenExpiresAt', null);
+    user.set("password", newPassword);
+    user.set("passwordResetToken", null);
+    user.set("passwordResetTokenExpiresAt", null);
     await user.save();
     return res.status(200).end();
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 }
 
 export async function verifyResetToken(req, res, next) {
   try {
-    const {userId, token: passwordResetToken} = req.query;
+    const { userId, token: passwordResetToken } = req.query;
     if (!passwordResetToken) return res.status(400).end();
     const user = await User.findOne({
       where: { id: userId, passwordResetToken },
-      attributes: ['passwordResetTokenExpiresAt']
+      attributes: ["passwordResetTokenExpiresAt"],
     });
     if (!user) return res.status(401).end();
-    const resetTokenIsExpired = !user.get('passwordResetTokenExpiresAt') || moment(user.get('passwordResetTokenExpiresAt')).isBefore(moment());
+    const resetTokenIsExpired =
+      !user.get("passwordResetTokenExpiresAt") ||
+      moment(user.get("passwordResetTokenExpiresAt")).isBefore(moment());
     if (resetTokenIsExpired) return res.status(401).end();
     return res.status(200).end();
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 }
 
 export async function changeRole(req, res, next) {
   try {
-    const {userId} = req.params;
+    const { userId } = req.params;
     var newRole = String(req.body.role);
     if (config.userRoles.indexOf(newRole) === -1) {
       return res.status(403).send(`Cannot set unknown role ${newRole}.`);
     }
-    const user = await User.findOne({where: { id: userId }});
+    const user = await User.findOne({ where: { id: userId } });
     if (!user) return res.status(404).end();
-    user.set('role', newRole);
+    user.set("role", newRole);
     await user.save();
     return res.status(200).json(user.toJSON());
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 }
-
 
 export async function changeOrganization(req, res, next) {
   try {
-    const {userId} = req.params;
-    const {organization} = req.body;
-    const user = await User.findOne({where: { id: userId }});
+    const { userId } = req.params;
+    const { organization } = req.body;
+    const user = await User.findOne({ where: { id: userId } });
     if (!user) return res.status(404).end();
-    user.set('organization', organization);
+    user.set("organization", organization);
     await user.save();
     return res.status(200).json(user.toJSON());
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 }
-
 
 /**
  * Get my info
@@ -266,20 +286,13 @@ export async function me(req, res, next) {
     var userId = req.user.id;
     const user = await User.findOne({
       where: {
-        id: userId
+        id: userId,
       },
-      attributes: [
-        'id',
-        'name',
-        'email',
-        'role',
-        'provider',
-        'organization'
-      ]
+      attributes: ["id", "name", "email", "role", "provider", "organization"],
     });
     if (!user) return res.status(401).end();
     return res.json(user.dataValues);
-  } catch(e) {
+  } catch (e) {
     return next(e);
   }
 }
@@ -288,5 +301,5 @@ export async function me(req, res, next) {
  * Authentication callback
  */
 export function authCallback(req, res) {
-  res.redirect('/');
+  res.redirect("/");
 }

@@ -6,19 +6,22 @@ FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:0-${VARIANT}
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
 
+# RUN apt-get
+
 # [Optional] Uncomment if you want to install an additional version of node using nvm
 # ARG EXTRA_NODE_VERSION=10
 # RUN su node -c "source /usr/local/share/nvm/nvm.sh && nvm install ${EXTRA_NODE_VERSION}"
 
 # [Optional] Uncomment if you want to install more global node modules
-# RUN su node -c "npm install -g <your-package-list-here>"
+RUN su node -c "npm install -g node-gyp@8"
+
+COPY ./package.json ${LOCAL_WORKSPACE}
+COPY ./yarn.lock ${LOCAL_WORKSPACE}
+
+RUN yarn install --ignore-scripts
+
+COPY . ${LOCAL_WORKSPACE}
 
 WORKDIR ${LOCAL_WORKSPACE}
 
-COPY ../package*.json ${LOCAL_WORKSPACE}
-
-RUN yarn install
-
-COPY .. ${LOCAL_WORKSPACE}
-
-CMD ["npm", "run", "dev"]
+CMD ["yarn", "dev"]

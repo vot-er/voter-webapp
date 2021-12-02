@@ -1,10 +1,10 @@
-version: '3.8'
+version: "3.8"
 
 services:
   workspace:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
       args:
         # Update 'VARIANT' to pick an LTS version of Node.js: 16, 14, 12.
         # Append -bullseye or -buster to pin to an OS version.
@@ -16,7 +16,7 @@ services:
     volumes:
       - ..:/workspace:cached
       - //var/run/docker.sock:/var/run/docker.sock
-      #- nodemodules:/workspace/node_modules
+      - nodemodules:/workspace/node_modules:cached
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
@@ -36,11 +36,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres
     ports:
-      - "5432:5432"
-
-    # Add "forwardPorts": ["5432"] to **devcontainer.json** to forward PostgreSQL locally.
-    # (Adding the "ports" property to this file will not forward from a Codespace.)
+      - "5400:5432"
 
 volumes:
   nodemodules: null
   postgres-data: null
+  postgres-data-external: null

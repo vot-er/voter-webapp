@@ -2,44 +2,50 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.202.5/containers/javascript-node-postgres
 // Update the VARIANT arg in docker-compose.yml to pick a Node.js version
 {
-	"name": "Vot-ER Webapp",
-	"dockerComposeFile": "docker-compose.yml",
-	"service": "workspace",
-	"workspaceFolder": "/workspace",
+  "name": "Vot-ER Webapp",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "workspace",
+  "workspaceFolder": "/workspace",
 
-	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"sqltools.connections": [{
-			"name": "Container database",
-			"driver": "PostgreSQL",
-			"previewLimit": 50,
-			"server": "host.docker.internal",
-			"port": 5432,
-			"database": "postgres",
-			"username": "postgres",
-			"password": "postgres"
-		}]
-	},
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "sqltools.connections": [
+      {
+        "name": "Db",
+        "driver": "PostgreSQL",
+        "previewLimit": 50,
+        "server": "db",
+        "port": 5432,
+        "database": "postgres",
+        "username": "postgres",
+        "password": "postgres"
+      }
+    ],
+    "files.associations": {
+      "*.js": "javascriptreact"
+    },
+    "jest.jestCommandLine": "${workspaceFolder}/node_modules/.bin/jest"
+  },
 
-	// Add the IDs of extensions you want installed when the container is created.
-	"extensions": [
-		"dbaeumer.vscode-eslint",
-		"mtxr.sqltools",
-		"mtxr.sqltools-driver-pg",
-		"ms-azuretools.vscode-docker",
-		"eamodio.gitlens"
-	],
-	"mounts": ["source=//var/run/docker.sock,target=/var/run/docker.sock,type=bind,consistency=cached"],
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [3000, 5432],
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg",
+    "ms-azuretools.vscode-docker",
+    "eamodio.gitlens",
+    "esbenp.prettier-vscode",
+    "orta.vscode-jest"
+  ],
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [3000, 5432],
+  // Use 'postCreateCommand' to run commands after the container is created.
+  "postCreateCommand": "sudo chmod 666 /var/run/docker.sock",
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "sudo chmod 666 /var/run/docker.sock",
-
-	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	"remoteUser": "node",
-	"features": {
-		"docker-from-docker": "latest",
-		"git": "latest"
-	}
+  // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  // "remoteUser": "node",
+  "features": {
+    "docker-from-docker": "latest",
+    "git": "latest"
+  }
 }

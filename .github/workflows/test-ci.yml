@@ -9,7 +9,7 @@ jobs:
         with:
           node-version: "14.16.0"
       - run: yarn compile --ignore-scripts
-  LINT:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -29,12 +29,6 @@ jobs:
           node-version: "14.16.0"
       - run: yarn install --ignore-scripts
       - run: yarn open:dist & yarn test
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-
       - name: Tests ✅
         if: ${{ success() }}
         run: |

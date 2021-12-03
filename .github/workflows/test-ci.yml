@@ -19,7 +19,6 @@ jobs:
       SESSION_SECRET: test-secret
       PORT: 3000
       DOMAIN: http://localhost:3000
-      NODE_ENV: production
     services:
       db:
         image: postgres
@@ -41,7 +40,7 @@ jobs:
           node-version: "14.16.0"
       - run: yarn install --ignore-scripts
       - run: yarn compile
-      - run: yarn start & yarn test
+      - run: NODE_ENV=production yarn start & yarn test
       - run: |
           apt-get update \ 
           && apt-get install -y wget gnupg \

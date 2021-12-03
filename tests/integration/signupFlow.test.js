@@ -68,8 +68,8 @@ describe("Signup Flow", () => {
     await page.keyboard.type("Apt 123");
     await page.focus("input[name=city]");
     await page.keyboard.type("Anywhere");
-    await page.focus("input[name=city]");
-    await page.keyboard.type("Anywhere");
+    await page.focus("input[name=phonenumber]");
+    await page.keyboard.type("123-123-1234");
     await page.click("#state-select");
     await page.waitForSelector("#react-select-state-select-option-0", {
       timeout: 1000,

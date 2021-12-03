@@ -11,16 +11,14 @@ export class OrderForm extends React.Component {
     };
   }
   isReadyToSubmit() {
-    const {
-      addressLine1, city, state, zipcode, phonenumber
-    } = this.props.form;
+    const { addressLine1, city, state, zipcode, phonenumber } = this.props.form;
     return (
       addressLine1.length > 2 &&
-      city.length > 1 && 
-      state && 
-      zipcode.length >= 5 && 
+      city.length > 1 &&
+      state &&
+      zipcode.length >= 5 &&
       this.state.phonenumber.length > 0
-    )
+    );
   }
   onInputChange(e) {
     this.props.onChange(e.target.name, e.target.value);
@@ -53,15 +51,9 @@ export class OrderForm extends React.Component {
     }
   }
   render() {
-    const {
-      addressLine1,
-      addressLine2,
-      zipcode,
-      city,
-      state,
-      phonenumber
-    } = this.props.form;
-    const {isSubmitting} = this.state;
+    const { addressLine1, addressLine2, zipcode, city, state, phonenumber } =
+      this.props.form;
+    const { isSubmitting } = this.state;
     return (
       <div>
         <form onSubmit={this.handleNativeSubmit.bind(this)}>
@@ -113,10 +105,26 @@ export class OrderForm extends React.Component {
             </div>
           </div>
           <label className="form__label">Zipcode</label>
-          <input onChange={this.onInputChange.bind(this)} className="form__control" name="zipcode" value={zipcode}/>
+          <input
+            onChange={this.onInputChange.bind(this)}
+            className="form__control"
+            name="zipcode"
+            value={zipcode}
+          />
           <label className="form__label">Phone number</label>
-          <input onChange={this.onInputChange.bind(this)} className="form__control" name="phonenumber" value={phonenumber} placeholder="Phone number (optional)"/>
-          <SubmitButton className="btn btn-primary signup-button" disabled={!this.isReadyToSubmit()} isSubmitting={isSubmitting} value="Complete Order"/>
+          <input
+            onChange={this.onInputChange.bind(this)}
+            className="form__control"
+            name="phonenumber"
+            value={phonenumber}
+            placeholder="Phone number (optional)"
+          />
+          <SubmitButton
+            className="btn btn-primary signup-button"
+            disabled={!this.isReadyToSubmit()}
+            isSubmitting={isSubmitting}
+            value="Complete Order"
+          />
         </form>
       </div>
     );

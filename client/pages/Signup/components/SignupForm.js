@@ -99,24 +99,23 @@ export class SignupForm extends React.Component {
     return (
       this.state.email.length > 0 &&
       this.state.passwordIsValid &&
-      this.state.name.length > 0
+      this.state.firstName.length > 0 &&
+      this.state.firstName.length > 0
     );
   }
 
   onChange = async (field, value) => {
-    switch (field) {
-      case "password":
-        const { isValid: passwordIsValid, message: passwordValidationMessage } =
-          passwordValidation(value);
-        this.setState({
-          passwordIsValid,
-          passwordValidationMessage,
-        });
-        return this.setState({ password: value });
-
-      default:
-        return this.setState({ [field]: value });
+    if (field === "password") {
+      const { isValid: passwordIsValid, message: passwordValidationMessage } =
+        passwordValidation(value);
+      this.setState({
+        passwordIsValid,
+        passwordValidationMessage,
+        password: value,
+      });
     }
+
+    return this.setState({ [field]: value });
   };
 
   onSubmit = async (e) => {
@@ -210,6 +209,7 @@ export class SignupForm extends React.Component {
           value={organization}
         />
         <a
+          id="create-new-org-link"
           className="signup-card__helper-link"
           onClick={this.toggleOrganizationCreate.bind(this)}
         >
@@ -231,10 +231,19 @@ export class SignupForm extends React.Component {
         </p>
         <AlertCard type="error" message={this.state.error} />
         <form onSubmit={this.onSubmit}>
-          <label className="form__label">Name</label>
+          <label className="form__label">First Name</label>
           <input
             onChange={(e) => this.onChange(e.target.name, e.target.value)}
-            name="name"
+            name="firstName"
+            className="form__control"
+            value={name}
+            disabled={this.props.isAuthenticating}
+            placeholder="Elizabeth Blackwell"
+          />
+          <label className="form__label">Last Name</label>
+          <input
+            onChange={(e) => this.onChange(e.target.name, e.target.value)}
+            name="lastName"
             className="form__control"
             value={name}
             disabled={this.props.isAuthenticating}
@@ -257,6 +266,7 @@ export class SignupForm extends React.Component {
               onChange={(e) => this.onChange("stateOfWork", e)}
               className="form__control"
               name="stateOfWork"
+              id="state-of-work-select"
               value={stateOfWork}
             />
           </div>
@@ -267,6 +277,7 @@ export class SignupForm extends React.Component {
               onChange={(e) => this.onChange("jobTitle", e)}
               className="form__control"
               name="jobTitle"
+              id="job-title-select"
               value={jobTitle}
             />
           </div>

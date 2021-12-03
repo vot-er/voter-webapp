@@ -11,13 +11,13 @@ export class OrderForm extends React.Component {
     };
   }
   isReadyToSubmit() {
-    const { addressLine1, city, state, zipcode, phonenumber } = this.props.form;
+    const { addressLine1, city, state, zipcode, phoneNumber } = this.props.form;
     return (
       addressLine1.length > 2 &&
       city.length > 1 &&
       state &&
       zipcode.length >= 5 &&
-      this.state.phonenumber.length > 0
+      phoneNumber.length > 0
     );
   }
   onInputChange(e) {
@@ -51,7 +51,7 @@ export class OrderForm extends React.Component {
     }
   }
   render() {
-    const { addressLine1, addressLine2, zipcode, city, state, phonenumber } =
+    const { addressLine1, addressLine2, zipcode, city, state, phoneNumber } =
       this.props.form;
     const { isSubmitting } = this.state;
     return (
@@ -115,8 +115,8 @@ export class OrderForm extends React.Component {
           <input
             onChange={this.onInputChange.bind(this)}
             className="form__control"
-            name="phonenumber"
-            value={phonenumber}
+            name="phoneNumber"
+            value={phoneNumber}
             placeholder="Phone number (optional)"
           />
           <SubmitButton

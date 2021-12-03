@@ -40,7 +40,7 @@ jobs:
         with:
           node-version: "14.16.0"
       - run: yarn install --ignore-scripts
-      - run: yarn build
+      - run: yarn compile
       - run: yarn start & yarn test
       - run: |
           apt-get update \ 

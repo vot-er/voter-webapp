@@ -47,7 +47,7 @@ jobs:
       - run: yarn install --ignore-scripts
       - run: npm rebuild node-sass
       - run: yarn compile
-      - run: NODE_ENV=production yarn start & yarn test
+      - run: NODE_ENV=test yarn start & yarn test
       - name: Tests ✅
         if: ${{ success() }}
         run: |

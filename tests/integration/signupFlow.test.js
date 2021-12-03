@@ -50,7 +50,6 @@ describe("Signup Flow", () => {
     await page.click("#react-select-4-option-0");
 
     await page.waitForTimeout(500);
-    await page.screenshot({ path: "tmp/screenshot.png" });
     await page.click("button[type=submit]");
 
     await page.waitForSelector(".order-kit-page", {
@@ -62,5 +61,24 @@ describe("Signup Flow", () => {
       (e) => e.innerHTML
     );
     expect(orderKitHtml).toContain("Shipping Address");
+
+    await page.focus("input[name=addressLine1]");
+    await page.keyboard.type("200 Main St");
+    await page.focus("input[name=addressLine2]");
+    await page.keyboard.type("Apt 123");
+    await page.focus("input[name=city]");
+    await page.keyboard.type("Anywhere");
+    await page.focus("input[name=city]");
+    await page.keyboard.type("Anywhere");
+    await page.click("#state-select");
+    await page.waitForSelector("#react-select-state-select-option-0", {
+      timeout: 1000,
+    });
+    await page.click("#react-select-state-select-option-0");
+    await page.focus("input[name=zipcode]");
+    await page.keyboard.type("10000");
+    await page.click("button[type=submit]");
+    await page.waitForTimeout(1000);
+    expect(page.url()).toBe("https://voter.kindful.com/");
   });
 });

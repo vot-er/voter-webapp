@@ -14,6 +14,7 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     env:
+      NODE_ENV: test
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres?schema=public
       TEST_DATASOURCE_URL: postgres://postgres:postgres@localhost:5433/postgres?schema=public
       SESSION_SECRET: test-secret
@@ -48,7 +49,7 @@ jobs:
       - run: npm rebuild node-sass
       - run: yarn compile
       - run: yarn run migrate
-      - run: NODE_ENV=test yarn start & yarn test
+      - run: yarn start & yarn test
       - name: Tests ✅
         if: ${{ success() }}
         run: |

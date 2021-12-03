@@ -39,6 +39,7 @@ jobs:
         with:
           node-version: "14.16.0"
       - run: yarn install --ignore-scripts
+      - run: npm rebuild node-sass
       - run: yarn compile
       - run: NODE_ENV=production yarn start & yarn test
       - run: |

@@ -16,7 +16,7 @@ beforeAll(async () => {
   });
 });
 afterAll(async () => {
-  await browser.close();
+  if (browser) await browser.close();
 });
 describe("Signup Flow", () => {
   test("successfully complete the signup flow", async () => {

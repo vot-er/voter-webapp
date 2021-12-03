@@ -17,11 +17,7 @@
     "copy-modules": "cp ./node_modules/@fort-awesome ./dist/node_modules",
     "clean": "babel-node tools/clean.js",
     "postinstall": "npm run migrate && npm run compile",
-<<<<<<< HEAD
-    "migrate": "cd sequelize && sequelize-cli db:migrate && cd ..",
-=======
     "migrate": "cd sequelize && npx sequelize db:migrate && cd ..",
->>>>>>> main
     "build": "npm run compile",
     "compile": "npm run clean && npx babel -d ./dist/server ./server -s && npx babel -d ./dist/shared ./shared -s && npx babel-node tools/build.js && cp ./package.json ./dist/package.json",
     "seed": "cd sequelize && npx sequelize db:seed:all --config=./config/config.js",

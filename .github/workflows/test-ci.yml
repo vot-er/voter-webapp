@@ -1,14 +1,6 @@
 name: Tests CI
 on: [push, pull_request]
 jobs:
-  build:
-    steps:
-      - uses: actions/checkout@v2
-      - name: Test using Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: "14.16.0"
-      - run: yarn compile --ignore-scripts
   lint:
     runs-on: ubuntu-latest
     steps:

@@ -68,8 +68,6 @@ describe("Signup Flow", () => {
     await page.keyboard.type("Apt 123");
     await page.focus("input[name=city]");
     await page.keyboard.type("Anywhere");
-    await page.focus("input[name=city]");
-    await page.keyboard.type("Anywhere");
     await page.click("#state-select");
     await page.waitForSelector("#react-select-state-select-option-0", {
       timeout: 1000,
@@ -77,8 +75,14 @@ describe("Signup Flow", () => {
     await page.click("#react-select-state-select-option-0");
     await page.focus("input[name=zipcode]");
     await page.keyboard.type("10000");
+
+    await page.focus("input[name=phoneNumber]");
+    await page.keyboard.type("123-123-1234");
+
+    await page.waitForTimeout(500);
     await page.click("button[type=submit]");
     await page.waitForTimeout(1000);
+    await page.screenshot({ path: "screenshot.jpeg" });
     expect(page.url()).toBe("https://voter.kindful.com/");
   });
 });

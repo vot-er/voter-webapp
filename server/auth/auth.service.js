@@ -1,43 +1,51 @@
-'use strict';
-import config from '../config/environment';
-import jwt from 'jsonwebtoken';
-import expressJwt from 'express-jwt';
-import compose from 'composable-middleware';
-import {User} from '../models';
+"use strict";
+import config from "../config/environment";
+import jwt from "jsonwebtoken";
+import expressJwt from "express-jwt";
+import compose from "composable-middleware";
+import { User } from "../models";
 
 var validateJwt = expressJwt({
-  secret: config.secrets.session
+  secret: config.secrets.session,
 });
 
 export function attachUser() {
-  return compose()
-    // Validate jwt
-    .use(function(req, res, next) {
-      // allow access_token to be passed through query parameter as well
-      if (req.query && req.query.hasOwnProperty('access_token')) {
-        req.headers.authorization = `Bearer ${req.query.access_token}`;
-      } else if (req.query && typeof req.headers.authorization === 'undefined') {
-        // IE11 forgets to set Authorization header sometimes. Pull from cookie instead.
-        req.headers.authorization = `Bearer ${req.cookies.token}`;
-      }
-      validateJwt(req, res, async function(e) {
-        if (!e && req.user && req.user.id) {
-          req.user = await User.findOne({
-            where: {
-              id: req.user.id,
-            },
-            attributes: ['id', 'name', 'role']
-          });
-        } else {
-          Reflect.deleteProperty(req, 'user'); // Ignore error since authentication forbidding handled later
+  return (
+    compose()
+      // Validate jwt
+      .use(function (req, res, next) {
+        // allow access_token to be passed through query parameter as well
+        if (
+          req.query &&
+          Object.prototype.hasOwnProperty.call(req.query, "access_token")
+        ) {
+          req.headers.authorization = `Bearer ${req.query.access_token}`;
+        } else if (
+          req.query &&
+          typeof req.headers.authorization === "undefined"
+        ) {
+          // IE11 forgets to set Authorization header sometimes. Pull from cookie instead.
+          req.headers.authorization = `Bearer ${req.cookies.token}`;
         }
+        validateJwt(req, res, async function (e) {
+          if (!e && req.user && req.user.id) {
+            req.user = await User.findOne({
+              where: {
+                id: req.user.id,
+              },
+              attributes: ["id", "name", "role"],
+            });
+          } else {
+            Reflect.deleteProperty(req, "user"); // Ignore error since authentication forbidding handled later
+          }
+          return next();
+        });
+      })
+      // Attach user to request
+      .use(async function (req, res, next) {
         return next();
-      });
-    })
-    // Attach user to request
-    .use(async function(req, res, next) {
-      return next();
-    });
+      })
+  );
 }
 
 /**
@@ -47,7 +55,7 @@ export function attachUser() {
 export function isAuthenticated() {
   return compose()
     .use(attachUser())
-    .use(async function(req, res, next) {
+    .use(async function (req, res, next) {
       if (!req.user) return res.status(401).end();
       return next();
     });
@@ -58,34 +66,42 @@ export function isAuthenticated() {
  */
 export function hasGlobalRole(roleRequired) {
   if (!roleRequired) {
-    throw new Error('Required role needs to be set');
+    throw new Error("Required role needs to be set");
   }
 
   return compose()
     .use(isAuthenticated())
     .use(function meetsRequirements(req, res, next) {
-      if (config.userRoles.indexOf(req.user.role) >= config.userRoles.indexOf(roleRequired)) {
+      if (
+        config.userRoles.indexOf(req.user.role) >=
+        config.userRoles.indexOf(roleRequired)
+      ) {
         return next();
       } else {
-        return res.status(403).send('Forbidden');
+        return res.status(403).send("Forbidden");
       }
     });
 }
-
 
 export function hasAccountRole(roleRequired, options) {
   options = options || {};
   return compose()
     .use(isAuthenticated())
     .use(function meetsRequirements(req, res, next) {
-      let {accountId} = req.params;
+      let { accountId } = req.params;
       if (!accountId && options.useQueryParams) {
         accountId = req.query.accountId;
       }
-      if (!accountId) return res.status(400).send('Invalid account id.');
-      const relevantMembership = req.permissions.filter(permission => permission.accountId === accountId)[0] || {};
+      if (!accountId) return res.status(400).send("Invalid account id.");
+      const relevantMembership =
+        req.permissions.filter(
+          (permission) => permission.accountId === accountId
+        )[0] || {};
       const relevantRole = relevantMembership.role;
-      const isAuthorized = relevantRole && config.userRoles.indexOf(relevantRole) >= config.userRoles.indexOf(roleRequired);
+      const isAuthorized =
+        relevantRole &&
+        config.userRoles.indexOf(relevantRole) >=
+          config.userRoles.indexOf(roleRequired);
       return isAuthorized ? next(null) : res.status(401).end();
     });
 }
@@ -95,7 +111,7 @@ export function hasAccountRole(roleRequired, options) {
  */
 export function signToken(id, role) {
   return jwt.sign({ id, role }, config.secrets.session, {
-    expiresIn: 60 * 60 * 24 * 7 // one week
+    expiresIn: 60 * 60 * 24 * 7, // one week
   });
 }
 
@@ -104,8 +120,10 @@ export function signToken(id, role) {
  */
 export function setTokenCookie(req, res) {
   if (!req.user) {
-    return res.status(404).send('It looks like you aren\'t logged in, please try again.');
+    return res
+      .status(404)
+      .send("It looks like you aren't logged in, please try again.");
   }
   var token = signToken(req.user.id, req.user.role);
-  res.cookie('token', token);
+  res.cookie("token", token);
 }

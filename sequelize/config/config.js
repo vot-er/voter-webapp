@@ -1,20 +1,21 @@
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  process.env.DATABASE_URL = require('../../server/config/local.env').DATABASE_URL;
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+  process.env.DATABASE_URL =
+    require("../../server/config/local.env").DATABASE_URL;
 }
-const parse = require('pg-connection-string').parse;
-const parsed = parse(process.env.DATABASE_URL || '');
+const parse = require("pg-connection-string").parse;
+const parsed = parse(process.env.DATABASE_URL || "");
 
 module.exports = {
   development: {
-    username: parsed.user || '',
+    username: parsed.user || "",
     password: parsed.password || null,
-    database: parsed.database || '',
-    host: parsed.host || '127.0.0.1',
-    port: parsed.port || '5432',
-    dialect: 'postgres',
+    database: parsed.database || "",
+    host: parsed.host || "127.0.0.1",
+    port: parsed.port || "5432",
+    dialect: "postgres",
     define: {
-      timestamps: true
-    }
+      timestamps: true,
+    },
   },
   test: {
     username: parsed.user,
@@ -22,17 +23,10 @@ module.exports = {
     database: parsed.database,
     host: parsed.host,
     port: parsed.port,
-    dialect: 'postgres',
-    ssl: true,
+    dialect: "postgres",
     define: {
-      timestamps: true
+      timestamps: true,
     },
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    }
   },
   production: {
     username: parsed.user,
@@ -40,16 +34,16 @@ module.exports = {
     database: parsed.database,
     host: parsed.host,
     port: parsed.port,
-    dialect: 'postgres',
+    dialect: "postgres",
     ssl: true,
     define: {
-      timestamps: true
+      timestamps: true,
     },
     dialectOptions: {
       ssl: {
         require: true,
-        rejectUnauthorized: false
-      }
-    }
-  }
+        rejectUnauthorized: false,
+      },
+    },
+  },
 };

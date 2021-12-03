@@ -238,7 +238,7 @@ export class SignupForm extends React.Component {
             className="form__control"
             value={name}
             disabled={this.props.isAuthenticating}
-            placeholder="Elizabeth Blackwell"
+            placeholder="Elizabeth"
           />
           <label className="form__label">Last Name</label>
           <input
@@ -247,7 +247,7 @@ export class SignupForm extends React.Component {
             className="form__control"
             value={name}
             disabled={this.props.isAuthenticating}
-            placeholder="Elizabeth Blackwell"
+            placeholder="Blackwell"
           />
           <label className="form__label">Email</label>
           <input

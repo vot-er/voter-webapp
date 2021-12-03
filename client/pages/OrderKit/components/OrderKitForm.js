@@ -11,13 +11,9 @@ export class OrderForm extends React.Component {
     };
   }
   isReadyToSubmit() {
-    const { addressLine1, city, state, zipcode, phoneNumber } = this.props.form;
+    const { addressLine1, city, state, zipcode } = this.props.form;
     return (
-      addressLine1.length > 2 &&
-      city.length > 1 &&
-      state &&
-      zipcode.length >= 5 &&
-      phoneNumber.length > 0
+      addressLine1.length > 2 && city.length > 1 && state && zipcode.length >= 5
     );
   }
   onInputChange(e) {

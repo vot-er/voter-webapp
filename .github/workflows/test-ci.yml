@@ -40,7 +40,8 @@ jobs:
         with:
           node-version: "14.16.0"
       - run: yarn install --ignore-scripts
-      - run: yarn open:dist & yarn test
+      - run: yarn build
+      - run: yarn start & yarn test
       - run: |
           apt-get update \ 
           && apt-get install -y wget gnupg \

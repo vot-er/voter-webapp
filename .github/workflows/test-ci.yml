@@ -22,7 +22,6 @@ jobs:
       DOMAIN: http://localhost:3000
       PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
       PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
-      FORCE_HTTPS: false
     services:
       db:
         image: postgres

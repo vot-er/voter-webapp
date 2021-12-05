@@ -1,5 +1,4 @@
 import puppeteer from "puppeteer";
-
 jest.setTimeout(10000);
 let browser;
 beforeAll(async () => {
@@ -39,15 +38,18 @@ describe("Signup Flow", () => {
     await page.focus("input[name=newOrganizationName]");
     await page.keyboard.type("Test Clinic");
     await page.click("#state-of-work-select");
-    await page.waitForSelector("#react-select-3-option-0", {
+    await page.waitForSelector("#react-select-state-of-work-select-option-0", {
       timeout: 1000,
     });
-    await page.click("#react-select-3-option-0");
-    await page.click("#job-title-select");
-    await page.waitForSelector("#react-select-4-option-0", {
+    await page.click("#react-select-state-of-work-select-option-0");
+    await page.click("#occupation-select");
+    await page.waitForSelector("#react-select-occupation-select-option-0", {
       timeout: 1000,
     });
-    await page.click("#react-select-4-option-0");
+    await page.click("#react-select-occupation-select-option-10");
+
+    await page.focus("input[name=jobTitle]");
+    await page.keyboard.type("Clinic Manager");
 
     await page.waitForTimeout(500);
     await page.click("button[type=submit]");
@@ -82,7 +84,6 @@ describe("Signup Flow", () => {
     await page.waitForTimeout(500);
     await page.click("button[type=submit]");
     await page.waitForTimeout(1000);
-    await page.screenshot({ path: "screenshot.jpeg" });
     expect(page.url()).toBe("https://voter.kindful.com/");
   });
 });

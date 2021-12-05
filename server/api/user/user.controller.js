@@ -52,6 +52,7 @@ export async function create(req, res, next) {
       lastName,
       organization: organizationId,
       newOrganizationName,
+      occupation,
       jobTitle,
     } = req.body;
     if (!unformattedEmail || typeof unformattedEmail !== "string") {
@@ -77,6 +78,7 @@ export async function create(req, res, next) {
     user.set("firstName", firstName);
     user.set("lastName", lastName);
     user.set("jobTitle", jobTitle);
+    user.set("occupation", occupation);
     if (newOrganizationName && organizationId) {
       return res
         .status(400)

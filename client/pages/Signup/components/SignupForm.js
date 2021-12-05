@@ -15,6 +15,7 @@ export class SignupForm extends React.Component {
       firstName: "",
       lastName: "",
       organization: null,
+      occupation: null,
       jobTitle: "",
       newOrganizationName: "",
       stateOfWork: null,
@@ -40,7 +41,7 @@ export class SignupForm extends React.Component {
     }));
   }
 
-  getJobTitleOptions() {
+  getOccupationOptions() {
     return [
       {
         label: "Medical Student",
@@ -129,6 +130,7 @@ export class SignupForm extends React.Component {
       newOrganizationName,
       organization,
       isSubmitting,
+      occupation,
       jobTitle,
     } = this.state;
     e.stopPropagation();
@@ -150,7 +152,8 @@ export class SignupForm extends React.Component {
         firstName,
         lastName,
         stateOfWork,
-        jobTitle: jobTitle ? jobTitle.value : "",
+        occupation: occupation ? occupation.value : "",
+        jobTitle,
       };
       if (createNewOrganization) {
         signupBody.newOrganizationName = newOrganizationName;
@@ -218,10 +221,26 @@ export class SignupForm extends React.Component {
       </div>
     );
   }
-
+  renderJobTitle() {
+    const { jobTitle, occupation } = this.state;
+    if (!occupation || occupation.value !== "other") return null;
+    return (
+      <div style={{ marginBottom: 8 }}>
+        <label className="form__label">Job Title</label>
+        <input
+          onChange={(e) => this.onChange(e.target.name, e.target.value)}
+          name="jobTitle"
+          className="form__control"
+          style={{ marginBottom: 0 }}
+          value={jobTitle}
+          disabled={this.props.isAuthenticating}
+        />
+      </div>
+    );
+  }
   render() {
     const isReadyToSubmit = this.isReadyToSubmit();
-    const { isSubmitting, name, email, password, stateOfWork, jobTitle } =
+    const { isSubmitting, name, email, password, stateOfWork, occupation } =
       this.state;
     return (
       <div className="signup-card">
@@ -267,20 +286,23 @@ export class SignupForm extends React.Component {
               className="form__control"
               name="stateOfWork"
               id="state-of-work-select"
+              instanceId="state-of-work-select"
               value={stateOfWork}
             />
           </div>
           <div style={{ marginBottom: 8 }}>
-            <label className="form__label">Job Title</label>
+            <label className="form__label">Occupation</label>
             <Select
-              options={this.getJobTitleOptions()}
-              onChange={(e) => this.onChange("jobTitle", e)}
+              options={this.getOccupationOptions()}
+              onChange={(e) => this.onChange("occupation", e)}
               className="form__control"
-              name="jobTitle"
-              id="job-title-select"
-              value={jobTitle}
+              name="occupation"
+              id="occupation-select"
+              instanceId="occupation-select"
+              value={occupation}
             />
           </div>
+          {this.renderJobTitle()}
           <label className="form__label">Create a Password</label>
           <input
             onChange={(e) => this.onChange(e.target.name, e.target.value)}

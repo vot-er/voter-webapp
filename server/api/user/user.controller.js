@@ -7,6 +7,7 @@ import moment from "moment";
 import emailer from "../../email";
 import PasswordResetEmail from "../../email/components/PasswordReset/PasswordResetEmail";
 import { applyPatch } from "../../utils/patch";
+import { everyActionApi } from '../everyAction';
 const Op = Sequelize.Op;
 
 /**
@@ -79,6 +80,7 @@ export async function create(req, res, next) {
     user.set("lastName", lastName);
     user.set("jobTitle", jobTitle);
     user.set("occupation", occupation);
+    let employer = newOrganizationName;
     if (newOrganizationName && organizationId) {
       return res
         .status(400)
@@ -105,7 +107,23 @@ export async function create(req, res, next) {
         return res.status(400).send("Invalid organization id provided.");
 
       user.organization = organizationToJoin.id;
+      employer = organizationToJoin.name;
     }
+
+    try {
+      const res = await everyActionApi.peoplefindorcreate({
+        firstName,
+        lastName,
+        emails: [{ email }],
+        employer,
+        occupation,
+        jobTitle,
+      });
+      user.vanId = res.vanId;
+    } catch (err) {
+      console.error(err);
+    }
+
     user = await user.save();
     const token = jwt.sign({ id: user.id }, config.secrets.session, {
       expiresIn: 60 * 60 * 5,

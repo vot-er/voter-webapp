@@ -7,7 +7,7 @@ import moment from "moment";
 import emailer from "../../email";
 import PasswordResetEmail from "../../email/components/PasswordReset/PasswordResetEmail";
 import { applyPatch } from "../../utils/patch";
-import { everyActionApi } from '../everyAction';
+import { everyAction } from '../../everyAction';
 const Op = Sequelize.Op;
 
 /**
@@ -111,23 +111,32 @@ export async function create(req, res, next) {
     }
 
     try {
-      const { vanId } = await everyActionApi.peoplefindorcreate({
-        firstName,
-        lastName,
-        emails: [{ email }],
-        employer,
-        occupation,
-        jobTitle,
+      const res = await everyAction({
+        method: "POST",
+        url: "/people/findOrCreate",
+        data: {
+          firstName,
+          lastName,
+          emails: [{ email }],
+          employer,
+          occupation,
+          jobTitle,
+        },
       });
+      const { vanId } = res.data;
       user.vanId = vanId;
-      await everyActionApi.peoplevanidcanvassresponses({
-        canvassContext: { omitActivistCodeContactHistory: true },
-        responses: [{
-          type: "ActivistCode",
-          action: "Apply",
-          activistCodeId: "EID52D2C4F", // HasTrackableHDK
-        }],
-      }, { vanId });
+      await everyAction({
+        method: "POST",
+        url: `/people/${vanId}/canvassResponses`,
+        data: {
+          canvassContext: { omitActivistCodeContactHistory: true },
+          responses: [{
+            type: "ActivistCode",
+            action: "Apply",
+            activistCodeId: "EID52D2C4F", // HasTrackableHDK
+          }],
+        },
+      });
     } catch (err) {
       console.error(err);
     }

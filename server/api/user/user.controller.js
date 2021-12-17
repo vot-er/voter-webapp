@@ -111,7 +111,7 @@ export async function create(req, res, next) {
     }
 
     try {
-      const res = await everyActionApi.peoplefindorcreate({
+      const { vanId } = await everyActionApi.peoplefindorcreate({
         firstName,
         lastName,
         emails: [{ email }],
@@ -119,7 +119,15 @@ export async function create(req, res, next) {
         occupation,
         jobTitle,
       });
-      user.vanId = res.vanId;
+      user.vanId = vanId;
+      await everyActionApi.peoplevanidcanvassresponses({
+        canvassContext: { omitActivistCodeContactHistory: true },
+        responses: [{
+          type: "ActivistCode",
+          action: "Apply",
+          activistCodeId: "EID52D2C4F", // HasTrackableHDK
+        }],
+      }, { vanId });
     } catch (err) {
       console.error(err);
     }

@@ -1,7 +1,14 @@
+import { Client } from "pg";
 import puppeteer from "puppeteer";
+import { UUIDV4 } from "sequelize";
+
+require("dotenv").config();
+const client = new Client(process.env.DATABASE_URL);
+
 jest.setTimeout(10000);
 let browser;
 beforeAll(async () => {
+  await client.connect();
   browser = await puppeteer.launch({
     headless: true,
     args: [
@@ -16,9 +23,18 @@ beforeAll(async () => {
 });
 afterAll(async () => {
   if (browser) await browser.close();
+  await client.end();
 });
 describe("Signup Flow", () => {
   test("successfully complete the signup flow", async () => {
+    const userValues = {
+      firstName: "John",
+      lastName: "Doe",
+      email: `${UUIDV4()}@mailinator.com`,
+      jobTitle: "Clinic Manager",
+      occupation: "other",
+      stateOfWork: "AL",
+    };
     // Signup
     const page = await browser.newPage();
     await page.goto("http://localhost:3000");
@@ -26,11 +42,11 @@ describe("Signup Flow", () => {
     const html = await page.$eval(".signup-card", (e) => e.innerHTML);
     expect(html).toContain("Let's get you a healthy democracy kit.");
     await page.focus("input[name=firstName]");
-    await page.keyboard.type("John");
+    await page.keyboard.type(expectedValues.firstName);
     await page.focus("input[name=lastName]");
-    await page.keyboard.type("Doe");
+    await page.keyboard.type(expectedValues.lastName);
     await page.focus("input[name=email]");
-    await page.keyboard.type("test@mailinator.com");
+    await page.keyboard.type(expectedValues.email);
     await page.focus("input[name=password]");
     await page.keyboard.type("testtest");
     await page.click("#create-new-org-link");
@@ -49,7 +65,7 @@ describe("Signup Flow", () => {
     await page.click("#react-select-occupation-select-option-10");
 
     await page.focus("input[name=jobTitle]");
-    await page.keyboard.type("Clinic Manager");
+    await page.keyboard.type(expectedValues.jobTitle);
 
     await page.waitForTimeout(500);
     await page.click("button[type=submit]");
@@ -85,5 +101,14 @@ describe("Signup Flow", () => {
     await page.click("button[type=submit]");
     await page.waitForTimeout(1000);
     expect(page.url()).toBe("https://voter.kindful.com/");
+    const { rows } = await client.query(
+      `SELECT * FROM "users" WHERE email = $1`,
+      [userValues.email]
+    );
+    const user = rows[0];
+    expect(rows.length).toEqual(1);
+    Object.keys(userValues).forEach((key) => {
+      expect(user[key]).toEqual(userValues[key]);
+    });
   });
 });

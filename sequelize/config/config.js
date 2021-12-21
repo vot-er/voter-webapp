@@ -1,7 +1,4 @@
-if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
-  process.env.DATABASE_URL =
-    require("../../server/config/local.env").DATABASE_URL;
-}
+require("dotenv").config({ path: "../.env" });
 const parse = require("pg-connection-string").parse;
 const parsed = parse(process.env.DATABASE_URL || "");
 

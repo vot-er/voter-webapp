@@ -7,7 +7,7 @@ import moment from "moment";
 import emailer from "../../email";
 import PasswordResetEmail from "../../email/components/PasswordReset/PasswordResetEmail";
 import { applyPatch } from "../../utils/patch";
-import { everyAction } from '../../everyAction';
+import { everyAction } from "../../everyAction";
 const Op = Sequelize.Op;
 
 /**
@@ -55,6 +55,7 @@ export async function create(req, res, next) {
       newOrganizationName,
       occupation,
       jobTitle,
+      stateOfWork,
     } = req.body;
     if (!unformattedEmail || typeof unformattedEmail !== "string") {
       return res.status(422).send("Must provide an email address.");
@@ -81,6 +82,7 @@ export async function create(req, res, next) {
     user.set("jobTitle", jobTitle);
     user.set("occupation", occupation);
     let employer = newOrganizationName;
+    user.set("stateOfWork", stateOfWork);
     if (newOrganizationName && organizationId) {
       return res
         .status(400)
@@ -130,11 +132,13 @@ export async function create(req, res, next) {
         url: `/people/${vanId}/canvassResponses`,
         data: {
           canvassContext: { omitActivistCodeContactHistory: true },
-          responses: [{
-            type: "ActivistCode",
-            action: "Apply",
-            activistCodeId: "EID52D2C4F", // HasTrackableHDK
-          }],
+          responses: [
+            {
+              type: "ActivistCode",
+              action: "Apply",
+              activistCodeId: "EID52D2C4F", // HasTrackableHDK
+            },
+          ],
         },
       });
     } catch (err) {

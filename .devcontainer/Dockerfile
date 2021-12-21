@@ -2,16 +2,13 @@
 ARG VARIANT
 FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:0-${VARIANT}
 
+# [Optional] Uncomment this section to install additional OS packages.
+# RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+#     && apt-get -y install --no-install-recommends <your-package-list-here>
 # Needed to run puppeteer
 RUN apt-get update \
-    && apt-get install -y wget gnupg \
-    && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
-    && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
-    && apt-get update \
-    && apt-get install -y google-chrome-stable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf libxss1 \
-      --no-install-recommends \
+    && apt-get install -y chromium \
     && rm -rf /var/lib/apt/lists/*
-
 
 # [Optional] Uncomment if you want to install an additional version of node using nvm
 # ARG EXTRA_NODE_VERSION=10
@@ -23,10 +20,6 @@ RUN su node -c "npm install -g node-gyp@8"
 COPY ./package.json ${LOCAL_WORKSPACE}
 COPY ./yarn.lock ${LOCAL_WORKSPACE}
 
-RUN yarn install --ignore-scripts
-
-COPY . ${LOCAL_WORKSPACE}
-
-WORKDIR ${LOCAL_WORKSPACE}
+RUN yarn install --ignore-scripts --frozen-lockfile
 
 CMD ["yarn", "dev"]

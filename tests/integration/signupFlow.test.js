@@ -1,6 +1,6 @@
 import { Client } from "pg";
 import puppeteer from "puppeteer";
-import { UUIDV4 } from "sequelize";
+import { v4 } from "uuid";
 
 require("dotenv").config();
 const client = new Client(process.env.DATABASE_URL);
@@ -11,6 +11,7 @@ beforeAll(async () => {
   await client.connect();
   browser = await puppeteer.launch({
     headless: true,
+    executablePath: process.env.CHROMIUM_EXECUTABLE_PATH,
     args: [
       // Required for Docker version of Puppeteer
       "--no-sandbox",
@@ -35,7 +36,7 @@ describe("Signup Flow", () => {
     const expectedValues = {
       firstName: "John",
       lastName: "Doe",
-      email: `${UUIDV4()}@mailinator.com`,
+      email: `${v4()}@mailinator.com`,
       jobTitle: "Clinic Manager",
       occupation: "other",
       stateOfWork: "AL",
@@ -80,7 +81,7 @@ describe("Signup Flow", () => {
     await page.waitForTimeout(1000);
     expect(page.url()).toBe("https://voter.kindful.com/");
     const { rows } = await client.query(
-      `SELECT * FROM "users" WHERE email = $1`,
+      `SELECT * FROM "users" WHERE email = $1::text`,
       [expectedValues.email]
     );
     const user = rows[0];

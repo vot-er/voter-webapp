@@ -151,7 +151,7 @@ export class SignupForm extends React.Component {
         password,
         firstName,
         lastName,
-        stateOfWork,
+        stateOfWork: stateOfWork ? stateOfWork.value : "",
         occupation: occupation ? occupation.value : "",
         jobTitle,
       };

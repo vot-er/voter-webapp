@@ -25,6 +25,11 @@ var all = {
   // Postmark Token
   token: process.env.POSTMARK_TOKEN,
 
+  everyAction: {
+    appName: process.env.EVERYACTION_APP_NAME,
+    apiKey: process.env.EVERYACTION_API_KEY,
+  },
+
   // Browser-sync port
   browserSyncPort: process.env.BROWSER_SYNC_PORT || 3000,
 

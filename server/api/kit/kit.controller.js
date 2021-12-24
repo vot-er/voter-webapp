@@ -137,3 +137,48 @@ export async function bulkAssign(req, res, next) {
     return next(e);
   }
 }
+
+export async function bulkShip(req, res, next) {
+  try {
+    const {codes} = req.body;
+    const unShipped = await Kit.findAll({
+      where: {
+        code: !null,
+        shipped: false
+      }
+    });
+    const results = codes.map(code => ({
+      code: code,
+      kitId: null,
+      status: null,
+      failureReason: null
+    }));
+    for (let i = 0; i < unShipped.length; i++) {
+      if (codes.includes(unShipped[i].code.toString(10))) {
+        let result = results.filter(obj => {
+          return obj.code === unShipped[i].code;
+        });
+        try {
+          unShipped[i].shipped = true;
+          await unShipped[i].save();
+          result.status = 'succeeded';
+          result.kitId = unShipped[i].id;
+        } catch(err) {
+          result.status = 'failed';
+          result.failureReason = String(err);
+          return next(err);
+        };
+      };
+    };
+    for(let i = 0; i < results.length; i++){
+      if(results[i].status == null){
+        results[i].kitId = 'none';
+        results[i].status = 'failed';
+        results[i].failureReason = 'no matched kit';
+      };
+    };
+    return res.json(results);
+  } catch(err) {
+    return next(err);
+  };
+};

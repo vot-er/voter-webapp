@@ -63,6 +63,7 @@ class App extends React.Component {
                   <PrivateRoute path="/admin/kits/:kitId" exact component={KitShowAdminPage} isAuthorized={isAdmin} redirectTo="/404" />
                   <PrivateRoute path="/admin/users/:userId" exact component={UserShowAdminPage} isAuthorized={isAdmin} redirectTo="/404" />
                   <PrivateRoute path="/admin/bulk-update" exact component={BulkUpdatePage} isAuthorized={isAdmin} redirectTo="/404" />
+                  <PrivateRoute path="/admin/bulk-ship" exact component={BulkShipPage} isAuthorized={isAdmin} redirectTo='/404' />
                   <Route path="/" component={NotFoundPage} />
                 </Switch>
               </div>

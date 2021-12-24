@@ -57,3 +57,10 @@ export function bulkAssign(body) {
     return data;
   };
 }
+
+export function bulkShip(body) {
+  return (async function() {
+    const {data} = await axios.post('/api/kits/bulk-ship', body);
+    return data;
+  })()
+}

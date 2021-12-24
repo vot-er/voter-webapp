@@ -67,7 +67,7 @@ function BulkShipPage() {
         <h1>Bulk Ship Kits</h1>
       <form onSubmit = {handleSubmit}>
         <textarea value = {codes} style = {{width: 500, height: 400}} onChange = {handleChange} placeholder = 'Add a list of line separated codes to mark unshipped kits as shipped.'/>
-        <SubmitButton className="btn btn-primary signup-button" isSubmitting={false} value="Bulk Update"/>
+        <SubmitButton className='btn btn-primary signup-button' isSubmitting={false} value='Bulk Update'/>
       </form>
       {renderResults()}
     </div>

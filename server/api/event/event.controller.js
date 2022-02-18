@@ -1,4 +1,7 @@
-import {createEventAndAttachKitMetadata} from '../../services/event/event.service.js';
+import {
+  createEventAndAttachKitMetadata,
+  updateEveryActionEventFields,
+} from '../../services/event/event.service.js';
 
 export async function create(req, res) {
   try {
@@ -10,7 +13,7 @@ export async function create(req, res) {
       os, platform, browser, isMobile, isDesktop, isBot, source: userAgent
     } = req.useragent;
 
-    await createEventAndAttachKitMetadata({
+    const ev = await createEventAndAttachKitMetadata({
       code: ref,
       type,
       destination,
@@ -21,6 +24,12 @@ export async function create(req, res) {
       os,
       platform,
     });
+
+    if (ev.user) {
+      const user = await ev.getUser();
+      await updateEveryActionEventFields(user)
+    }
+
     return res.status(204).end();
   } catch(err) {
     console.error(err);

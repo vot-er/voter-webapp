@@ -1,13 +1,13 @@
 "use strict";
 
-import { User, Organization, Kit, Sequelize } from "../../models";
+import { User, Organization, Sequelize } from "../../models";
 import config from "../../config/environment";
 import jwt from "jsonwebtoken";
 import moment from "moment";
 import emailer from "../../email";
 import PasswordResetEmail from "../../email/components/PasswordReset/PasswordResetEmail";
 import { applyPatch } from "../../utils/patch";
-import { everyAction } from "../../everyAction";
+import { everyAction, getOrCreateVanId } from "../../everyAction";
 const Op = Sequelize.Op;
 
 /**
@@ -81,7 +81,6 @@ export async function create(req, res, next) {
     user.set("lastName", lastName);
     user.set("jobTitle", jobTitle);
     user.set("occupation", occupation);
-    let employer = newOrganizationName;
     user.set("stateOfWork", stateOfWork);
     if (newOrganizationName && organizationId) {
       return res
@@ -109,23 +108,12 @@ export async function create(req, res, next) {
         return res.status(400).send("Invalid organization id provided.");
 
       user.organization = organizationToJoin.id;
-      employer = organizationToJoin.name;
     }
 
+    user = await user.save();
+
     try {
-      const res = await everyAction({
-        method: "POST",
-        url: "/people/findOrCreate",
-        data: {
-          firstName,
-          lastName,
-          emails: [{ email }],
-          employer,
-          occupation,
-          jobTitle,
-        },
-      });
-      const { vanId } = res.data;
+      const vanId = await getOrCreateVanId(user);
       user.vanId = vanId;
       await everyAction({
         method: "POST",

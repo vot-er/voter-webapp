@@ -16,7 +16,10 @@ export default function (app) {
   app.use("/api/organizations", require("./api/organization"));
 
   app.options("/api/events", cors());
+  app.options("/api/redirects", cors());
+
   app.use("/api/events", cors(), require("./api/event"));
+  app.use("/api/redirects", cors(), require("./api/redirect"));
 
   app.use("/auth", require("./auth").default);
 

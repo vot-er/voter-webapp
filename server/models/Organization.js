@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       customUrl: {
         type: DataTypes.TEXT,
-        allowNull: false,
+        allowNull: true,
       },
       public: {
         type: DataTypes.BOOLEAN,

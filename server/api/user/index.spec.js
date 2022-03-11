@@ -1,23 +1,23 @@
-'use strict';
+"use strict";
 
 function mockAuthService() {
   return {
     isAuthenticated() {
-      return 'authService.isAuthenticated';
+      return "authService.isAuthenticated";
     },
     hasGlobalRole(role) {
       return `authService.hasGlobalRole.${role}`;
-    }
+    },
   };
 }
 function mockUserCtrl() {
   return {
-    index: 'userCtrl.index',
-    destroy: 'userCtrl.destroy',
-    me: 'userCtrl.me',
-    changePassword: 'userCtrl.changePassword',
-    show: 'userCtrl.show',
-    create: 'userCtrl.create'
+    index: "userCtrl.index",
+    destroy: "userCtrl.destroy",
+    me: "userCtrl.me",
+    changePassword: "userCtrl.changePassword",
+    show: "userCtrl.show",
+    create: "userCtrl.create",
   };
 }
 
@@ -29,24 +29,24 @@ function mockRouter() {
         put: jest.fn(),
         patch: jest.fn(),
         post: jest.fn(),
-        delete: jest.fn()
+        delete: jest.fn(),
       };
-    }
+    },
   };
 }
 
 // require the index with our stubbed out modules
-jest.mock('express', () => mockRouter());
-jest.mock('./user.controller.js', () => mockUserCtrl());
-jest.mock('../../auth/auth.service', () => mockAuthService());
+jest.mock("express", () => mockRouter());
+jest.mock("./user.controller.js", () => mockUserCtrl());
+jest.mock("../../auth/auth.service", () => mockAuthService());
 
-var userIndex = require('./user.controller.js');
+var userIndex = require("./user.controller.js");
 
-describe('User API Router:', function() {
-  it('should return an express router instance', function() {
+describe("User API Router:", function () {
+  it("should return an express router instance", function () {
     expect(userIndex).toEqual(mockUserCtrl());
   });
-/*
+  /*
   describe('GET /api/users', function() {
     it('should verify admin role and route to user.controller.index', function() {
       expect(routerStub.get

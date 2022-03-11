@@ -1,4 +1,9 @@
-export async function sequentiallyDelete(functionsToRun, integrationId, limit, totalRowsDeleted) {
+export async function sequentiallyDelete(
+  functionsToRun,
+  integrationId,
+  limit,
+  totalRowsDeleted
+) {
   totalRowsDeleted = totalRowsDeleted || 0;
   if (functionsToRun.length === 0) {
     return true;
@@ -8,7 +13,12 @@ export async function sequentiallyDelete(functionsToRun, integrationId, limit, t
     const rowsDeleted = queryResponse[1].rowCount;
     totalRowsDeleted += rowsDeleted;
     if (rowsDeleted < limit) {
-      return sequentiallyDelete(functionsToRun.slice(1), integrationId, limit, totalRowsDeleted);
+      return sequentiallyDelete(
+        functionsToRun.slice(1),
+        integrationId,
+        limit,
+        totalRowsDeleted
+      );
     }
     return false;
   }

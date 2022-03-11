@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
   var Event = sequelize.define(
-    'event',
+    "event",
     {
       id: {
         primaryKey: true,
         type: DataTypes.UUID,
         allowNull: false,
-        defaultValue: DataTypes.UUIDV4
+        defaultValue: DataTypes.UUIDV4,
       },
       type: {
         type: DataTypes.TEXT,
@@ -28,19 +28,28 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  Event.associate = function(models) {
-    Event.belongsTo(models.Kit, {as: 'Kit', foreignKey: {
-      name: 'kit',
-      allowNull: true
-    }});
-    Event.belongsTo(models.Organization, {as: 'Organization', foreignKey: {
-      name: 'organization',
-      allowNull: true
-    }});
-    Event.belongsTo(models.User, {as: 'User', foreignKey: {
-      name: 'user',
-      allowNull: true
-    }});
+  Event.associate = function (models) {
+    Event.belongsTo(models.Kit, {
+      as: "Kit",
+      foreignKey: {
+        name: "kit",
+        allowNull: true,
+      },
+    });
+    Event.belongsTo(models.Organization, {
+      as: "Organization",
+      foreignKey: {
+        name: "organization",
+        allowNull: true,
+      },
+    });
+    Event.belongsTo(models.User, {
+      as: "User",
+      foreignKey: {
+        name: "user",
+        allowNull: true,
+      },
+    });
   };
   return Event;
 };

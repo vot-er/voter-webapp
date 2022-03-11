@@ -1,5 +1,5 @@
-import {schema as schemaTypes} from 'normalizr';
-const {Entity} = schemaTypes;
+import { schema as schemaTypes } from "normalizr";
+const { Entity } = schemaTypes;
 
 export default class Normalizer {
   constructor() {
@@ -10,20 +10,20 @@ export default class Normalizer {
     return definition(this);
   }
   define(key, model, options = {}) {
-    options.idAttribute = options.idAttribute || 'id';
+    options.idAttribute = options.idAttribute || "id";
     const schema = new Entity(key, {}, options);
     this.schemaMap[key] = schema;
     this.schemas.push({
       key,
-      model
+      model,
     });
     return schema;
   }
   init() {
-    this.schemas.forEach(({key, model}) => {
+    this.schemas.forEach(({ key, model }) => {
       const mappedModel = {};
-      Object.keys(model).forEach(modelKey => {
-        if (typeof model[modelKey] === 'string') {
+      Object.keys(model).forEach((modelKey) => {
+        if (typeof model[modelKey] === "string") {
           const schema = this.schemaMap[model[modelKey]];
           mappedModel[modelKey] = schema;
         } else {

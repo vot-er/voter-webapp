@@ -1,21 +1,22 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import { withRouter } from 'react-router-dom';
-import {TopNav} from 'Components';
-import {logout} from '../../actions/authActions';
-import './account-page.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { withRouter } from "react-router-dom";
+import { TopNav } from "Components";
+import { logout } from "../../actions/authActions";
+import "./account-page.scss";
 
 export class HomePage extends React.Component {
-  componentDidMount() {
-  }
+  componentDidMount() {}
   render() {
     return (
       <div className="fill">
-        <TopNav title="Account"/>
+        <TopNav title="Account" />
         <div className="fill home-page">
-          <a href="#" onClick={this.props.logout.bind(this)}>Logout</a>
+          <a href="#" onClick={this.props.logout.bind(this)}>
+            Logout
+          </a>
         </div>
       </div>
     );
@@ -23,21 +24,19 @@ export class HomePage extends React.Component {
 }
 
 HomePage.propTypes = {
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
 };
 
 function mapStateToProps() {
-  return {
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    logout: bindActionCreators(logout, dispatch)
+    logout: bindActionCreators(logout, dispatch),
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomePage));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(HomePage)
+);

@@ -1,25 +1,29 @@
-const DELIMITER = '__'; // double underscore
+const DELIMITER = "__"; // double underscore
 
 function flattenSchema(schema) {
-  return getFlattened('', schema, {});
+  return getFlattened("", schema, {});
 }
 
 function getFlattened(prefix, object, flattenedSchema) {
   flattenedSchema = flattenedSchema || {};
-  Object.keys(object).forEach(key => {
-    if(isColumnDefinition(object[key])) {
+  Object.keys(object).forEach((key) => {
+    if (isColumnDefinition(object[key])) {
       flattenedSchema[`${prefix}${key}`] = object[key];
     } else {
-      flattenedSchema = getFlattened(`${prefix}${key}${DELIMITER}`, object[key], flattenedSchema);
+      flattenedSchema = getFlattened(
+        `${prefix}${key}${DELIMITER}`,
+        object[key],
+        flattenedSchema
+      );
     }
   });
   return flattenedSchema;
 }
 
 function isColumnDefinition(object) {
-  if(isValidator(object)) {
+  if (isValidator(object)) {
     return true;
-  } else if(object.type && isValidator(object.type)) {
+  } else if (object.type && isValidator(object.type)) {
     return true;
   }
   return false;
@@ -27,21 +31,21 @@ function isColumnDefinition(object) {
 
 function isValidator(field) {
   const dataTypes = [
-    'STRING',
-    'CHAR',
-    'TEXT',
-    'TINYINT',
-    'SMALLINT',
-    'INTEGER',
-    'DECIMAL',
-    'FLOAT',
-    'BOOLEAN',
-    'JSONB',
-    'BLOB',
-    'ENUM',
-    'DATE',
-    'UUID',
-    'UUIDV4'
+    "STRING",
+    "CHAR",
+    "TEXT",
+    "TINYINT",
+    "SMALLINT",
+    "INTEGER",
+    "DECIMAL",
+    "FLOAT",
+    "BOOLEAN",
+    "JSONB",
+    "BLOB",
+    "ENUM",
+    "DATE",
+    "UUID",
+    "UUIDV4",
   ];
   return dataTypes.indexOf(field.key) > -1;
 }
@@ -56,8 +60,12 @@ function setNested(key, value) {
 
 function getAllNested() {
   let nestedObject = {};
-  Object.keys(this.toJSON()).forEach(key => {
-    nestedObject = iterateGetNestedOneLevel(key.split(DELIMITER), nestedObject, this.get(key));
+  Object.keys(this.toJSON()).forEach((key) => {
+    nestedObject = iterateGetNestedOneLevel(
+      key.split(DELIMITER),
+      nestedObject,
+      this.get(key)
+    );
   });
   return nestedObject;
 }
@@ -67,7 +75,7 @@ function convertDotNotation(key) {
 }
 
 function iterateGetNestedOneLevel(keys, currentObject, value) {
-  if(!keys.length) {
+  if (!keys.length) {
     return value;
   }
   currentObject[keys[0]] = currentObject[keys[0]] || {};
@@ -76,10 +84,14 @@ function iterateGetNestedOneLevel(keys, currentObject, value) {
 
 function convertNestedObject(nestedObject, prefix) {
   let flattenedObject = {};
-  prefix = prefix || '';
-  Object.keys(nestedObject).forEach(key => {
-    if(isNestedField(nestedObject[key])) { // should really check schema column type
-      flattenedObject = Object.assign(flattenedObject, convertNestedObject(nestedObject[key], `${prefix}${key}${DELIMITER}`));
+  prefix = prefix || "";
+  Object.keys(nestedObject).forEach((key) => {
+    if (isNestedField(nestedObject[key])) {
+      // should really check schema column type
+      flattenedObject = Object.assign(
+        flattenedObject,
+        convertNestedObject(nestedObject[key], `${prefix}${key}${DELIMITER}`)
+      );
     } else {
       flattenedObject[`${prefix}${key}`] = nestedObject[key];
     }
@@ -88,7 +100,7 @@ function convertNestedObject(nestedObject, prefix) {
 }
 
 function isNestedField(value) {
-  return typeof value === 'object' && !(value instanceof Date);
+  return typeof value === "object" && !(value instanceof Date);
 }
 
 function applyNestedPatch(object, patch) {
@@ -97,7 +109,7 @@ function applyNestedPatch(object, patch) {
 }
 
 function applyPatch(object, flattenedPatch) {
-  Object.keys(flattenedPatch).forEach(key => {
+  Object.keys(flattenedPatch).forEach((key) => {
     object.set(key, flattenedPatch[key]);
   });
   return object;
@@ -111,5 +123,5 @@ module.exports = {
   getAllNested: getAllNested,
   flattenSchema: flattenSchema,
   applyNestedPatch: applyNestedPatch,
-  applyPatch: applyPatch
+  applyPatch: applyPatch,
 };

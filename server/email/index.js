@@ -1,4 +1,4 @@
-import {validateProps} from './components/PropTypes';
+import { validateProps } from "./components/PropTypes";
 
 export async function create(EmailComponent, props) {
   const generated = new EmailComponent(props);

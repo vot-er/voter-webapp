@@ -1,7 +1,7 @@
-import React from 'react';
-import {EmptyNavbar} from '../../components';
+import React from "react";
+import { EmptyNavbar } from "../../components";
 
-const EmailVerificationPage = () =>
+const EmailVerificationPage = () => (
   <div className="fill flex-column overflow-hidden">
     <EmptyNavbar />
     <div className="fill login-page">
@@ -10,6 +10,7 @@ const EmailVerificationPage = () =>
         Check your email for a verification link.
       </div>
     </div>
-  </div>;
+  </div>
+);
 
 export default EmailVerificationPage;

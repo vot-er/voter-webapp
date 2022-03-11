@@ -1,15 +1,15 @@
-import {initializeNormalState} from '../utils/normalize';
+import { initializeNormalState } from "../utils/normalize";
 
 export default {
   auth: {
     isAuthenticating: false,
     user: null,
-    activeAccountId: null
+    activeAccountId: null,
   },
   alert: {
-    err: null
+    err: null,
   },
   users: initializeNormalState(),
   kits: initializeNormalState(),
-  organizations: initializeNormalState()
+  organizations: initializeNormalState(),
 };

@@ -1,9 +1,7 @@
 // Centralized propType definitions
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-const {
-  shape, number, bool, string
-} = PropTypes;
+const { shape, number, bool, string } = PropTypes;
 
 export const fuelSavings = shape({
   newMpg: PropTypes.oneOf([number, string]),
@@ -15,7 +13,7 @@ export const fuelSavings = shape({
   displayResult: bool,
   dateModified: string,
   necessaryDataIsProvidedToCalculateSavings: bool,
-  savings
+  savings,
 });
 
 export const savings = shape({

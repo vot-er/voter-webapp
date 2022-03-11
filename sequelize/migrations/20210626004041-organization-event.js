@@ -1,13 +1,13 @@
-'use strict';
+"use strict";
 
 module.exports = {
-  up: async(queryInterface, DataTypes) => {
-    await queryInterface.createTable('organizations', {
+  up: async (queryInterface, DataTypes) => {
+    await queryInterface.createTable("organizations", {
       id: {
         primaryKey: true,
         type: DataTypes.UUID,
         allowNull: false,
-        defaultValue: DataTypes.UUIDV4
+        defaultValue: DataTypes.UUIDV4,
       },
       name: {
         type: DataTypes.TEXT,
@@ -20,12 +20,12 @@ module.exports = {
         type: DataTypes.DATE,
       },
     });
-    await queryInterface.createTable('events', {
+    await queryInterface.createTable("events", {
       id: {
         primaryKey: true,
         type: DataTypes.UUID,
         allowNull: false,
-        defaultValue: DataTypes.UUIDV4
+        defaultValue: DataTypes.UUIDV4,
       },
       type: {
         type: DataTypes.TEXT,
@@ -42,23 +42,23 @@ module.exports = {
       organization: {
         type: DataTypes.UUID,
         references: {
-          model: 'organizations',
-          key: 'id'
-        }
+          model: "organizations",
+          key: "id",
+        },
       },
       user: {
         type: DataTypes.UUID,
         references: {
-          model: 'users',
-          key: 'id'
-        }
+          model: "users",
+          key: "id",
+        },
       },
       kit: {
         type: DataTypes.UUID,
         references: {
-          model: 'kits',
-          key: 'id'
-        }
+          model: "kits",
+          key: "id",
+        },
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -67,18 +67,18 @@ module.exports = {
         type: DataTypes.DATE,
       },
     });
-    await queryInterface.addColumn('users', 'organization', {
+    await queryInterface.addColumn("users", "organization", {
       type: DataTypes.UUID,
       references: {
-        model: 'organizations',
-        key: 'id'
-      }
+        model: "organizations",
+        key: "id",
+      },
     });
   },
 
-  down: async queryInterface => {
-    await queryInterface.removeColumn('users', 'organization');
-    await queryInterface.dropTable('events');
-    await queryInterface.dropTable('organizations');
-  }
+  down: async (queryInterface) => {
+    await queryInterface.removeColumn("users", "organization");
+    await queryInterface.dropTable("events");
+    await queryInterface.dropTable("organizations");
+  },
 };

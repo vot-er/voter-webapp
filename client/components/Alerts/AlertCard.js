@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import './alerts.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import "./alerts.scss";
 
 class AlertCard extends React.Component {
   render() {
-    const {message, type} = this.props;
+    const { message, type } = this.props;
     if (!message) {
       return null;
     } else {
@@ -15,7 +15,7 @@ class AlertCard extends React.Component {
 
 AlertCard.propTypes = {
   message: PropTypes.string,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
 };
 
 export default AlertCard;

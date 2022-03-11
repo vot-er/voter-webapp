@@ -1,21 +1,21 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
   var Session = sequelize.define(
-    'session',
+    "session",
     {
       sid: {
         type: DataTypes.STRING,
-        primaryKey: true
+        primaryKey: true,
       },
       userId: DataTypes.STRING,
       expires: DataTypes.DATE,
       data: DataTypes.STRING(50000),
-      createdAt: {type: DataTypes.DATE, allowNull: false},
-      updatedAt: DataTypes.DATE
+      createdAt: { type: DataTypes.DATE, allowNull: false },
+      updatedAt: DataTypes.DATE,
     },
     {}
   );
-  Session.associate = function(models) {
+  Session.associate = function (models) {
     // associations can be defined here
   };
   return Session;

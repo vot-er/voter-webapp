@@ -1,6 +1,11 @@
-import {START_LOGIN, FINISH_LOGIN, GET_MY_PROFILE, LOGOUT} from '../constants/actionTypes';
-import objectAssign from 'object-assign';
-import initialState from './initialState';
+import {
+  START_LOGIN,
+  FINISH_LOGIN,
+  GET_MY_PROFILE,
+  LOGOUT,
+} from "../constants/actionTypes";
+import objectAssign from "object-assign";
+import initialState from "./initialState";
 
 // IMPORTANT: Note that with Redux, state should NEVER be changed.
 // State is considered immutable. Instead,
@@ -9,19 +14,19 @@ import initialState from './initialState';
 // and update values on the copy.
 export default function authReducer(state = initialState.auth, action) {
   switch (action.type) {
-  case START_LOGIN:
-    return objectAssign({}, state, {isAuthenticating: true});
+    case START_LOGIN:
+      return objectAssign({}, state, { isAuthenticating: true });
 
-  case FINISH_LOGIN:
-    return objectAssign({}, state, {isAuthenticating: false});
+    case FINISH_LOGIN:
+      return objectAssign({}, state, { isAuthenticating: false });
 
-  case GET_MY_PROFILE:
-    return objectAssign({}, state, {user: action.user});
+    case GET_MY_PROFILE:
+      return objectAssign({}, state, { user: action.user });
 
-  case LOGOUT:
-    return initialState.auth;
+    case LOGOUT:
+      return initialState.auth;
 
-  default:
-    return state;
+    default:
+      return state;
   }
 }

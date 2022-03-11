@@ -4,7 +4,7 @@ p {
 
 .container {
   width: 100%;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding: 42px 26px;
   max-width: 600px;
   box-sizing: border-box;
@@ -17,7 +17,7 @@ p {
   text-transform: uppercase;
   color: white;
   text-decoration: none;
-  background-color: #4CBF9C;
+  background-color: #4cbf9c;
   border-radius: 6px;
   margin-top: 4px;
   margin-bottom: 4px;
@@ -34,7 +34,7 @@ p {
 }
 
 .message {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   white-space: pre-line;
   font-style: italic;
 }

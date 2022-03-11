@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 module.exports = {
   up: async (queryInterface, DataTypes) => {
@@ -10,5 +10,5 @@ module.exports = {
 
   down: async (queryInterface) => {
     await queryInterface.removeColumn("users", "vanId");
-  }
+  },
 };

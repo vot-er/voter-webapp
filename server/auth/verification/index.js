@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-import express from 'express';
-import * as controller from './verification.controller';
+import express from "express";
+import * as controller from "./verification.controller";
 
 var router = express.Router();
 
-router.get('/', controller.verifyEmail);
+router.get("/", controller.verifyEmail);
 
 export default router;

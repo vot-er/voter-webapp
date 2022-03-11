@@ -1,16 +1,20 @@
 import {
   createEventAndAttachKitMetadata,
   updateEveryActionEventFields,
-} from '../../services/event/event.service.js';
+} from "../../services/event/event.service.js";
 
 export async function create(req, res) {
   try {
+    const { ref, type, destination } = req.body;
+    const { ip } = req;
     const {
-      ref, type, destination
-    } = req.body;
-    const {ip} = req;
-    const {
-      os, platform, browser, isMobile, isDesktop, isBot, source: userAgent
+      os,
+      platform,
+      browser,
+      isMobile,
+      isDesktop,
+      isBot,
+      source: userAgent,
     } = req.useragent;
 
     const ev = await createEventAndAttachKitMetadata({
@@ -19,7 +23,13 @@ export async function create(req, res) {
       destination,
       ip,
       userAgent,
-      device: isMobile ? 'mobile' : isDesktop ? 'desktop' : isBot ? 'bot' : null,
+      device: isMobile
+        ? "mobile"
+        : isDesktop
+        ? "desktop"
+        : isBot
+        ? "bot"
+        : null,
       browser,
       os,
       platform,
@@ -27,11 +37,11 @@ export async function create(req, res) {
 
     if (ev.user) {
       const user = await ev.getUser();
-      await updateEveryActionEventFields(user)
+      await updateEveryActionEventFields(user);
     }
 
     return res.status(204).end();
-  } catch(err) {
+  } catch (err) {
     console.error(err);
     return res.status(500).end();
   }

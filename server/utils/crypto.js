@@ -1,12 +1,12 @@
-const crypto = require('crypto');
+const crypto = require("crypto");
 
 function makeSalt(byteSize) {
   return new Promise((resolve, reject) => {
-    crypto.randomBytes(byteSize || 16, function(err, salt) {
+    crypto.randomBytes(byteSize || 16, function (err, salt) {
       if (err) {
         return reject(err);
       }
-      return resolve(salt.toString('base64'));
+      return resolve(salt.toString("base64"));
     });
   });
 }
@@ -14,7 +14,7 @@ function makeSalt(byteSize) {
 function initializeVector(stringLength) {
   return new Promise((resolve, reject) => {
     makeSalt()
-      .then(iv => resolve(iv.slice(0, stringLength || 16)))
+      .then((iv) => resolve(iv.slice(0, stringLength || 16)))
       .catch(reject);
   });
 }
@@ -27,41 +27,46 @@ function encryptPassword(password, saltString) {
 
     var defaultIterations = 10000;
     var defaultKeyLength = 64;
-    var salt = new Buffer.from(saltString, 'base64');
+    var salt = new Buffer.from(saltString, "base64");
 
-    return crypto.pbkdf2(password, salt, defaultIterations, defaultKeyLength, 'sha256',
-      function(err, key) {
+    return crypto.pbkdf2(
+      password,
+      salt,
+      defaultIterations,
+      defaultKeyLength,
+      "sha256",
+      function (err, key) {
         if (err) {
           return reject(err);
         }
-        return resolve(key.toString('base64'));
-      });
+        return resolve(key.toString("base64"));
+      }
+    );
   });
 }
 
-
 function cipherEncrypt(plaintext, iv, secret) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const cipher = crypto.createCipheriv(
-      'aes-128-cbc',
+      "aes-128-cbc",
       secret.slice(0, 16),
       iv
     );
-    let encrypted = cipher.update(plaintext, 'utf8', 'base64');
-    encrypted += cipher.final('base64');
-    return resolve(encrypted.toString('base64'));
+    let encrypted = cipher.update(plaintext, "utf8", "base64");
+    encrypted += cipher.final("base64");
+    return resolve(encrypted.toString("base64"));
   });
 }
 
 function cipherDecrypt(encryptedValue, iv, secret) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const decipher = crypto.createDecipheriv(
-      'aes-128-cbc',
+      "aes-128-cbc",
       secret.slice(0, 16),
       iv
     );
-    let decrypted = decipher.update(encryptedValue, 'base64', 'utf8');
-    decrypted += decipher.final('utf8');
+    let decrypted = decipher.update(encryptedValue, "base64", "utf8");
+    decrypted += decipher.final("utf8");
     return resolve(decrypted);
   });
 }
@@ -72,6 +77,6 @@ module.exports = {
   initializeVector: initializeVector,
   encryptPassword: encryptPassword,
   cipherEncrypt: cipherEncrypt,
-  cipherDecrypt: cipherDecrypt
+  cipherDecrypt: cipherDecrypt,
 };
 /* eslint-enable object-shorthand */

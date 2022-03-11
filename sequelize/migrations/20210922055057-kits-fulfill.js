@@ -1,15 +1,15 @@
-'use strict';
+"use strict";
 
 module.exports = {
-  up: async(queryInterface, DataTypes) => {
-    await queryInterface.addColumn('kits', 'fulfill', {
+  up: async (queryInterface, DataTypes) => {
+    await queryInterface.addColumn("kits", "fulfill", {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
-      allowNull: false
+      allowNull: false,
     });
   },
 
-  down: async queryInterface => {
-    await queryInterface.removeColumn('kits', 'fulfill');
-  }
+  down: async (queryInterface) => {
+    await queryInterface.removeColumn("kits", "fulfill");
+  },
 };

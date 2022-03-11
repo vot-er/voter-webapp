@@ -14,11 +14,12 @@
 @import "loader";
 @import "list";
 
-@import 'loaders.css/src/animations/ball-scale-ripple.scss';
+@import "loaders.css/src/animations/ball-scale-ripple.scss";
 
 /* Styles */
 
-body, html {
+body,
+html {
   min-height: 100%;
   width: 100%;
   color: #222222;
@@ -27,7 +28,8 @@ body, html {
 }
 
 body {
-  font: 14px -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";;
+  font: 14px -apple-system, system-ui, "Segoe UI", Helvetica, Arial, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   line-height: 1.4em;
   color: $text-color;
   margin: 0 auto;
@@ -85,7 +87,11 @@ body {
   justify-content: center;
 }
 
-h1, h2, h3, h4, h5 {
+h1,
+h2,
+h3,
+h4,
+h5 {
   margin-top: 0;
   font-family: $heading-font;
   line-height: 1.2em;
@@ -143,7 +149,10 @@ h1.page-heading {
   font-size: 10px;
 }
 
-a.unstyled-link, a.unstyled-link:hover, a.unstyled-link:visited, a.unstyled-link:active {
+a.unstyled-link,
+a.unstyled-link:hover,
+a.unstyled-link:visited,
+a.unstyled-link:active {
   text-decoration: none;
   color: $text-color;
 }
@@ -152,7 +161,9 @@ a.styled-link {
   color: $text-color;
   font-weight: 600;
   text-decoration: none;
-  &:visited,:hover,:active {
+  &:visited,
+  :hover,
+  :active {
     text-decoration: none;
     color: $text-color;
   }

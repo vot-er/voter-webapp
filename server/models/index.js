@@ -1,12 +1,12 @@
-'use strict';
-import Address from './Address';
-import Event from './Event';
-import Kit from './Kit';
-import Organization from './Organization';
-import Session from './Session';
-import User from './User';
-import config from '../config/environment';
-import Sequelize from 'sequelize';
+"use strict";
+import Address from "./Address";
+import Event from "./Event";
+import Kit from "./Kit";
+import Organization from "./Organization";
+import Session from "./Session";
+import User from "./User";
+import config from "../config/environment";
+import Sequelize from "sequelize";
 
 var db = {};
 
@@ -23,7 +23,7 @@ db.Organization = importModel(Organization);
 db.Session = importModel(Session);
 db.Address = importModel(Address);
 
-Object.keys(db).forEach(modelName => {
+Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
     db[modelName].associate(db);
   }

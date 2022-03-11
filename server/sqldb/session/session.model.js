@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
-export default function(sequelize, DataTypes) {
-  return sequelize.define('session', {
+export default function (sequelize, DataTypes) {
+  return sequelize.define("session", {
     sid: {
       type: DataTypes.STRING,
-      primaryKey: true
+      primaryKey: true,
     },
     userId: DataTypes.STRING,
     expires: DataTypes.DATE,

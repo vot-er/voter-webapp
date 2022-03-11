@@ -1,4 +1,4 @@
-@import '_variables';
+@import "_variables";
 
 .react-datepicker {
   box-shadow: $card-box-shadow;
@@ -11,6 +11,8 @@
   border-bottom: 1px solid $lighter-grey;
 }
 
-.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle::before {
+.react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle,
+.react-datepicker-popper[data-placement^="bottom"]
+  .react-datepicker__triangle::before {
   border-bottom-color: white;
 }

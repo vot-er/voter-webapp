@@ -2,9 +2,9 @@
  * User model events
  */
 
-'use strict';
+"use strict";
 
-import {EventEmitter} from 'events';
+import { EventEmitter } from "events";
 var UserEvents = new EventEmitter();
 
 // Set max event listeners (0 == unlimited)
@@ -12,8 +12,8 @@ UserEvents.setMaxListeners(0);
 
 // Model events
 var events = {
-  save: 'save',
-  remove: 'remove'
+  save: "save",
+  remove: "remove",
 };
 
 // Register the event emitter to the model events
@@ -25,11 +25,11 @@ function registerEvents(User) {
 }
 
 function emitEvent(event) {
-  return function(doc) {
+  return function (doc) {
     UserEvents.emit(`${event}:${doc._id}`, doc);
     UserEvents.emit(event, doc);
   };
 }
 
-export {registerEvents};
+export { registerEvents };
 export default UserEvents;

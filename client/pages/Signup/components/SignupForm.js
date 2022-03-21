@@ -7,9 +7,10 @@ import passwordValidation from "../../../../shared/validation/password";
 import { states } from "../../../../shared/utils";
 
 export class SignupForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      referral: this.props.referral,
       email: "",
       password: "",
       firstName: "",
@@ -121,6 +122,7 @@ export class SignupForm extends React.Component {
 
   onSubmit = async (e) => {
     const {
+      referral,
       email,
       password,
       firstName,
@@ -147,6 +149,7 @@ export class SignupForm extends React.Component {
     try {
       this.setState({ isSubmitting: true });
       const signupBody = {
+        referral,
         email,
         password,
         firstName,
@@ -330,6 +333,7 @@ export class SignupForm extends React.Component {
 }
 
 SignupForm.propTypes = {
+  referral: PropTypes.string,
   signup: func.isRequired,
   organizations: array.isRequired,
   isAuthenticating: bool.isRequired,

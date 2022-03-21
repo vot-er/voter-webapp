@@ -56,6 +56,7 @@ export async function create(req, res, next) {
       occupation,
       jobTitle,
       stateOfWork,
+      referral,
     } = req.body;
     if (!unformattedEmail || typeof unformattedEmail !== "string") {
       return res.status(422).send("Must provide an email address.");
@@ -82,6 +83,7 @@ export async function create(req, res, next) {
     user.set("jobTitle", jobTitle);
     user.set("occupation", occupation);
     user.set("stateOfWork", stateOfWork);
+    user.set("referral", referral);
     if (newOrganizationName && organizationId) {
       return res
         .status(400)

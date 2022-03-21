@@ -13,7 +13,8 @@
 7. Install dependencies using `yarn install`
 8. Migrate your database using `yarn run migrate`
 9. Seed data using `yarn run seed`
-10. Go to `localhost:3000` and log in with the username `admin@example.com` and password `admin`
+10. Start the development server using `yarn dev`
+11. Go to `localhost:3000/admin` and log in with the username `admin@example.com` and password `admin`
 
 ## Questions?
 

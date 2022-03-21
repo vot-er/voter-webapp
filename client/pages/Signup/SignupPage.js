@@ -34,6 +34,7 @@ export class LoginPage extends React.Component {
             signup={this.signup}
             isAuthenticating={this.props.auth.isAuthenticating}
             organizations={this.props.organizations}
+            referral={this.props.referral}
           />
         </div>
         <div className="signup__image" />
@@ -48,12 +49,14 @@ LoginPage.propTypes = {
   auth: PropTypes.object.isRequired,
   organizations: PropTypes.array.isRequired,
   getOrganizations: PropTypes.func.isRequired,
+  referral: PropTypes.string,
 };
 
 function mapStateToProps(state) {
   return {
     auth: state.auth,
     organizations: toArray(state.organizations),
+    referral: getReferral(),
   };
 }
 
@@ -63,6 +66,10 @@ function mapDispatchToProps(dispatch) {
     routerActions: bindActionCreators(routerActions, dispatch),
     getOrganizations: bindActionCreators(getOrganizations, dispatch),
   };
+}
+
+function getReferral() {
+  return (new URL(document.location)).searchParams.get('referral');
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

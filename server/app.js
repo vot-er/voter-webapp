@@ -9,8 +9,9 @@ import config from "./config/environment";
 import http from "http";
 import { requestHandler, errorHandler } from "./config/tracking";
 import useragent from "express-useragent";
-var RateLimit = require("express-rate-limit");
-var limiter = new RateLimit({
+import rateLimit from "express-rate-limit";
+
+var limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 5,
 });

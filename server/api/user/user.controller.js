@@ -5,6 +5,8 @@ import config from "../../config/environment";
 import jwt from "jsonwebtoken";
 import moment from "moment";
 import emailer from "../../email";
+import escape from "escape-html";
+
 import PasswordResetEmail from "../../email/components/PasswordReset/PasswordResetEmail";
 import { applyPatch } from "../../utils/patch";
 import { everyAction, getOrCreateVanId } from "../../everyAction";
@@ -281,7 +283,9 @@ export async function changeRole(req, res, next) {
     const { userId } = req.params;
     var newRole = String(req.body.role);
     if (config.userRoles.indexOf(newRole) === -1) {
-      return res.status(403).send(`Cannot set unknown role ${newRole}.`);
+      return res
+        .status(403)
+        .send(`Cannot set unknown role ${escape(newRole)}.`);
     }
     const user = await User.findOne({ where: { id: userId } });
     if (!user) return res.status(404).end();

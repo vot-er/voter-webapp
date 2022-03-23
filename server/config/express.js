@@ -97,6 +97,11 @@ export default function (app) {
       saveUninitialized: true,
       resave: false,
       store: sessionStore,
+      cookie: {
+        httpOnly: true,
+        secure: env === "production",
+        maxAge: 60 * 60 * 60, // 60 days,
+      },
     })
   );
 

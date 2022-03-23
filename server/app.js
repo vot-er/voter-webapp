@@ -9,6 +9,11 @@ import config from "./config/environment";
 import http from "http";
 import { requestHandler, errorHandler } from "./config/tracking";
 import useragent from "express-useragent";
+var RateLimit = require("express-rate-limit");
+var limiter = new RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 5,
+});
 
 // Setup server
 var app = express();
@@ -19,6 +24,7 @@ var socketio = require("socket.io")(server, {
   path: "/socket.io-client",
 });
 requestHandler(app);
+app.use(limiter);
 app.use(useragent.express());
 
 require("./config/socketio").default(socketio);

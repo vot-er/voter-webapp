@@ -1,6 +1,6 @@
-import Sentry from "@sentry/node";
-import { CaptureConsole } from "@sentry/integrations";
-import config from "./environment";
+const Sentry = require("@sentry/node");
+const integrations = require("@sentry/integrations");
+const config = require("./environment");
 
 export function requestHandler(app) {
   if (config.sentry.backendDSN) {
@@ -8,7 +8,7 @@ export function requestHandler(app) {
       dsn: config.sentry.backendDSN,
       environment: config.deployment,
       integrations: [
-        new CaptureConsole({
+        new integrations.CaptureConsole({
           levels: ["error"],
         }),
       ],

@@ -40,6 +40,7 @@
     "@fortawesome/react-fontawesome": "^0.1.9",
     "@hot-loader/react-dom": "16.13",
     "@sentry/browser": "^5.15.5",
+    "@sentry/integrations": "^6.19.3",
     "@sentry/node": "^6.7.0",
     "@sentry/tracing": "^6.7.0",
     "aws-sdk": "^2.682.0",

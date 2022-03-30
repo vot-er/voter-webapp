@@ -9,7 +9,7 @@ import escape from "escape-html";
 
 import PasswordResetEmail from "../../email/components/PasswordReset/PasswordResetEmail";
 import { applyPatch } from "../../utils/patch";
-import { everyAction, getOrCreateVanId } from "../../everyAction";
+import { tryToUpdateUserWithEveryActionTag } from "../../everyAction";
 const Op = Sequelize.Op;
 
 /**
@@ -113,29 +113,8 @@ export async function create(req, res, next) {
     }
 
     user = await user.save();
+    tryToUpdateUserWithEveryActionTag(user);
 
-    try {
-      const vanId = await getOrCreateVanId(user);
-      user.vanId = vanId;
-      await everyAction({
-        method: "POST",
-        url: `/people/${vanId}/canvassResponses`,
-        data: {
-          canvassContext: { omitActivistCodeContactHistory: true },
-          responses: [
-            {
-              type: "ActivistCode",
-              action: "Apply",
-              activistCodeId: "EID52D2C4F", // HasTrackableHDK
-            },
-          ],
-        },
-      });
-    } catch (err) {
-      console.error(err);
-    }
-
-    user = await user.save();
     const token = jwt.sign({ id: user.id }, config.secrets.session, {
       expiresIn: 60 * 60 * 5,
     });

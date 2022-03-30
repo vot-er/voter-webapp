@@ -10,7 +10,6 @@ export function setup(User /*, config*/) {
       },
       async function (email, password, done) {
         try {
-          console.log(email, password);
           const user = await User.findOne({
             where: { email: email.toLowerCase() },
             attributes: ["id", "role", "salt", "password"],

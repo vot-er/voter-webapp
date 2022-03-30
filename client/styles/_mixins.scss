@@ -78,15 +78,14 @@
   border-radius: 4px;
 }
 
-
-@mixin flex-center(){
+@mixin flex-center() {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-@mixin normalized-button(){
+@mixin normalized-button() {
   outline: none;
   border: none;
   &:hover {

@@ -29,15 +29,15 @@
 
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
-	"dbaeumer.vscode-eslint",
-	"mtxr.sqltools",
-	"mtxr.sqltools-driver-pg",
-	"ms-azuretools.vscode-docker",
-	"eamodio.gitlens",
-	"esbenp.prettier-vscode",
-	"orta.vscode-jest",
-	"firsttris.vscode-jest-runner"
-],
+    "dbaeumer.vscode-eslint",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg",
+    "ms-azuretools.vscode-docker",
+    "eamodio.gitlens",
+    "esbenp.prettier-vscode",
+    "orta.vscode-jest",
+    "firsttris.vscode-jest-runner"
+  ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [3000, 5432],
   // Use 'postCreateCommand' to run commands after the container is created.

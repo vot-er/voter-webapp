@@ -1,11 +1,11 @@
-import HTMLComponent from '../BaseComponent';
-import PropTypes from '../PropTypes';
-import config from '../../../config/environment';
-import path from 'path';
+import HTMLComponent from "../BaseComponent";
+import PropTypes from "../PropTypes";
+import config from "../../../config/environment";
+import path from "path";
 
 export default class VerificationEmail extends HTMLComponent {
   async renderHtml() {
-    const {userId, token} = this.props;
+    const { userId, token } = this.props;
     const url = `${config.domain}/auth/verification?id=${userId}&code=${token}`;
     return `
       <div class="container">
@@ -23,10 +23,10 @@ export default class VerificationEmail extends HTMLComponent {
     `;
   }
   getDefaultSendOptions() {
-    const {userEmail} = this.props;
+    const { userEmail } = this.props;
     return {
       to: [userEmail],
-      subject: 'Verify your email for VotER'
+      subject: "Verify your email for VotER",
     };
   }
 }
@@ -34,7 +34,10 @@ export default class VerificationEmail extends HTMLComponent {
 VerificationEmail.propTypes = {
   userId: PropTypes.object.isRequired,
   userEmail: PropTypes.string.isRequired,
-  token: PropTypes.string.isRequired
+  token: PropTypes.string.isRequired,
 };
 
-VerificationEmail.styles = path.join(__dirname, '../../styles/verification.css');
+VerificationEmail.styles = path.join(
+  __dirname,
+  "../../styles/verification.css"
+);

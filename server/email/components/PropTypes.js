@@ -1,13 +1,17 @@
-export const string = PropType('string');
-export const func = PropType('func');
-export const bool = PropType('bool');
-export const object = PropType('object');
+export const string = PropType("string");
+export const func = PropType("func");
+export const bool = PropType("bool");
+export const object = PropType("object");
 
 export function validateProps(props, propTypes) {
-  Object.keys(propTypes).forEach(key => {
+  Object.keys(propTypes).forEach((key) => {
     const isValid = propTypes[key].validate(props[key]);
     if (!isValid) {
-      throw new Error(`Prop ${key} is not valid. Expected ${propTypes[key].type}, received ${typeof props[key]}.`);
+      throw new Error(
+        `Prop ${key} is not valid. Expected ${
+          propTypes[key].type
+        }, received ${typeof props[key]}.`
+      );
     }
   });
 }
@@ -15,35 +19,37 @@ export function validateProps(props, propTypes) {
 function PropType(type) {
   return {
     type,
-    validate: prop => !validatePresenceOf(prop) || validateType(type),
+    validate: (prop) => !validatePresenceOf(prop) || validateType(type),
     isRequired: {
       type,
-      validate: prop => validatePresenceOf(prop) && validateType(type)
-    }
+      validate: (prop) => validatePresenceOf(prop) && validateType(type),
+    },
   };
 }
 
 function validateType(type) {
-  return function(prop) {
+  return function (prop) {
     switch (type) {
-    case 'string':
-      return typeof prop === 'string';
-    case 'func':
-      return typeof prop === 'function';
-    case 'object':
-      return typeof prop === 'object';
-    case 'bool':
-      return typeof prop === 'boolean';
-    default:
-      throw new Error(`Could not validate type ${type}.`);
+      case "string":
+        return typeof prop === "string";
+      case "func":
+        return typeof prop === "function";
+      case "object":
+        return typeof prop === "object";
+      case "bool":
+        return typeof prop === "boolean";
+      default:
+        throw new Error(`Could not validate type ${type}.`);
     }
   };
 }
 
 function validatePresenceOf(prop) {
-  return (typeof prop !== 'number' || !isNaN(Number(prop)))
-    && (typeof prop === 'number' || prop)
-    && (typeof prop !== 'string' || prop.length);
+  return (
+    (typeof prop !== "number" || !isNaN(Number(prop))) &&
+    (typeof prop === "number" || prop) &&
+    (typeof prop !== "string" || prop.length)
+  );
 }
 
 export default { string, func, bool, object, validateProps };

@@ -1,19 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import './error-boundary.scss';
-import * as Sentry from '@sentry/browser';
+import React from "react";
+import PropTypes from "prop-types";
+import "./error-boundary.scss";
+import * as Sentry from "@sentry/browser";
 
 export default class Avatar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasError: false
+      hasError: false,
     };
   }
   componentDidCatch(err, errorInfo) {
     if (process.env.SENTRY_DSN_FRONTEND) {
-      Sentry.withScope(scope => {
-        Object.keys(errorInfo).forEach(key => {
+      Sentry.withScope((scope) => {
+        Object.keys(errorInfo).forEach((key) => {
           scope.setExtra(key, errorInfo[key]);
         });
         Sentry.captureException(err);
@@ -22,19 +22,22 @@ export default class Avatar extends React.Component {
       console.error(err, errorInfo);
     }
     this.setState({
-      hasError: true
+      hasError: true,
     });
   }
   render() {
     if (this.state.hasError) {
-      return <div className="error-boundary-page">
-        Sorry, something went wrong and it has been reported. Please try again.
-      </div>;
+      return (
+        <div className="error-boundary-page">
+          Sorry, something went wrong and it has been reported. Please try
+          again.
+        </div>
+      );
     }
     return this.props.children;
   }
 }
 
 Avatar.propTypes = {
-  children: PropTypes.any.isRequired
+  children: PropTypes.any.isRequired,
 };

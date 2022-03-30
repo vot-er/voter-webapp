@@ -1,5 +1,5 @@
-import {LOGOUT} from '../constants/actionTypes';
-import initialState from './initialState';
+import { LOGOUT } from "../constants/actionTypes";
+import initialState from "./initialState";
 
 // IMPORTANT: Note that with Redux, state should NEVER be changed.
 // State is considered immutable. Instead,
@@ -8,9 +8,9 @@ import initialState from './initialState';
 // and update values on the copy.
 export default function authReducer(state = initialState.auth, action) {
   switch (action.type) {
-  case LOGOUT:
-    return initialState.auth;
-  default:
-    return state;
+    case LOGOUT:
+      return initialState.auth;
+    default:
+      return state;
   }
 }

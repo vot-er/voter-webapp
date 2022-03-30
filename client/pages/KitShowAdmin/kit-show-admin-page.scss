@@ -2,5 +2,5 @@
 @import "../../styles/_mixins";
 
 input.internal-control {
-  @include simple-input
+  @include simple-input;
 }

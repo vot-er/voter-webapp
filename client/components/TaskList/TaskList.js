@@ -1,21 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import './task-list.scss';
-import {TaskItem} from 'Components';
-
+import React from "react";
+import PropTypes from "prop-types";
+import "./task-list.scss";
+import { TaskItem } from "Components";
 
 class TaskList extends React.Component {
   render() {
-    const {tasks, heading} = this.props;
-    var taskItems = tasks.map(task => <TaskItem key={task._id} task={task} />);
+    const { tasks, heading } = this.props;
+    var taskItems = tasks.map((task) => (
+      <TaskItem key={task._id} task={task} />
+    ));
     return (
       <div className="task-list">
-        <div className="task-list__header">
-          {heading}
-        </div>
-        <div className="task-list__items">
-          {taskItems}
-        </div>
+        <div className="task-list__header">{heading}</div>
+        <div className="task-list__items">{taskItems}</div>
       </div>
     );
   }
@@ -23,7 +20,7 @@ class TaskList extends React.Component {
 
 TaskList.propTypes = {
   heading: PropTypes.string,
-  tasks: PropTypes.array.isRequired
+  tasks: PropTypes.array.isRequired,
 };
 
 export default TaskList;

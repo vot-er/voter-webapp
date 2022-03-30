@@ -1,12 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
 import config from "./config/environment";
 
 export const everyAction = axios.create({
   baseURL: "https://api.securevan.com/v4",
   headers: {
-     "Accept": "application/json",
-     "Content-Type": "application/json",
+    Accept: "application/json",
+    "Content-Type": "application/json",
   },
   auth: {
     username: config.everyAction.appName,
@@ -47,4 +47,29 @@ export async function updateEveryActionUser(vanId, data) {
     data,
   });
   return res.data;
+}
+
+export async function tryToUpdateUserWithEveryActionTag(user) {
+  try {
+    const vanId = await getOrCreateVanId(user);
+    user.vanId = vanId;
+    await everyAction({
+      method: "POST",
+      url: `/people/${vanId}/canvassResponses`,
+      data: {
+        canvassContext: { omitActivistCodeContactHistory: true },
+        responses: [
+          {
+            type: "ActivistCode",
+            action: "Apply",
+            activistCodeId: "EID52D2C4F", // HasTrackableHDK
+          },
+        ],
+      },
+    });
+  } catch (err) {
+    console.error(err);
+  }
+
+  return user.save();
 }

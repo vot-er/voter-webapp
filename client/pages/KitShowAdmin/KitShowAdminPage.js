@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import { withRouter } from 'react-router-dom';
-import {getOne as getKit, patch as patchKit} from '../../actions/kitActions';
-import {TopNav} from 'Components';
-import './kit-show-admin-page.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { withRouter } from "react-router-dom";
+import { getOne as getKit, patch as patchKit } from "../../actions/kitActions";
+import { TopNav } from "Components";
+import "./kit-show-admin-page.scss";
 
 export class KitPage extends React.Component {
   constructor(props) {
@@ -13,15 +13,15 @@ export class KitPage extends React.Component {
     this.state = {
       kit: null,
       showCodeEditor: false,
-      formCodeValue: '',
-      isSubmitting: false
+      formCodeValue: "",
+      isSubmitting: false,
     };
   }
   static getDerivedStateFromProps(props) {
     const kitId = props.match.params.kitId;
     const kit = props.kitsById[kitId];
     return {
-      kit
+      kit,
     };
   }
   getKit() {
@@ -31,14 +31,16 @@ export class KitPage extends React.Component {
     this.getKit();
   }
   render() {
-    const {kit} = this.state;
+    const { kit } = this.state;
     if (!kit) return null;
     return (
       <div className="fill">
-        <TopNav title="Kit"/>
+        <TopNav title="Kit" />
         <div className="fill task-page">
           <div>{kit.user.name}</div>
-          {kit.shippingAddress ? this.renderAddress(kit.shippingAddress) : 'No address provided.'}
+          {kit.shippingAddress
+            ? this.renderAddress(kit.shippingAddress)
+            : "No address provided."}
           <div>Code: {this.renderCode()}</div>
           <div>{this.renderOrderInfo()}</div>
         </div>
@@ -50,11 +52,23 @@ export class KitPage extends React.Component {
     return (
       <div>
         <label>
-          <input data-test-id="orderInfo" type="checkbox" name="shipped" checked={this.state.kit.shipped} onChange={this.toggleShipped.bind(this)} />
+          <input
+            data-test-id="orderInfo"
+            type="checkbox"
+            name="shipped"
+            checked={this.state.kit.shipped}
+            onChange={this.toggleShipped.bind(this)}
+          />
           Shipped
         </label>
         <label>
-          <input data-test-id="orderInfo" type="checkbox" name="noFulfill" checked={!this.state.kit.fulfill} onChange={this.toggleFulfill.bind(this)} />
+          <input
+            data-test-id="orderInfo"
+            type="checkbox"
+            name="noFulfill"
+            checked={!this.state.kit.fulfill}
+            onChange={this.toggleFulfill.bind(this)}
+          />
           Do Not Fulfill
         </label>
       </div>
@@ -62,51 +76,69 @@ export class KitPage extends React.Component {
   }
 
   async toggleShipped() {
-    const {match} = this.props;
+    const { match } = this.props;
     const isShipped = !this.state.kit.shipped;
     await this.props.patchKit(match.params.kitId, {
-      isShipped
+      isShipped,
     });
   }
 
   async toggleFulfill() {
-    console.log(this.state.kit.fulfill)
-    const {match} = this.props;
+    console.log(this.state.kit.fulfill);
+    const { match } = this.props;
     const fulfill = !this.state.kit.fulfill;
     await this.props.patchKit(match.params.kitId, {
-      fulfill
+      fulfill,
     });
   }
 
   renderCode() {
-    const {
-      showCodeEditor, kit, formCodeValue
-    } = this.state;
+    const { showCodeEditor, kit, formCodeValue } = this.state;
     if (!showCodeEditor) {
-      return <span>{kit.code ? kit.code : '-'} <a href="#" onClick={this.openCodeEditor.bind(this)}>Edit</a></span>;
+      return (
+        <span>
+          {kit.code ? kit.code : "-"}{" "}
+          <a href="#" onClick={this.openCodeEditor.bind(this)}>
+            Edit
+          </a>
+        </span>
+      );
     }
-    return <form onSubmit={this.submitCode.bind(this)}><input className="internal-control" value={formCodeValue} onChange={e => this.changeFormCode(e.target.value)}/> <button type="submit" disabled={this.state.isSubmitting}>Save</button></form>;
+    return (
+      <form onSubmit={this.submitCode.bind(this)}>
+        <input
+          className="internal-control"
+          value={formCodeValue}
+          onChange={(e) => this.changeFormCode(e.target.value)}
+        />{" "}
+        <button type="submit" disabled={this.state.isSubmitting}>
+          Save
+        </button>
+      </form>
+    );
   }
 
   renderAddress(address) {
-    return <div>
-      {address.addressLine1}
-      <br/>
-      {address.addressLine2}
-      <br/>
-      {address.city}, {address.state} {address.postalCode}
-    </div>;
+    return (
+      <div>
+        {address.addressLine1}
+        <br />
+        {address.addressLine2}
+        <br />
+        {address.city}, {address.state} {address.postalCode}
+      </div>
+    );
   }
   openCodeEditor(e) {
     e.preventDefault();
     e.stopPropagation();
     this.setState({
-      showCodeEditor: true
+      showCodeEditor: true,
     });
   }
   changeFormCode(value) {
     this.setState({
-      formCodeValue: value
+      formCodeValue: value,
     });
   }
   async submitCode(e) {
@@ -115,21 +147,21 @@ export class KitPage extends React.Component {
     if (this.state.isSubmitting) return;
     try {
       this.setState({
-        isSubmitting: true
+        isSubmitting: true,
       });
-      const {formCodeValue: code} = this.state;
-      const {match} = this.props;
+      const { formCodeValue: code } = this.state;
+      const { match } = this.props;
       await this.props.patchKit(match.params.kitId, {
-        code
+        code,
       });
       this.setState({
         isSubmitting: false,
-        showCodeEditor: false
+        showCodeEditor: false,
       });
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       this.setState({
-        isSubmitting: false
+        isSubmitting: false,
       });
     }
   }
@@ -139,12 +171,12 @@ KitPage.propTypes = {
   getKit: PropTypes.func.isRequired,
   patchKit: PropTypes.func.isRequired,
   kitsById: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
-    kitsById: state.kits.byId
+    kitsById: state.kits.byId,
   };
 }
 
@@ -155,7 +187,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(KitPage));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(KitPage)
+);

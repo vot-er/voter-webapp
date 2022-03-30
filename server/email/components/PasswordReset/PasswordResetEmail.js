@@ -1,12 +1,12 @@
-import HTMLComponent from '../BaseComponent';
-import config from '../../../config/environment';
-import PropTypes from '../PropTypes';
-import path from 'path';
-import axios from 'axios';
+import HTMLComponent from "../BaseComponent";
+import config from "../../../config/environment";
+import PropTypes from "../PropTypes";
+import path from "path";
+import axios from "axios";
 
 export default class PasswordResetEmail extends HTMLComponent {
   async renderHtml() {
-    const {user, token} = this.props;
+    const { user, token } = this.props;
     const resetUrl = `${config.domain}/password/reset?user=${user.id}&token=${token}`;
     return `
       <div class="container">
@@ -23,35 +23,36 @@ export default class PasswordResetEmail extends HTMLComponent {
     `;
   }
   getDefaultSendOptions() {
-    const {user} = this.props;
+    const { user } = this.props;
     return {
       To: user.email,
       From: `${config.email.name} <${config.email.address}>`,
-      Subject: 'Password Reset for VotER'
+      Subject: "Password Reset for VotER",
     };
   }
   async send(options) {
     let body = await this.renderHtml();
     let sendOptions = this.getDefaultSendOptions();
-    let data = {HtmlBody: body, ...sendOptions, ...options};
+    let data = { HtmlBody: body, ...sendOptions, ...options };
     await axios({
-      method: 'POST',
-      url: 'https://api.postmarkapp.com/email',
+      method: "POST",
+      url: "https://api.postmarkapp.com/email",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'X-Postmark-Server-Token': config.token
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "X-Postmark-Server-Token": config.token,
       },
-      data
+      data,
     });
   }
 }
 
-
 PasswordResetEmail.propTypes = {
   user: PropTypes.object.isRequired,
-  token: PropTypes.string.isRequired
+  token: PropTypes.string.isRequired,
 };
 
-
-PasswordResetEmail.styles = path.join(__dirname, '../../styles/password-reset.css');
+PasswordResetEmail.styles = path.join(
+  __dirname,
+  "../../styles/password-reset.css"
+);

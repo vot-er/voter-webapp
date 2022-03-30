@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 /*eslint no-process-env:0*/
 
-import path from 'path';
-import _ from 'lodash';
-import shared from './shared';
+import path from "path";
+import _ from "lodash";
+import shared from "./shared";
 
 /*function requiredProcessEnv(name) {
   if(!process.env[name]) {
@@ -37,25 +37,26 @@ var all = {
   port: process.env.PORT || 9000,
 
   // Server IP
-  ip: process.env.IP || '0.0.0.0',
+  ip: process.env.IP || "0.0.0.0",
 
   // Should we populate the DB with sample data?
   seedDB: false,
   secrets: {
-    session: process.env.SESSION_SECRET
+    session: process.env.SESSION_SECRET,
   },
   mixpanel: {
-    id: process.env.MIXPANEL_ID
+    id: process.env.MIXPANEL_ID,
   },
   sentry: {
     frontendDSN: process.env.SENTRY_DSN_FRONTEND,
-    backendDSN: process.env.SENTRY_DSN_BACKEND
+    backendDSN: process.env.SENTRY_DSN_BACKEND,
   },
-  ...shared
+  ...shared,
 };
 
 // Export the config object based on the NODE_ENV
 // ==============================================
 module.exports = _.merge(
   all,
-  require(`./${process.env.NODE_ENV}-env.js`) || {});
+  require(`./${process.env.NODE_ENV}-env.js`) || {}
+);

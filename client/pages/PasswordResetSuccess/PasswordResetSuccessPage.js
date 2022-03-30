@@ -1,7 +1,7 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import {EmptyNavbar} from '../../components';
-import './password-reset-success-page.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import { EmptyNavbar } from "../../components";
+import "./password-reset-success-page.scss";
 
 export default class PasswordResetSuccessPage extends React.Component {
   render() {
@@ -11,7 +11,8 @@ export default class PasswordResetSuccessPage extends React.Component {
         <div className="fill login-page">
           <div className="login-card">
             <h1>Password Reset</h1>
-            Password changed successfully! <Link to="/login">Click here to login.</Link>
+            Password changed successfully!{" "}
+            <Link to="/login">Click here to login.</Link>
           </div>
         </div>
       </div>

@@ -1,26 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
-import {stopEvent} from '../../../utils/dom';
-import {AlertCard, SubmitButton} from '../../../components';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { stopEvent } from "../../../utils/dom";
+import { AlertCard, SubmitButton } from "../../../components";
 
 export class LoginForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      email: '',
-      password: ''
+      email: "",
+      password: "",
     };
   }
 
-  onChange = e => {
-    if (e.target.name === 'email') {
-      this.setState({email: e.target.value});
+  onChange = (e) => {
+    if (e.target.name === "email") {
+      this.setState({ email: e.target.value });
     }
-    if (e.target.name === 'password') {
-      this.setState({password: e.target.value});
+    if (e.target.name === "password") {
+      this.setState({ password: e.target.value });
     }
-  }
+  };
 
   onSubmit(e) {
     stopEvent(e);
@@ -33,13 +33,30 @@ export class LoginForm extends React.Component {
     return (
       <div className="login-card">
         <h1>Login</h1>
-        <AlertCard type="error" message={this.props.error}/>
+        <AlertCard type="error" message={this.props.error} />
         <form onSubmit={this.onSubmit.bind(this)}>
           <label className="form__label">Email</label>
-          <input onChange={this.onChange.bind(this)}className="form__control" name="email" value={this.state.email} disabled={this.props.isAuthenticating}/>
+          <input
+            onChange={this.onChange.bind(this)}
+            className="form__control"
+            name="email"
+            value={this.state.email}
+            disabled={this.props.isAuthenticating}
+          />
           <label className="form__label">Password</label>
-          <input onChange={this.onChange.bind(this)} className="form__control" type="password" name="password" value={this.state.password} disabled={this.props.isAuthenticating}/>
-          <SubmitButton className="btn btn-primary login-button" value="Login" isSubmitting={this.props.isAuthenticating}/>
+          <input
+            onChange={this.onChange.bind(this)}
+            className="form__control"
+            type="password"
+            name="password"
+            value={this.state.password}
+            disabled={this.props.isAuthenticating}
+          />
+          <SubmitButton
+            className="btn btn-primary login-button"
+            value="Login"
+            isSubmitting={this.props.isAuthenticating}
+          />
           <br />
           New user? <Link to="/signup">Create an account.</Link>
           <br />
@@ -54,7 +71,7 @@ LoginForm.propTypes = {
   login: PropTypes.func.isRequired,
   error: PropTypes.string,
   isAuthenticating: PropTypes.bool.isRequired,
-  redirectTo: PropTypes.string
+  redirectTo: PropTypes.string,
 };
 
 export default LoginForm;

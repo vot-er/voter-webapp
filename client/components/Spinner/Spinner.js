@@ -1,7 +1,7 @@
-import React from 'react';
-import './spinner.scss';
+import React from "react";
+import "./spinner.scss";
 
-const Spinner = () =>
+const Spinner = () => (
   <div className="la-ball-grid-beat">
     <div></div>
     <div></div>
@@ -12,6 +12,7 @@ const Spinner = () =>
     <div></div>
     <div></div>
     <div></div>
-  </div>;
+  </div>
+);
 
 export default Spinner;

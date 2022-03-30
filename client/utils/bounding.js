@@ -3,7 +3,7 @@ export function positionWithinWindow(node) {
     top: window.scrollY,
     left: window.scrollX,
     bottom: window.innerHeight + window.scrollY,
-    right: window.innerWidth + window.scrollX
+    right: window.innerWidth + window.scrollX,
   };
   var elementBounds = node.getBoundingClientRect();
   var style = {};
@@ -29,7 +29,7 @@ export function positionPopover(triggerRect, contentRect, options = {}) {
   const triggerPadding = options.triggerPadding || 14;
   let style = {
     top: triggerRect.top + triggerRect.height / 2 - contentRect.height / 2,
-    left: triggerRect.right + triggerPadding
+    left: triggerRect.right + triggerPadding,
   };
   style = keepWithinWindowBounds(style, contentRect, windowPadding);
   return style;
@@ -40,7 +40,7 @@ function keepWithinWindowBounds(style, contentRect, pad) {
     top: window.scrollY + pad,
     left: window.scrollX + pad,
     bottom: window.innerHeight + window.scrollY - pad,
-    right: window.innerWidth + window.scrollX - pad
+    right: window.innerWidth + window.scrollX - pad,
   };
   if (style.left < bounds.left) {
     style.left = bounds.left;

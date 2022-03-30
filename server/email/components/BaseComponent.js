@@ -1,17 +1,17 @@
-import fs from 'fs';
-import {minify} from 'html-minifier';
-import inlineCss from 'inline-css';
-import config from '../../config/environment';
-import htmlToText from 'html-to-text';
-import {validateProps} from './PropTypes';
-import {sendEmail} from '../send';
+import fs from "fs";
+import { minify } from "html-minifier";
+import inlineCss from "inline-css";
+import config from "../../config/environment";
+import htmlToText from "html-to-text";
+import { validateProps } from "./PropTypes";
+import { sendEmail } from "../send";
 
 export default class BaseHTMLComponent {
   constructor(props = {}) {
     this.props = props;
     this.propTypes;
     this.state = {};
-    this.stylePath = '';
+    this.stylePath = "";
     this.components = {};
     this.componentList = [];
   }
@@ -30,7 +30,7 @@ export default class BaseHTMLComponent {
     const encapsulatedHtml = encapsulateBody(rawBody, styles);
     return {
       html: await formatHtml(encapsulatedHtml),
-      text: await this.renderText()
+      text: await this.renderText(),
     };
   }
   async loadComponent(component, name) {
@@ -49,12 +49,14 @@ export default class BaseHTMLComponent {
     return `${myStyles}\n\n${subcomponentStyles}`;
   }
   async getStylesheetsFromSubcomponents() {
-    const promises = this.componentList.map(component => component.getStylesheet());
+    const promises = this.componentList.map((component) =>
+      component.getStylesheet()
+    );
     const styles = await Promise.all(promises);
-    return styles.join('\n\n');
+    return styles.join("\n\n");
   }
   async renderHtml() {
-    return '';
+    return "";
   }
   async renderText() {
     const html = await this.renderHtml();
@@ -70,35 +72,39 @@ export default class BaseHTMLComponent {
       Destination: {
         ToAddresses: options.to || defaultOptions.to || [],
         BccAddresses: options.bcc || defaultOptions.bcc || [],
-        CcAddresses: options.cc || defaultOptions.cc || []
+        CcAddresses: options.cc || defaultOptions.cc || [],
       },
       Message: {
         Body: {
           Html: {
-            Charset: 'UTF-8',
-            Data: rendered.html
+            Charset: "UTF-8",
+            Data: rendered.html,
           },
           Text: {
-            Charset: 'UTF-8',
-            Data: rendered.text
-          }
+            Charset: "UTF-8",
+            Data: rendered.text,
+          },
         },
         Subject: {
-          Charset: 'UTF-8',
-          Data: options.subject || defaultOptions.subject || ''
-        }
+          Charset: "UTF-8",
+          Data: options.subject || defaultOptions.subject || "",
+        },
       },
-      Source: options.from || defaultOptions.from || `${config.email.name} <${config.email.address}>` || ''
+      Source:
+        options.from ||
+        defaultOptions.from ||
+        `${config.email.name} <${config.email.address}>` ||
+        "",
     });
   }
 }
 
 async function formatHtml(rawHtml) {
   const inlined = await inlineCss(rawHtml, {
-    url: config.domain
+    url: config.domain,
   });
   return minify(inlined, {
-    collapseWhitespace: true
+    collapseWhitespace: true,
   });
 }
 
@@ -125,7 +131,7 @@ function fetchStylesheetFile(filePath) {
         resolve(data);
       });
     } else {
-      resolve('');
+      resolve("");
     }
   });
 }

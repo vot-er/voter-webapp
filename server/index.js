@@ -1,14 +1,14 @@
-'use strict';
+"use strict";
 
 // Set default node environment to development
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+var env = (process.env.NODE_ENV = process.env.NODE_ENV || "development");
 
-require('babel-polyfill');
+require("babel-polyfill");
 
-if (env === 'development' || env === 'test') {
+if (env === "development" || env === "test") {
   // Register the Babel require hook
-  require('@babel/register');
+  require("@babel/register");
 }
 
 // Export the application
-exports = module.exports = require('./app');
+exports = module.exports = require("./app");

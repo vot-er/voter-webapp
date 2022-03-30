@@ -1,10 +1,10 @@
-import webpack from 'webpack';
-import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
-import config from '../webpack.config.prod';
+import webpack from "webpack";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import config from "../webpack.config.prod";
 
 config.plugins.push(new BundleAnalyzerPlugin());
 
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = "production";
 
 const compiler = webpack(config);
 

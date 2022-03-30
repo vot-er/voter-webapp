@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
 exports = module.exports = {
   // List of user roles
-  userRoles: ['invited', 'unverified', 'user', 'admin'],
+  userRoles: ["invited", "unverified", "user", "admin"],
 };

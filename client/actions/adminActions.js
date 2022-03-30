@@ -1,22 +1,23 @@
-import * as types from '../constants/actionTypes';
-import axios from 'axios';
-import {handleError} from '../utils/error';
-import { displayError } from './alertActions';
+import * as types from "../constants/actionTypes";
+import axios from "axios";
+import { handleError } from "../utils/error";
+import { displayError } from "./alertActions";
 
 export function changeUserRole(userId, newRole) {
-  return function(dispatch) {
+  return function (dispatch) {
     return new Promise((resolve, reject) => {
-      axios.put(`/api/users/${userId}/role`, {
-        role: newRole
-      })
-        .then(res => {
+      axios
+        .put(`/api/users/${userId}/role`, {
+          role: newRole,
+        })
+        .then((res) => {
           if (res.status >= 400) {
             return Promise.reject(res.error);
           }
           dispatch({
             type: types.ADMIN_UPDATE_USER_ROLE,
             userId,
-            newRole
+            newRole,
           });
           resolve();
         })
@@ -26,17 +27,17 @@ export function changeUserRole(userId, newRole) {
 }
 
 export function deleteUser(userId) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       await axios({
-        method: 'DELETE',
-        url: `/api/users/${userId}`
+        method: "DELETE",
+        url: `/api/users/${userId}`,
       });
       dispatch({
         type: types.REMOVE_USER,
-        id: userId
+        id: userId,
       });
-    } catch(err) {
+    } catch (err) {
       dispatch(displayError(err));
     }
   };

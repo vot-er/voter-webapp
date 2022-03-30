@@ -1,22 +1,22 @@
-import mixpanel from 'mixpanel-browser';
+import mixpanel from "mixpanel-browser";
 
 export function trackEvent(type) {
-  return async function() {
+  return async function () {
     try {
       mixpanel.track(type);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   };
 }
 
 export function identifyUser(userId, user) {
-  return async function() {
+  return async function () {
     try {
       mixpanel.identify(userId);
       if (user) {
         const userProps = {
-          $last_login: new Date() // eslint-disable-line camelcase
+          $last_login: new Date(), // eslint-disable-line camelcase
         };
         if (user.email) {
           userProps.$email = user.email;
@@ -29,7 +29,7 @@ export function identifyUser(userId, user) {
         }
         mixpanel.people.set(userProps);
       }
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   };

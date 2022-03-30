@@ -1,7 +1,15 @@
-import {denormalize as normalizrDenormalize, normalize as normalizrNormalize} from 'normalizr';
-import Normalizer from './Normalizer';
-import {user, accountPermission, account, customer, payment} from './models.js';
-
+import {
+  denormalize as normalizrDenormalize,
+  normalize as normalizrNormalize,
+} from "normalizr";
+import Normalizer from "./Normalizer";
+import {
+  user,
+  accountPermission,
+  account,
+  customer,
+  payment,
+} from "./models.js";
 
 const normalizer = new Normalizer();
 export const User = normalizer.import(user);
@@ -14,7 +22,7 @@ normalizer.init();
 
 export function denormalize(data, state, targetSchema) {
   const entities = {};
-  Object.keys(state).forEach(key => {
+  Object.keys(state).forEach((key) => {
     if (state[key].byId) {
       entities[key] = state[key].byId;
     }
@@ -24,7 +32,7 @@ export function denormalize(data, state, targetSchema) {
 }
 
 export function normalize(data, targetSchema) {
-  if (typeof data === 'object') {
+  if (typeof data === "object") {
     data = Object.assign({}, data);
   } else {
     data = data.concat();
@@ -35,12 +43,15 @@ export function normalize(data, targetSchema) {
 
 class Normalized {
   constructor(normalizedObject) {
-    if (!normalizedObject) throw new Error('Must instantiate with normal object.');
+    if (!normalizedObject)
+      throw new Error("Must instantiate with normal object.");
     this.normalized = normalizedObject;
   }
   toArray(key) {
     if (!this.normalized.entities[key]) return [];
-    return Object.keys(this.normalized.entities[key]).map(id => this.normalized.entities[key][id]);
+    return Object.keys(this.normalized.entities[key]).map(
+      (id) => this.normalized.entities[key][id]
+    );
   }
   toJSON() {
     return Object.assign({}, this.normalized);

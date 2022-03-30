@@ -1,5 +1,5 @@
-import Mixpanel from 'mixpanel';
-import config from '../config/environment';
+import Mixpanel from "mixpanel";
+import config from "../config/environment";
 
 let mixpanel;
 if (config.mixpanel.id) {

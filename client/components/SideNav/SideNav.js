@@ -1,11 +1,11 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import {connect} from 'react-redux';
-import * as authActions from '../../actions/authActions';
-import {bindActionCreators} from 'redux';
-import navLogo from '../../assets/nav-logo.png';
-import './side-nav.scss';
+import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import * as authActions from "../../actions/authActions";
+import { bindActionCreators } from "redux";
+import navLogo from "../../assets/nav-logo.png";
+import "./side-nav.scss";
 
 // Since this component is simple and static, there's no parent container for it.
 class Sidebar extends React.Component {
@@ -14,7 +14,7 @@ class Sidebar extends React.Component {
       <div className="sidebar">
         <div className="sidebar__top">
           <div className="sidebar__workspace">
-            <img className="sidebar__logo"src={navLogo} />
+            <img className="sidebar__logo" src={navLogo} />
           </div>
         </div>
         <div className="sidebar__items">
@@ -34,13 +34,13 @@ class Sidebar extends React.Component {
 Sidebar.propTypes = {
   auth: PropTypes.object.isRequired,
   authActions: PropTypes.object.isRequired,
-  pathname: PropTypes.string.isRequired
+  pathname: PropTypes.string.isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     pathname: state.router.location.pathname,
-    auth: state.auth
+    auth: state.auth,
   };
 }
 
@@ -50,7 +50,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

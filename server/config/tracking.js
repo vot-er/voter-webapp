@@ -1,4 +1,5 @@
-const Sentry = require("@sentry/node");
+import Sentry from "@sentry/node";
+import { CaptureConsole } from "@sentry/integrations";
 import config from "./environment";
 
 export function requestHandler(app) {
@@ -6,6 +7,11 @@ export function requestHandler(app) {
     Sentry.init({
       dsn: config.sentry.backendDSN,
       environment: config.deployment,
+      integrations: [
+        new CaptureConsole({
+          levels: ["error"],
+        }),
+      ],
     });
     app.use(Sentry.Handlers.requestHandler());
   }

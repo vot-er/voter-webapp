@@ -50,7 +50,7 @@ describe("Signup Flow", () => {
     await submitForm(page);
 
     await page.waitForSelector(".order-kit-page", {
-      timeout: 3000,
+      timeout: 5000,
     });
     // Shipping
     const orderKitHtml = await page.$eval(

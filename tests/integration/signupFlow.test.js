@@ -22,7 +22,7 @@ beforeAll(async () => {
     ],
   });
   page = await browser.newPage();
-  await page.goto("http://localhost:3000");
+  await page.goto("http://localhost:3000/signup?referral=foobar");
   await page.waitForSelector(".signup-card");
   const html = await page.$eval(".signup-card", (e) => e.innerHTML);
   expect(html).toContain("Let's get you a healthy democracy kit.");
@@ -40,6 +40,7 @@ describe("Signup Flow", () => {
       jobTitle: "Clinic Manager",
       occupation: "other",
       stateOfWork: "AL",
+      referral: "foobar",
     };
     // Signup
     await enterAccountInformation(page, expectedValues);

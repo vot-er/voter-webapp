@@ -116,7 +116,6 @@ export async function create(req, res, next) {
 
     user = await user.save();
     tryToUpdateUserWithEveryActionTag(user);
-
     const token = jwt.sign({ id: user.id }, config.secrets.session, {
       expiresIn: 60 * 60 * 5,
     });

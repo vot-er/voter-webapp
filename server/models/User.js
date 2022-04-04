@@ -65,6 +65,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       vanId: DataTypes.INTEGER,
+      referral: DataTypes.STRING
     },
     {
       defaultScope: {

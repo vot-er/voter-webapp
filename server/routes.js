@@ -30,7 +30,7 @@ export default function (app) {
 
   // All other routes should redirect to the app.html
   app.route("/*").get((req, res) => {
-    if (app.get("env") === "production") {
+    if (app.get("env") === "production" || app.get("env") === "test") {
       res.render(path.resolve(`${app.get("appPath")}/index.html`));
     } else {
       res.render(path.resolve(`${app.get("appPath")}/index.js`));

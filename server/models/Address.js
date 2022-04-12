@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.UUID,
         allowNull: false,
-        defaultValue: DataTypes.UUIDV4,
+        defaultValue: sequelize.literal('uuid_generate_v4()'),
       },
       addressLine1: { type: DataTypes.TEXT, allowNull: false },
       addressLine2: {

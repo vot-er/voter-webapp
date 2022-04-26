@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       code: {
-        type: DataTypes.TEXT,
+        type: 'citext',
         unique: true,
         sparse: true,
       },

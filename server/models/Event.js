@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
-      code: DataTypes.TEXT,
+      code: "citext",
       destination: DataTypes.TEXT,
       createdAt: {
         type: DataTypes.DATE,

@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.UUID,
         allowNull: false,
-        defaultValue: sequelize.literal('uuid_generate_v4()'),
+        defaultValue: sequelize.literal("uuid_generate_v4()"),
       },
       user: {
         type: DataTypes.UUID,
@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       code: {
-        type: 'citext',
+        type: "citext",
         unique: true,
         sparse: true,
       },

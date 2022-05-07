@@ -1,13 +1,16 @@
 "use strict";
 
 import { Kit } from "../../models";
+import { Op } from "sequelize";
 
 export async function redirect(req, res, next) {
   try {
     const { code } = req.params;
     const kit = await Kit.findOne({
       where: {
-        code,
+        code: {
+          [Op.iLike]: '%' + code + '%',
+        }
       },
     });
     if (!kit) return res.status(404).end();

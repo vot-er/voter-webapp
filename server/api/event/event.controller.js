@@ -18,7 +18,7 @@ export async function create(req, res) {
     } = req.useragent;
 
     const ev = await createEventAndAttachKitMetadata({
-      code: ref,
+      code: ref.toLowerCase(),
       type,
       destination,
       ip,

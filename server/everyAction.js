@@ -42,7 +42,7 @@ export async function getEveryActionUser(vanId, params) {
 
 export async function updateEveryActionUser(vanId, data) {
   const res = await everyAction({
-    method: "PATCH",
+    method: "POST",
     url: `/people/${vanId}`,
     data,
   });

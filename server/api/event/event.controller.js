@@ -38,6 +38,10 @@ export async function create(req, res) {
     if (ev.user) {
       const user = await ev.getUser();
       await updateEveryActionEventFields(user);
+      const org = await user.getOrganization();
+      if (org.vanId) {
+        await updateEveryActionEventFields(org);
+      }
     }
 
     return res.status(204).end();

@@ -14,25 +14,25 @@ export const everyAction = axios.create({
   },
 });
 
-export async function getOrCreateVanId(user) {
-  if (user.vanId) {
-    return user.vanId
+export async function getOrCreateVanId(record) {
+  if (record.vanId) {
+    return record.vanId
   } else {
-    const org = await user.getOrganization();
+    const org = await record.getOrganization();
     const res = await everyAction({
       method: "POST",
       url: "/people/findOrCreate",
       data: {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        emails: [{ email: user.email }],
+        firstName: record.firstName,
+        lastName: record.lastName,
+        emails: [{ email: record.email }],
         employer: org.name,
-        occupation: user.occupation,
-        jobTitle: user.jobTitle,
+        occupation: record.occupation,
+        jobTitle: record.jobTitle,
       },
     });
-    user.vanId = res.data.vanId;
-    user.save();
+    record.vanId = res.data.vanId;
+    record.save();
     return res.data.vanId;
   }
 }

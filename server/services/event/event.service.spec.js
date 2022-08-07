@@ -4,6 +4,9 @@ const mockKitBody = {
   code: "test",
   organization: "organization",
   user: "user",
+  User: {
+    organization: "organization"
+  },
 };
 
 jest.mock("../../models/Kit", () => () => {

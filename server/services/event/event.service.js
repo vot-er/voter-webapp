@@ -1,5 +1,5 @@
 import { getOrCreateVanId, updateEveryActionUser } from "../../everyAction";
-import { Event, Kit, Sequelize } from "../../models";
+import { Event, Kit, User, Sequelize } from "../../models";
 
 const { Op } = Sequelize;
 
@@ -10,10 +10,11 @@ export async function createEventAndAttachKitMetadata(body) {
       where: {
         code,
       },
+      include: { model: User, as: 'User' }
     });
     if (kit) {
       body.kit = kit.id;
-      body.organization = kit.organization;
+      body.organization = kit.User.organization;
       body.user = kit.user;
     }
   }
@@ -34,10 +35,10 @@ const VOTER_REGISTRATION_PATTERNS = [
 
 const patternForLike = (pattern) => `%${pattern}%`;
 
-async function getCustomFieldValuesFromDb(user) {
+async function getCustomFieldValuesFromDb(record) {
   const voterRegistrations = await Event.count({
     where: {
-      user: user.id,
+      [record.constructor.name]: record.id,
       destination: {
         [Op.like]: {
           [Op.any]: VOTER_REGISTRATION_PATTERNS.map(patternForLike),
@@ -48,7 +49,7 @@ async function getCustomFieldValuesFromDb(user) {
 
   const voteByMail = await Event.count({
     where: {
-      user: user.id,
+      [record.constructor.name]: record.id,
       destination: {
         [Op.like]: patternForLike(VOTE_BY_MAIL_PATTERN),
       },
@@ -62,10 +63,10 @@ async function getCustomFieldValuesFromDb(user) {
   };
 }
 
-export async function updateEveryActionEventFields(user) {
-  const vanId = await getOrCreateVanId(user);
+export async function updateEveryActionEventFields(record) {
+  const vanId = await getOrCreateVanId(record);
   const { voterRegistrations, voteByMail, total } =
-    await getCustomFieldValuesFromDb(user);
+    await getCustomFieldValuesFromDb(record);
 
   await updateEveryActionUser(vanId, {
     customFieldValues: [
